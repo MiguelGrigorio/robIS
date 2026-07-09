@@ -1,0 +1,24 @@
+ball_follower:
+  ros__parameters:
+    image_topic: /image_raw
+    cmd_vel_topic: /cmd_vel
+    debug_image_topic: /ball_follower/debug_image
+    publish_debug_image: true
+    use_sim_time: false
+
+    target_h_min: 5
+    target_h_max: 25
+    target_s_min: 80
+    target_v_min: 80
+    min_area_px: 350.0
+
+    target_radius_px: 70.0
+    radius_deadband_px: 10.0
+    center_deadband_px: 35.0
+
+    max_linear_speed: 0.22
+    max_angular_speed: 0.9
+    linear_gain: 0.004
+    angular_gain: 1.4
+    search_angular_speed: 0.25
+    stop_on_lost: true

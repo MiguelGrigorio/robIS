@@ -1,0 +1,356 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="robis_d2x">
+
+  <xacro:arg name="params_file" default="$(find robis_description)/config/robot_parameters.yaml"/>
+  <xacro:arg name="sim_flavor" default="none"/>
+
+  <xacro:property name="params_file_path" value="$(arg params_file)"/>
+  <xacro:property name="sim_flavor" value="$(arg sim_flavor)"/>
+  <xacro:property name="params" value="${xacro.load_yaml(params_file_path)}"/>
+  <xacro:property name="physical" value="${params['physical']}"/>
+  <xacro:property name="frames" value="${params['frames']}"/>
+  <xacro:property name="lidar" value="${params['sensors']['lidar']}"/>
+  <xacro:property name="camera" value="${params['sensors']['camera']}"/>
+  <xacro:property name="chassis_mesh_uri" value="file://$(find robis_description)/meshes/chassis.stl"/>
+
+  <xacro:property name="chassis_radius" value="${physical['chassis_radius']}"/>
+  <xacro:property name="chassis_height" value="${physical['chassis_height']}"/>
+  <xacro:property name="chassis_mass" value="${physical['chassis_mass']}"/>
+  <xacro:property name="ground_clearance" value="${physical['ground_clearance']}"/>
+  <xacro:property name="wheel_radius" value="${physical['wheel_radius']}"/>
+  <xacro:property name="wheel_width" value="${physical['wheel_width']}"/>
+  <xacro:property name="wheel_track" value="${physical['wheel_track']}"/>
+  <xacro:property name="wheel_mass" value="${physical['wheel_mass']}"/>
+  <xacro:property name="caster_radius" value="${physical['caster_radius']}"/>
+  <xacro:property name="caster_offset_x" value="${physical['caster_offset_x']}"/>
+  <xacro:property name="caster_mass" value="${physical['caster_mass']}"/>
+  <xacro:property name="lidar_tower_height" value="${physical['lidar_tower_height']}"/>
+  <xacro:property name="lidar_tower_radius" value="${physical['lidar_tower_radius']}"/>
+  <xacro:property name="lidar_mass" value="${physical['lidar_mass']}"/>
+  <xacro:property name="camera_offset_x" value="${physical['camera_offset_x']}"/>
+  <xacro:property name="camera_offset_z" value="${physical['camera_offset_z']}"/>
+  <xacro:property name="aruco_size_xy" value="${physical['aruco_size_xy']}"/>
+  <xacro:property name="aruco_thickness" value="${physical['aruco_thickness']}"/>
+
+  <xacro:property name="frame_base_footprint" value="${frames['base_footprint']}"/>
+  <xacro:property name="frame_base_link" value="${frames['base_link']}"/>
+  <xacro:property name="frame_lidar_tower" value="${frames['lidar_tower']}"/>
+  <xacro:property name="frame_lidar_link" value="${frames['lidar_link']}"/>
+  <xacro:property name="frame_camera_link" value="${frames['camera_link']}"/>
+  <xacro:property name="frame_camera_optical" value="${frames['camera_optical_frame']}"/>
+  <xacro:property name="frame_aruco_marker" value="${frames['aruco_marker']}"/>
+
+  <material name="blue">
+    <color rgba="0.2 0.4 0.8 1.0"/>
+  </material>
+  <material name="black">
+    <color rgba="0.1 0.1 0.1 1.0"/>
+  </material>
+  <material name="dark_gray">
+    <color rgba="0.3 0.3 0.3 1.0"/>
+  </material>
+  <material name="light_blue">
+    <color rgba="0.4 0.7 0.9 1.0"/>
+  </material>
+
+  <xacro:macro name="cylinder_inertia" params="m r h">
+    <inertia ixx="${m * (3 * r * r + h * h) / 12}" ixy="0" ixz="0"
+             iyy="${m * (3 * r * r + h * h) / 12}" iyz="0"
+             izz="${m * r * r / 2}"/>
+  </xacro:macro>
+
+  <xacro:macro name="sphere_inertia" params="m r">
+    <inertia ixx="${2 * m * r * r / 5}" ixy="0" ixz="0"
+             iyy="${2 * m * r * r / 5}" iyz="0"
+             izz="${2 * m * r * r / 5}"/>
+  </xacro:macro>
+
+  <!-- ==================== BASE ==================== -->
+
+  <link name="${frame_base_footprint}"/>
+
+  <joint name="base_joint" type="fixed">
+    <parent link="${frame_base_footprint}"/>
+    <child link="${frame_base_link}"/>
+    <origin xyz="0 0 ${ground_clearance}" rpy="0 0 0"/>
+  </joint>
+
+  <link name="${frame_base_link}">
+    <visual>
+      <geometry>
+        <mesh filename="${chassis_mesh_uri}" scale="1 1 1"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 ${-pi / 2}"/>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="${chassis_radius}" length="${chassis_height}"/>
+      </geometry>
+      <origin xyz="0 0 ${chassis_height / 2}" rpy="0 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="${chassis_mass}"/>
+      <origin xyz="0 0 ${chassis_height / 2}" rpy="0 0 0"/>
+      <xacro:cylinder_inertia m="${chassis_mass}" r="${chassis_radius}" h="${chassis_height}"/>
+    </inertial>
+  </link>
+
+  <!-- ==================== RODAS MOTRIZES ==================== -->
+
+  <xacro:macro name="wheel" params="name y_offset">
+    <joint name="${name}_wheel_joint" type="continuous">
+      <parent link="${frame_base_link}"/>
+      <child link="${name}_wheel"/>
+      <origin xyz="0 ${y_offset} ${wheel_radius - ground_clearance}" rpy="${-pi / 2} 0 0"/>
+      <axis xyz="0 0 1"/>
+      <dynamics damping="0.1" friction="0.1"/>
+    </joint>
+
+    <link name="${name}_wheel">
+      <visual>
+        <geometry>
+          <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+        </geometry>
+        <material name="black"/>
+      </visual>
+      <collision>
+        <geometry>
+          <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="${wheel_mass}"/>
+        <xacro:cylinder_inertia m="${wheel_mass}" r="${wheel_radius}" h="${wheel_width}"/>
+      </inertial>
+    </link>
+  </xacro:macro>
+
+  <xacro:wheel name="left" y_offset="${wheel_track / 2}"/>
+  <xacro:wheel name="right" y_offset="${-wheel_track / 2}"/>
+
+  <!-- ==================== RODAS CASTER (FRENTE E TRÁS) ==================== -->
+
+  <xacro:macro name="caster" params="name x_offset">
+    <joint name="${name}_caster_joint" type="fixed">
+      <parent link="${frame_base_link}"/>
+      <child link="${name}_caster_wheel"/>
+      <origin xyz="${x_offset} 0 ${caster_radius - ground_clearance}" rpy="0 0 0"/>
+    </joint>
+
+    <link name="${name}_caster_wheel">
+      <visual>
+        <geometry>
+          <sphere radius="${caster_radius}"/>
+        </geometry>
+        <material name="dark_gray"/>
+      </visual>
+      <collision>
+        <geometry>
+          <sphere radius="${caster_radius}"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="${caster_mass}"/>
+        <xacro:sphere_inertia m="${caster_mass}" r="${caster_radius}"/>
+      </inertial>
+    </link>
+  </xacro:macro>
+
+  <!-- caster_offset_x aponta para a frente; trás usa valor negativo -->
+  <xacro:caster name="front" x_offset="${ caster_offset_x}"/>
+  <xacro:caster name="rear"  x_offset="${-caster_offset_x}"/>
+
+  <!-- ==================== TORRE DO LIDAR ==================== -->
+
+  <joint name="lidar_tower_joint" type="fixed">
+    <parent link="${frame_base_link}"/>
+    <child link="${frame_lidar_tower}"/>
+    <origin xyz="0.22 0 ${chassis_height}" rpy="0 0 0"/>
+  </joint>
+
+  <link name="${frame_lidar_tower}">
+    <visual>
+      <geometry>
+        <cylinder radius="${lidar_tower_radius}" length="${lidar_tower_height}"/>
+      </geometry>
+      <origin xyz="0 0 ${lidar_tower_height / 2}" rpy="0 0 0"/>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="${lidar_tower_radius}" length="${lidar_tower_height}"/>
+      </geometry>
+      <origin xyz="0 0 ${lidar_tower_height / 2}" rpy="0 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="${lidar_mass}"/>
+      <origin xyz="0 0 ${lidar_tower_height / 2}" rpy="0 0 0"/>
+      <xacro:cylinder_inertia m="${lidar_mass}" r="${lidar_tower_radius}" h="${lidar_tower_height}"/>
+    </inertial>
+  </link>
+
+  <joint name="lidar_joint" type="fixed">
+    <parent link="${frame_lidar_tower}"/>
+    <child link="${frame_lidar_link}"/>
+    <origin xyz="0 0 ${lidar_tower_height}" rpy="0 0 0"/>
+  </joint>
+
+  <link name="${frame_lidar_link}">
+    <visual>
+      <geometry>
+        <cylinder radius="0.03" length="0.02"/>
+      </geometry>
+      <origin xyz="0 0 0.01" rpy="0 0 0"/>
+      <material name="light_blue"/>
+    </visual>
+    <inertial>
+      <mass value="0.1"/>
+      <xacro:cylinder_inertia m="0.1" r="0.03" h="0.02"/>
+    </inertial>
+  </link>
+
+  <!-- ==================== CÂMERA ==================== -->
+
+  <joint name="camera_joint" type="fixed">
+    <parent link="${frame_base_link}"/>
+    <child link="${frame_camera_link}"/>
+    <origin xyz="${camera_offset_x} 0 ${camera_offset_z}" rpy="0 0 0"/>
+  </joint>
+
+  <link name="${frame_camera_link}">
+    <visual>
+      <geometry>
+        <box size="0.02 0.06 0.03"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <inertial>
+      <mass value="0.05"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+    </inertial>
+  </link>
+
+  <joint name="camera_optical_joint" type="fixed">
+    <parent link="${frame_camera_link}"/>
+    <child link="${frame_camera_optical}"/>
+    <origin xyz="0 0 0" rpy="${-pi / 2} 0 ${-pi / 2}"/>
+  </joint>
+
+  <link name="${frame_camera_optical}"/>
+
+  <!-- ==================== MARCADOR ARUCO ==================== -->
+
+  <joint name="aruco_joint" type="fixed">
+    <parent link="${frame_base_link}"/>
+    <child link="${frame_aruco_marker}"/>
+    <origin xyz="0 0 ${chassis_height + aruco_thickness}" rpy="0 0 0"/>
+  </joint>
+
+  <link name="${frame_aruco_marker}">
+    <visual>
+      <geometry>
+        <box size="${aruco_size_xy} ${aruco_size_xy} ${aruco_thickness}"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+  </link>
+
+  <!-- ==================== GAZEBO SIM (JAZZY) ==================== -->
+
+  <xacro:if value="${sim_flavor == 'gz'}">
+    <gazebo>
+      <plugin filename="gz-sim-joint-state-publisher-system" name="gz::sim::systems::JointStatePublisher">
+        <topic>/joint_states</topic>
+      </plugin>
+      <plugin filename="gz-sim-diff-drive-system" name="gz::sim::systems::DiffDrive">
+        <left_joint>left_wheel_joint</left_joint>
+        <right_joint>right_wheel_joint</right_joint>
+        <wheel_separation>${wheel_track}</wheel_separation>
+        <wheel_radius>${wheel_radius}</wheel_radius>
+        <topic>/cmd_vel</topic>
+        <odom_topic>/odom</odom_topic>
+        <tf_topic>/tf</tf_topic>
+        <frame_id>odom</frame_id>
+        <child_frame_id>${frame_base_footprint}</child_frame_id>
+      </plugin>
+    </gazebo>
+
+    <gazebo reference="${frame_lidar_link}">
+      <sensor type="gpu_lidar" name="ydlidar">
+        <always_on>true</always_on>
+        <visualize>true</visualize>
+        <topic>/scan</topic>
+        <update_rate>${lidar['update_rate']}</update_rate>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>${lidar['samples']}</samples>
+              <resolution>1</resolution>
+              <min_angle>${lidar['min_angle']}</min_angle>
+              <max_angle>${lidar['max_angle']}</max_angle>
+            </horizontal>
+          </scan>
+          <range>
+            <min>${lidar['range_min']}</min>
+            <max>${lidar['range_max']}</max>
+            <resolution>${lidar['range_resolution']}</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>${lidar['noise_stddev']}</stddev>
+          </noise>
+        </ray>
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${frame_camera_link}">
+      <sensor type="camera" name="camera">
+        <always_on>true</always_on>
+        <visualize>true</visualize>
+        <topic>/camera/image_raw</topic>
+        <camera_info_topic>/camera/camera_info</camera_info_topic>
+        <update_rate>${camera['update_rate']}</update_rate>
+        <camera name="webcam">
+          <horizontal_fov>${camera['horizontal_fov']}</horizontal_fov>
+          <image>
+            <width>${camera['width']}</width>
+            <height>${camera['height']}</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>${camera['near_clip']}</near>
+            <far>${camera['far_clip']}</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>${camera['noise_stddev']}</stddev>
+          </noise>
+        </camera>
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="left_wheel">
+      <mu1>1.0</mu1>
+      <mu2>1.0</mu2>
+    </gazebo>
+
+    <gazebo reference="right_wheel">
+      <mu1>1.0</mu1>
+      <mu2>1.0</mu2>
+    </gazebo>
+
+    <gazebo reference="front_caster_wheel">
+      <mu1>0.0</mu1>
+      <mu2>0.0</mu2>
+    </gazebo>
+
+    <gazebo reference="rear_caster_wheel">
+      <mu1>0.0</mu1>
+      <mu2>0.0</mu2>
+    </gazebo>
+  </xacro:if>
+
+</robot>

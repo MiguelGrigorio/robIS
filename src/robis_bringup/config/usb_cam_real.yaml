@@ -1,0 +1,8 @@
+/**:
+  ros__parameters:
+    image_topic: /camera/image_raw
+    video_device: /dev/video0
+    frame_id: camera_link
+    image_width: 640
+    image_height: 480
+    framerate: 30.0
