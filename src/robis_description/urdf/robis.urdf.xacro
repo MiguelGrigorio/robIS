@@ -1,18 +1,25 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="robis_d2x">
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="robis">
 
+  <!-- ==========================================================
+       1) ARGUMENTOS E CARREGAMENTO DO YAML
+       ========================================================== -->
   <xacro:arg name="params_file" default="$(find robis_description)/config/robot_parameters.yaml"/>
   <xacro:arg name="sim_flavor" default="none"/>
+  <xacro:arg name="realistic_materials" default="false"/>
 
   <xacro:property name="params_file_path" value="$(arg params_file)"/>
   <xacro:property name="sim_flavor" value="$(arg sim_flavor)"/>
+  <xacro:property name="realistic_materials" value="$(arg realistic_materials)"/>
   <xacro:property name="params" value="${xacro.load_yaml(params_file_path)}"/>
   <xacro:property name="physical" value="${params['physical']}"/>
   <xacro:property name="frames" value="${params['frames']}"/>
   <xacro:property name="lidar" value="${params['sensors']['lidar']}"/>
   <xacro:property name="camera" value="${params['sensors']['camera']}"/>
-  <xacro:property name="chassis_mesh_uri" value="file://$(find robis_description)/meshes/chassis.stl"/>
 
+  <!-- ==========================================================
+       2) ATALHOS PARA OS VALORES DO YAML
+       ========================================================== -->
   <xacro:property name="chassis_radius" value="${physical['chassis_radius']}"/>
   <xacro:property name="chassis_height" value="${physical['chassis_height']}"/>
   <xacro:property name="chassis_mass" value="${physical['chassis_mass']}"/>
@@ -23,7 +30,9 @@
   <xacro:property name="wheel_mass" value="${physical['wheel_mass']}"/>
   <xacro:property name="caster_radius" value="${physical['caster_radius']}"/>
   <xacro:property name="caster_offset_x" value="${physical['caster_offset_x']}"/>
-  <xacro:property name="caster_mass" value="${physical['caster_mass']}"/>
+  <xacro:property name="caster_ground_gap" value="${physical['caster_ground_gap']}"/>
+  <xacro:property name="caster_front_mass" value="${physical['caster_front_mass']}"/>
+  <xacro:property name="caster_rear_mass" value="${physical['caster_rear_mass']}"/>
   <xacro:property name="lidar_tower_height" value="${physical['lidar_tower_height']}"/>
   <xacro:property name="lidar_tower_radius" value="${physical['lidar_tower_radius']}"/>
   <xacro:property name="lidar_mass" value="${physical['lidar_mass']}"/>
@@ -40,19 +49,32 @@
   <xacro:property name="frame_camera_optical" value="${frames['camera_optical_frame']}"/>
   <xacro:property name="frame_aruco_marker" value="${frames['aruco_marker']}"/>
 
+  <!-- ==========================================================
+       3) MESHES REAIS (modelados no Blender)
+       ========================================================== -->
+  <xacro:property name="chassis_mesh_uri" value="file://$(find robis_description)/meshes/chassis.stl"/>
+  <xacro:property name="rubber_mesh_uri" value="file://$(find robis_description)/meshes/rubber.stl"/>
+  <xacro:property name="aruco_mesh_uri" value="file://$(find robis_description)/meshes/aruco_marker.stl"/>
+
+  <!-- ==========================================================
+       4) MATERIAIS (cores)
+       ========================================================== -->
   <material name="blue">
-    <color rgba="0.2 0.4 0.8 1.0"/>
+    <color rgba="0.17 0.42 0.69 1.0"/>
   </material>
   <material name="black">
     <color rgba="0.1 0.1 0.1 1.0"/>
   </material>
   <material name="dark_gray">
-    <color rgba="0.3 0.3 0.3 1.0"/>
+    <color rgba="0.15 0.15 0.15 1.0"/>
   </material>
   <material name="light_blue">
-    <color rgba="0.4 0.7 0.9 1.0"/>
+    <color rgba="0.3 0.6 0.8 1.0"/>
   </material>
 
+  <!-- ==========================================================
+       5) MACROS DE INÉRCIA
+       ========================================================== -->
   <xacro:macro name="cylinder_inertia" params="m r h">
     <inertia ixx="${m * (3 * r * r + h * h) / 12}" ixy="0" ixz="0"
              iyy="${m * (3 * r * r + h * h) / 12}" iyz="0"
@@ -65,8 +87,20 @@
              izz="${2 * m * r * r / 5}"/>
   </xacro:macro>
 
-  <!-- ==================== BASE ==================== -->
+  <!-- ==========================================================
+       6) BASE / CHASSI
+       IMPORTANTE: cada mesh visual (chassis, rubber, aruco) agora
+       vira um LINK PRÓPRIO, unido ao base_link por uma joint fixa.
+       Isso corrige um bug conhecido do RViz2/robot_state_publisher:
+       quando um único <link> tem múltiplos <visual> com materiais
+       DIFERENTES, o visualizador às vezes aplica o material do
+       primeiro <visual> a todos os outros do mesmo link. Separando
+       em links distintos, cada material fica isolado corretamente.
 
+       Toda a MASSA/INÉRCIA física continua concentrada no base_link
+       (as peças _visual sao "massless", com <mass value="0.0"/>),
+       para não alterar a dinâmica do robô.
+       ========================================================== -->
   <link name="${frame_base_footprint}"/>
 
   <joint name="base_joint" type="fixed">
@@ -76,13 +110,6 @@
   </joint>
 
   <link name="${frame_base_link}">
-    <visual>
-      <geometry>
-        <mesh filename="${chassis_mesh_uri}" scale="1 1 1"/>
-      </geometry>
-      <origin xyz="0 0 0" rpy="0 0 ${-pi / 2}"/>
-      <material name="blue"/>
-    </visual>
     <collision>
       <geometry>
         <cylinder radius="${chassis_radius}" length="${chassis_height}"/>
@@ -96,8 +123,75 @@
     </inertial>
   </link>
 
-  <!-- ==================== RODAS MOTRIZES ==================== -->
+  <!--  Visual: chassi (azul) -->
+  <joint name="chassis_visual_joint" type="fixed">
+    <parent link="${frame_base_link}"/>
+    <child link="chassis_visual_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
 
+  <link name="chassis_visual_link">
+    <visual>
+      <geometry>
+        <mesh filename="${chassis_mesh_uri}" scale="1 1 1"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="blue"/>
+    </visual>
+    <inertial>
+      <mass value="0.0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+  </link>
+
+  <!-- Visual: borracha (preto) -->
+  <joint name="rubber_visual_joint" type="fixed">
+    <parent link="${frame_base_link}"/>
+    <child link="rubber_visual_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="rubber_visual_link">
+    <visual>
+      <geometry>
+        <mesh filename="${rubber_mesh_uri}" scale="1 1 1"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="black"/>
+    </visual>
+    <inertial>
+      <mass value="0.0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+  </link>
+
+  <!--  Visual: marcador ArUco (light_blue)  -->
+  <joint name="aruco_marker_visual_joint" type="fixed">
+    <parent link="${frame_base_link}"/>
+    <child link="aruco_marker_visual_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="aruco_marker_visual_link">
+    <visual>
+      <geometry>
+        <mesh filename="${aruco_mesh_uri}" scale="1 1 1"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="light_blue"/>
+    </visual>
+    <inertial>
+      <mass value="0.0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+  </link>
+
+  <!-- ==========================================================
+       7) RODAS MOTRIZES
+       ========================================================== -->
   <xacro:macro name="wheel" params="name y_offset">
     <joint name="${name}_wheel_joint" type="continuous">
       <parent link="${frame_base_link}"/>
@@ -129,44 +223,88 @@
   <xacro:wheel name="left" y_offset="${wheel_track / 2}"/>
   <xacro:wheel name="right" y_offset="${-wheel_track / 2}"/>
 
-  <!-- ==================== RODAS CASTER (FRENTE E TRÁS) ==================== -->
-
-  <xacro:macro name="caster" params="name x_offset">
+  <!-- ==========================================================
+       8) RODAS CASTER
+       ========================================================== -->
+  <xacro:macro name="caster" params="name x_offset mass">
     <joint name="${name}_caster_joint" type="fixed">
       <parent link="${frame_base_link}"/>
       <child link="${name}_caster_wheel"/>
-      <origin xyz="${x_offset} 0 ${caster_radius - ground_clearance}" rpy="0 0 0"/>
+      <origin xyz="${x_offset} 0 ${(caster_ground_gap + caster_radius) - ground_clearance}" rpy="0 0 0"/>
     </joint>
 
+    <!-- Física: continua uma esfera simples (estável para contato com o chão,
+         não altera a dinâmica já validada). O visual "cru" (esfera) some daqui;
+         quem aparece na tela agora são os links _visual abaixo. -->
     <link name="${name}_caster_wheel">
-      <visual>
-        <geometry>
-          <sphere radius="${caster_radius}"/>
-        </geometry>
-        <material name="dark_gray"/>
-      </visual>
       <collision>
         <geometry>
           <sphere radius="${caster_radius}"/>
         </geometry>
       </collision>
       <inertial>
-        <mass value="${caster_mass}"/>
-        <xacro:sphere_inertia m="${caster_mass}" r="${caster_radius}"/>
+        <mass value="${mass}"/>
+        <xacro:sphere_inertia m="${mass}" r="${caster_radius}"/>
+      </inertial>
+    </link>
+
+    <!-- Visual: suporte vertical (garfo simplificado) ligando o chassi até a
+         rodinha, para não parecer flutuando. Massless, mesmo padrão dos
+         outros links "_visual" do robô. -->
+    <joint name="${name}_caster_mount_visual_joint" type="fixed">
+      <parent link="${name}_caster_wheel"/>
+      <child link="${name}_caster_mount_visual_link"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+
+    <link name="${name}_caster_mount_visual_link">
+      <visual>
+        <geometry>
+          <cylinder radius="${caster_radius * 0.25}" length="${caster_ground_gap + caster_radius}"/>
+        </geometry>
+        <origin xyz="0 0 ${(caster_ground_gap + caster_radius) / 2}" rpy="0 0 0"/>
+        <material name="dark_gray"/>
+      </visual>
+      <inertial>
+        <mass value="0.0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+      </inertial>
+    </link>
+
+    <!-- Visual: a rodinha em si, um cilindro fino (eixo Y) em vez da esfera
+         "crua" - lembra bem mais uma roda boba real girando livremente. -->
+    <joint name="${name}_caster_roller_visual_joint" type="fixed">
+      <parent link="${name}_caster_wheel"/>
+      <child link="${name}_caster_roller_visual_link"/>
+      <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
+    </joint>
+
+    <link name="${name}_caster_roller_visual_link">
+      <visual>
+        <geometry>
+          <cylinder radius="${caster_radius}" length="${caster_radius * 0.6}"/>
+        </geometry>
+        <material name="dark_gray"/>
+      </visual>
+      <inertial>
+        <mass value="0.0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
       </inertial>
     </link>
   </xacro:macro>
 
-  <!-- caster_offset_x aponta para a frente; trás usa valor negativo -->
-  <xacro:caster name="front" x_offset="${ caster_offset_x}"/>
-  <xacro:caster name="rear"  x_offset="${-caster_offset_x}"/>
+  <xacro:caster name="front" x_offset="${caster_offset_x}"  mass="${caster_front_mass}"/>
+  <xacro:caster name="rear"  x_offset="${-caster_offset_x}" mass="${caster_rear_mass}"/>
 
-  <!-- ==================== TORRE DO LIDAR ==================== -->
-
+  <!-- ==========================================================
+       9) TORRE DO LIDAR
+       ========================================================== -->
   <joint name="lidar_tower_joint" type="fixed">
     <parent link="${frame_base_link}"/>
     <child link="${frame_lidar_tower}"/>
-    <origin xyz="0.22 0 ${chassis_height}" rpy="0 0 0"/>
+    <origin xyz="0.20 0 ${chassis_height}" rpy="0 0 0"/>
   </joint>
 
   <link name="${frame_lidar_tower}">
@@ -210,8 +348,9 @@
     </inertial>
   </link>
 
-  <!-- ==================== CÂMERA ==================== -->
-
+  <!-- ==========================================================
+       10) CÂMERA
+       ========================================================== -->
   <joint name="camera_joint" type="fixed">
     <parent link="${frame_base_link}"/>
     <child link="${frame_camera_link}"/>
@@ -239,26 +378,56 @@
 
   <link name="${frame_camera_optical}"/>
 
-  <!-- ==================== MARCADOR ARUCO ==================== -->
-
+  <!-- ==========================================================
+       11) MARCADOR ARUCO (joint de posicionamento apenas — o
+       visual já está no link aruco_marker_visual_link, seção 6)
+       ========================================================== -->
   <joint name="aruco_joint" type="fixed">
     <parent link="${frame_base_link}"/>
     <child link="${frame_aruco_marker}"/>
-    <origin xyz="0 0 ${chassis_height + aruco_thickness}" rpy="0 0 0"/>
+    <origin xyz="0 0 ${chassis_height}" rpy="0 0 0"/>
   </joint>
 
-  <link name="${frame_aruco_marker}">
-    <visual>
-      <geometry>
-        <box size="${aruco_size_xy} ${aruco_size_xy} ${aruco_thickness}"/>
-      </geometry>
-      <material name="black"/>
-    </visual>
-  </link>
+  <link name="${frame_aruco_marker}"/>
 
-  <!-- ==================== GAZEBO SIM (JAZZY) ==================== -->
-
+  <!-- ==========================================================
+       12) GAZEBO SIM (só entra com sim_flavor:=gz)
+       ========================================================== -->
   <xacro:if value="${sim_flavor == 'gz'}">
+
+    <xacro:if value="${realistic_materials}">
+      <gazebo reference="chassis_visual_link">
+        <visual>
+          <material>
+            <pbr>
+              <metal>
+                <metalness>0.35</metalness>
+                <roughness>0.4</roughness>
+              </metal>
+            </pbr>
+            <ambient>0.2 0.4 0.8 1.0</ambient>
+            <diffuse>0.2 0.4 0.8 1.0</diffuse>
+            <specular>0.6 0.6 0.6 1.0</specular>
+          </material>
+        </visual>
+      </gazebo>
+      <gazebo reference="rubber_visual_link">
+        <visual>
+          <material>
+            <pbr>
+              <metal>
+                <metalness>0.0</metalness>
+                <roughness>0.9</roughness>
+              </metal>
+            </pbr>
+            <ambient>0.05 0.05 0.05 1.0</ambient>
+            <diffuse>0.05 0.05 0.05 1.0</diffuse>
+            <specular>0.05 0.05 0.05 1.0</specular>
+          </material>
+        </visual>
+      </gazebo>
+    </xacro:if>
+
     <gazebo>
       <plugin filename="gz-sim-joint-state-publisher-system" name="gz::sim::systems::JointStatePublisher">
         <topic>/joint_states</topic>
@@ -274,6 +443,9 @@
         <frame_id>odom</frame_id>
         <child_frame_id>${frame_base_footprint}</child_frame_id>
       </plugin>
+      <!-- <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+        <render_engine>ogre2</render_engine>
+      </plugin> -->
     </gazebo>
 
     <gazebo reference="${frame_lidar_link}">
@@ -281,6 +453,7 @@
         <always_on>true</always_on>
         <visualize>true</visualize>
         <topic>/scan</topic>
+        <!-- <gz_frame_id>${frame_lidar_link}</gz_frame_id> -->
         <update_rate>${lidar['update_rate']}</update_rate>
         <ray>
           <scan>
@@ -310,7 +483,8 @@
         <always_on>true</always_on>
         <visualize>true</visualize>
         <topic>/camera/image_raw</topic>
-        <camera_info_topic>/camera/camera_info</camera_info_topic>
+        <!-- <camera_info_topic>/camera/camera_info</camera_info_topic>
+        <gz_frame_id>${frame_camera_optical}</gz_frame_id> -->
         <update_rate>${camera['update_rate']}</update_rate>
         <camera name="webcam">
           <horizontal_fov>${camera['horizontal_fov']}</horizontal_fov>
@@ -352,5 +526,4 @@
       <mu2>0.0</mu2>
     </gazebo>
   </xacro:if>
-
 </robot>

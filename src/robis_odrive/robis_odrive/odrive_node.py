@@ -179,7 +179,7 @@ class OdriveNode(Node):
         )
         self.declare_parameter(
             "base_frame",
-            "base_link",
+            "base_footprint",
             ParameterDescriptor(description="NOT YET IMPLEMENTED!"),
         )
         self.declare_parameter(
@@ -282,8 +282,8 @@ class OdriveNode(Node):
         self.tf_msg.transform.translation.z = 0.0
         self.tf_msg.transform.rotation.x = 0.0
         self.tf_msg.transform.rotation.y = 0.0
-        self.tf_msg.transform.rotation.w = 0.0
-        self.tf_msg.transform.rotation.z = 1.0
+        self.tf_msg.transform.rotation.w = 1.0
+        self.tf_msg.transform.rotation.z = 0.0
 
         self.new_pos_l = 0
         self.new_pos_r = 0

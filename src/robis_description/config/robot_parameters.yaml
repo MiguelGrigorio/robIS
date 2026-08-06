@@ -1,23 +1,66 @@
+# ============================================================================
+# ROBIS — Parâmetros do robô
+# ============================================================================
+# Único arquivo que normalmente precisa ser editado para ajustar medidas
+# físicas, nomes de frames (TF) e configuração dos sensores simulados.
+# O urdf/robis.urdf.xacro carrega estes valores via xacro.load_yaml().
+#
+# Todas as distâncias em METROS, massas em QUILOGRAMAS.
+# ============================================================================
+
 physical:
-  chassis_radius: 0.20
+  # ---- Chassi ----
+  # chassis_radius é a aproximação por CILINDRO da colisão física (o visual
+  # usa o mesh real, não circular). 0.242 foi escolhido por ser o raio que
+  # melhor aproxima a ÁREA real do chassi (octógono/escudo), calculado a
+  # partir das dimensões do mesh (chassis.stl): erro de apenas ~1%.
+  chassis_radius: 0.242
   chassis_height: 0.16
   chassis_mass: 5.0
-  ground_clearance: 0.065
+  ground_clearance: 0.065       # folga da base do chassi (base_link) até o chão
+
+  # ---- Rodas motrizes (esquerda / direita) ----
   wheel_radius: 0.0854
   wheel_width: 0.04
-  wheel_track: 0.36
+  wheel_track: 0.36             # distância entre o centro das duas rodas
   wheel_mass: 0.5
-  caster_radius: 0.025
+
+  # ---- Rodas caster (livres, frente e trás) ----
+  # Ficam perto da ponta do chassi (offset calculado a partir da extensão
+  # real do mesh em X, com ~2cm de folga da borda extrema). O robô "bambeia"
+  # levemente sobre o eixo das rodas motrizes: os casters tocam o chão
+  # ~1cm ACIMA do ponto de contato das rodas motrizes (caster_ground_gap).
+  # Caster traseiro é o mais usado (carrega mais peso); dianteiro só entra
+  # em contato em frenagens bruscas — refletido nas massas diferentes.
+  caster_radius: 0.025          # ~2 polegadas de diâmetro
   caster_offset_x: 0.18
-  caster_mass: 0.1
+  caster_ground_gap: 0.005
+  caster_front_mass: 0.05
+  caster_rear_mass: 0.75
+
+  # ---- Torre do LIDAR ----
   lidar_tower_height: 0.05
   lidar_tower_radius: 0.04
   lidar_mass: 0.2
-  camera_offset_x: 0.20
-  camera_offset_z: 0.10
-  aruco_size_xy: 0.10
+
+  # ---- Câmera ----
+  # Fica perto da borda frontal do chassi, próxima ao topo (mas abaixo da
+  # tampa/bumper).
+  camera_offset_x: 0.21
+  camera_offset_z: 0.12
+
+  # ---- Marcador ArUco ----
+  # Apoiado sobre o vidro/janela no TOPO do chassi (não é adesivo lateral).
+  # Tamanho batendo com o mesh real modelado (aruco_marker.stl).
+  aruco_size_xy: 0.22
   aruco_thickness: 0.001
 
+# ----------------------------------------------------------------------------
+# Nomes dos frames (TF). Mudar só com motivo específico — Nav2 e outras
+# ferramentas ROS2 esperam nomes como "base_footprint" e "base_link" por
+# convenção. Ter isso configurável (em vez de hardcoded no xacro) facilita,
+# por exemplo, adicionar um prefixo por robô no futuro (multi-robô).
+# ----------------------------------------------------------------------------
 frames:
   base_footprint: base_footprint
   base_link: base_link
@@ -27,6 +70,13 @@ frames:
   camera_optical_frame: camera_optical_frame
   aruco_marker: aruco_marker
 
+# ----------------------------------------------------------------------------
+# Sensores simulados (usados apenas quando sim_flavor=gz no xacro). Os
+# valores de resolução/framerate da câmera batem propositalmente com o
+# pipeline GStreamer real usado no robis_vision (v4l2src, 640x480 @ 30fps),
+# para que código de visão testado na simulação se comporte de forma
+# parecida ao rodar na câmera USB física depois.
+# ----------------------------------------------------------------------------
 sensors:
   lidar:
     update_rate: 10.0
@@ -37,9 +87,10 @@ sensors:
     range_max: 6.5
     range_resolution: 0.01
     noise_stddev: 0.01
+
   camera:
     update_rate: 30.0
-    horizontal_fov: 1.047
+    horizontal_fov: 1.222
     width: 640
     height: 480
     near_clip: 0.02

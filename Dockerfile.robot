@@ -46,16 +46,13 @@ RUN apt-get update && apt-get install -y \
     ros-jazzy-navigation2 \
     ros-jazzy-nav2-bringup \
     ros-jazzy-slam-toolbox \
-    ros-jazzy-twist-mux \
     ros-jazzy-robot-state-publisher \
     ros-jazzy-joint-state-publisher \
     ros-jazzy-xacro \
     ros-jazzy-tf-transformations \
     ros-jazzy-cv-bridge \
-    ros-jazzy-ros2-control \
-    ros-jazzy-ros2-controllers \
-    ros-jazzy-controller-manager \
-    ros-jazzy-diagnostic-updater \
+    ros-jazzy-lifecycle-msgs \
+    ros-jazzy-tf2-ros \
     ros-jazzy-rmw-cyclonedds-cpp \
     ros-jazzy-std-srvs \
     && rm -rf /var/lib/apt/lists/*
@@ -89,20 +86,14 @@ WORKDIR /robis_ws
 
 COPY src ./src
 
-RUN find src -mindepth 1 -maxdepth 1 -type d \
-    ! -name robis_bringup \
-    ! -name robis_description \
-    ! -name robis_navigation \
-    ! -name robis_odrive \
-    ! -name robis_ydlidar \
-    ! -name robis_vision \
-    -exec rm -rf {} +
+# A imagem física não precisa dos pacotes de Gazebo e bridge da simulação.
+RUN rm -rf src/robis_gazebo
 
 RUN . /opt/ros/jazzy/setup.sh && \
     rosdep install \
         --from-paths src \
         --ignore-src \
-        -r -y || true
+        -r -y
 
 ENV CMAKE_PREFIX_PATH=/opt/ydlidar-sdk
 ENV LD_LIBRARY_PATH=/opt/ydlidar-sdk/lib
@@ -112,6 +103,7 @@ ENV CPLUS_INCLUDE_PATH=/opt/ydlidar-sdk/include
 RUN . /opt/ros/jazzy/setup.sh && \
     colcon build \
         --symlink-install \
+        --packages-up-to robis_bringup robis_odrive robis_vision robis_ydlidar \
         --cmake-args \
             -DCMAKE_PREFIX_PATH=/opt/ydlidar-sdk
 

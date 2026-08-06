@@ -42,7 +42,7 @@ def generate_launch_description():
                     [robis_gazebo_share, "worlds", "turtlebot3_like.world"]
                 ),
             ),
-            DeclareLaunchArgument("robot_name", default_value="robis_d2x"),
+            DeclareLaunchArgument("robot_name", default_value="robis"),
             DeclareLaunchArgument("spawn_z", default_value="0.20"),
             DeclareLaunchArgument("gz_args", default_value="-r -v 4"),
             DeclareLaunchArgument(

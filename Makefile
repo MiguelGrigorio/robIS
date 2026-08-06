@@ -10,14 +10,18 @@ DOCKERFILE  := Dockerfile.robot
 SIM_DOCKERFILE := Dockerfile.sim
 TAR_FILE    := $(IMAGE_NAME).tar
 
-.PHONY: help setup build transfer load deploy clean build-sim run-sim run-robot
+.PHONY: help setup build transfer load deploy clean compose-build sim-up sim-shell sim-logs sim-down build-sim run-sim run-robot
 
 # ─────────────────────────────────────────────
 help:
 	@echo ""
 	@echo "  make setup      Instala QEMU e configura buildx para cross-compile"
 	@echo "  make build      Compila imagem arm64 no PC (robot)"
-	@echo "  make build-sim  Compila imagem local da simulação (sim)"
+	@echo "  make compose-build Compila a imagem da simulação via Compose"
+	@echo "  make sim-up      Sobe a simulação em segundo plano"
+	@echo "  make sim-shell   Abre um shell no container da simulação"
+	@echo "  make sim-logs    Mostra os logs do container da simulação"
+	@echo "  make sim-down    Para a simulação"
 	@echo "  make transfer   Envia imagem para a Jetson via scp"
 	@echo "  make load       Carrega imagem na Jetson"
 	@echo "  make deploy     build + transfer + load (fluxo completo)"
@@ -49,13 +53,22 @@ build:
 	@echo "[build] Imagem salva em $(TAR_FILE) ($$(du -sh $(TAR_FILE) | cut -f1))"
 
 # ─────────────────────────────────────────────
-build-sim:
-	@echo "[build-sim] Compilando imagem $(USER_NAME)robis-sim:$(IMAGE_TAG) localmente..."
-	docker build \
-		-f $(SIM_DOCKERFILE) \
-		-t $(USER_NAME)robis-sim:$(IMAGE_TAG) \
-		.
-	@echo "[build-sim] Pronto! Imagem $(USER_NAME)robis-sim:$(IMAGE_TAG) disponível localmente."
+compose-build:
+	docker compose build robis_sim
+
+sim-up:
+	docker compose up -d robis_sim
+
+sim-shell:
+	docker compose exec robis_sim bash
+
+sim-logs:
+	docker compose logs -f robis_sim
+
+sim-down:
+	docker compose down
+
+build-sim: compose-build
 
 # ─────────────────────────────────────────────
 transfer:
@@ -87,14 +100,7 @@ clean:
 	rm -f $(TAR_FILE)
 	@echo "[clean] Pronto."
 
-run-sim:
-	docker run -it --rm \
-	  --network=host \
-	  -e DISPLAY=$(DISPLAY) \
-	  -v /tmp/.X11-unix:/tmp/.X11-unix \
-	  -e ROS_DOMAIN_ID=0 \
-	  -e RMW_IMPLEMENTATION=rmw_cyclonedds_cpp \
-	  $(USER_NAME)robis-sim:$(IMAGE_TAG) /bin/bash
+run-sim: sim-up
 
 run-robot:
 	ssh $(JETSON_SSH) "docker run -it --rm \

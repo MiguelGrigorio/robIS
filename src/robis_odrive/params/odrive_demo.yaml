@@ -1,8 +1,0 @@
-odrive_node:
-  ros__parameters:
-    simulation_mode: true
-    cmd_vel_topic: /demo/cmd_vel
-    odom_topic: /demo/odrive/odom
-    publish_odom_tf: false
-    wheel_track: 0.278
-    tyre_circumference: 0.5

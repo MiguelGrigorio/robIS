@@ -1,8 +1,8 @@
 ball_follower:
   ros__parameters:
-    image_topic: /demo/camera/image_raw
-    cmd_vel_topic: /demo/cmd_vel
-    debug_image_topic: /demo/ball_follower/debug_image
+    image_topic: /camera/image_raw
+    cmd_vel_topic: /cmd_vel
+    debug_image_topic: /ball_follower/debug_image
     publish_debug_image: true
     use_sim_time: true
 

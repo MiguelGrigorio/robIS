@@ -1,1 +1,4 @@
 /robis.tar
+.vscode
+__pycache__/
+*.py[cod]

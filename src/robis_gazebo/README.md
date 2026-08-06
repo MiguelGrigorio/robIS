@@ -1,21 +1,21 @@
 # robis_gazebo
 
-Gazebo Sim package for the RobIS D2X platform on ROS 2 Jazzy.
+Simulação Gazebo Sim do robô robIS para ROS 2 Jazzy.
 
-## What this package provides
+## O que o pacote fornece
 
-- A simple indoor world inspired by the TurtleBot3 navigation demos
-- Launch files to open Gazebo Sim and spawn the robot
-- A bridge configuration for the main topics used in the project:
+- Um mundo interno simples, inspirado nas demonstrações de navegação do TurtleBot3
+- Launch files para abrir o Gazebo Sim e inserir o robô
+- Uma configuração de bridge para os principais tópicos do projeto:
   - `/clock`
-  - `/demo/cmd_vel`
-  - `/demo/odom`
-  - `/demo/scan`
-  - `/demo/camera/image_raw`
-  - `/demo/camera/camera_info`
-  - `/demo/tf`
+  - `/cmd_vel`
+  - `/odom`
+  - `/scan`
+  - `/camera/image_raw`
+  - `/camera/camera_info`
+  - `/tf`
 
-## Suggested usage
+## Dependências, compilação e execução
 
 ```bash
 cd ~/robis_ws
@@ -25,21 +25,21 @@ source install/setup.bash
 ros2 launch robis_gazebo simulation.launch.py
 ```
 
-## Expected first checks
+## Verificações iniciais
 
-After launching, validate:
+Depois de iniciar, valide:
 
 ```bash
-ros2 topic list | grep -E '/demo/(odom|scan|camera|cmd_vel|tf)'
-ros2 topic echo /demo/odom --once
-ros2 topic echo /demo/scan --once
-ros2 topic echo /demo/camera/camera_info --once
-ros2 topic pub /demo/cmd_vel geometry_msgs/msg/Twist '{linear: {x: 0.2}, angular: {z: 0.2}}' -r 10
+ros2 topic list | grep -E '/(odom|scan|camera|cmd_vel|tf)'
+ros2 topic echo /odom --once
+ros2 topic echo /scan --once
+ros2 topic echo /camera/camera_info --once
+ros2 topic pub /cmd_vel geometry_msgs/msg/Twist '{linear: {x: 0.2}, angular: {z: 0.2}}' -r 10
 ```
 
-## Notes
+## Frames e troubleshooting
 
-- This package assumes Gazebo Sim with `ros_gz_sim` on ROS 2 Jazzy.
-- The robot description is generated from `robis_description/urdf/robis.urdf.xacro` with `sim_flavor:=gz`.
-- The default world is `worlds/turtlebot3_like.world`, but you can still pass `world:=.../empty.world` if you want a simpler scene.
-- The goal here is phase-0 validation: spawn, move, publish sensors and establish the baseline for Nav2 and SLAM.
+- O pacote usa Gazebo Sim e `ros_gz_sim`.
+- O modelo é gerado de `robis_description/urdf/robis.urdf.xacro` com `sim_flavor:=gz`.
+- O mundo padrão é `turtlebot3_like.world`; `empty.world` pode ser usado para testes mínimos.
+- Os tópicos simulados são os mesmos do robô real. Se o laser não aparecer, verifique `/scan` e a conexão TF até `lidar_link`.

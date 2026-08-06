@@ -52,11 +52,6 @@ def generate_launch_description():
                 "use_sim_time": True,
             }
         ],
-        remappings=[
-            ("/tf", "/demo/tf"),
-            ("/tf_static", "/demo/tf_static"),
-            ("/joint_states", "/demo/joint_states"),
-        ],
     )
 
     bridge = Node(
@@ -89,10 +84,6 @@ def generate_launch_description():
         package="tf2_ros",
         executable="static_transform_publisher",
         output="screen",
-        remappings=[
-            ("/tf", "/demo/tf"),
-            ("/tf_static", "/demo/tf_static"),
-        ],
         arguments=[
             "0.22",
             "0",
@@ -101,7 +92,7 @@ def generate_launch_description():
             "0",
             "0",
             "base_footprint",
-            "robis_d2x/base_footprint/ydlidar",
+            "lidar_link",
         ],
     )
 
@@ -110,7 +101,7 @@ def generate_launch_description():
             DeclareLaunchArgument("model", default_value=default_model),
             DeclareLaunchArgument("world", default_value=default_world),
             DeclareLaunchArgument("bridge_config", default_value=default_bridge_config),
-            DeclareLaunchArgument("robot_name", default_value="robis_d2x"),
+            DeclareLaunchArgument("robot_name", default_value="robis"),
             DeclareLaunchArgument("spawn_z", default_value="0.20"),
             DeclareLaunchArgument("gz_args", default_value="-r -v 4"),
             SetEnvironmentVariable(

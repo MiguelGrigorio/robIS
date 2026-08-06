@@ -17,7 +17,7 @@ class BallFollower(Node):
     def __init__(self):
         super().__init__("ball_follower")
 
-        self.declare_parameter("image_topic", "/image_raw")
+        self.declare_parameter("image_topic", "/camera/image_raw")
         self.declare_parameter("cmd_vel_topic", "/cmd_vel")
         self.declare_parameter("debug_image_topic", "/ball_follower/debug_image")
         self.declare_parameter("publish_debug_image", True)
@@ -32,9 +32,9 @@ class BallFollower(Node):
         self.declare_parameter("radius_deadband_px", 10.0)
         self.declare_parameter("center_deadband_px", 35.0)
 
-        self.declare_parameter("max_linear_speed", 0.22)
-        self.declare_parameter("max_angular_speed", 0.9)
-        self.declare_parameter("linear_gain", 0.004)
+        self.declare_parameter("max_linear_speed", 0.5) #0.22
+        self.declare_parameter("max_angular_speed", 1.5) #0.9
+        self.declare_parameter("linear_gain", 0.01) #0.004
         self.declare_parameter("angular_gain", 1.4)
         self.declare_parameter("search_angular_speed", 0.25)
         self.declare_parameter("stop_on_lost", True)
