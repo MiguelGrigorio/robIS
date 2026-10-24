@@ -1,70 +1,32 @@
 # robis_ydlidar
 
-Driver ROS 2 do lidar YDLidar usado exclusivamente no robô real robIS.
+O launch do driver publica os dados; as TFs fixas são responsabilidade do
+URDF comum em `robis_description`, carregado pelo bringup.
 
-## Dependências
+Driver ROS 2 do lidar físico. Publica LaserScan em `/scan`.
 
-- ROS 2 Jazzy;
-- SDK nativo YDLidar, localizado em `etc/YDLidar-SDK`;
-- `rclcpp`, `sensor_msgs`, `std_srvs` e `tf2_ros`.
+Durante o build, o Docker baixa o SDK de
+[YDLIDAR/YDLidar-SDK](https://github.com/YDLIDAR/YDLidar-SDK), fixado no commit
+`7c0a2328fd85b65960c37287a67b0edbee8caa4b`, e compila a biblioteca.
+A imagem final contém a biblioteca instalada; não é necessário clonar ou
+instalar o SDK na Nano. Veja [build e deploy](../../docs/build.md).
 
-O SDK é compilado pelo `Dockerfile.robot` e instalado em `/opt/ydlidar-sdk`.
-O pacote não deve ser compilado na imagem de simulação.
+Os parâmetros do robô ficam em `robis_bringup/config/ydlidar_real.yaml`.
+O perfil básico inicia o driver diretamente e usa o URDF para a TF do lidar,
+evitando dois publicadores para o mesmo referencial.
+O launch separado `ydlidar_launch.py` aceita `params_file`; seu arquivo
+padrão é genérico. Para usar a configuração X4 do robIS, selecione o YAML
+do bringup citado acima.
 
-## Compilação no robô real
+O X4 foi identificado fisicamente com firmware 1.10, hardware 1 e 128000
+baud. A aquisição ROS mediu aproximadamente 9 Hz; solicitar `frequency=10.0`
+não garante essa taxa. O perfil usa `scan_gain=1.0`, sem correção empírica de
+distância. Ganhos configurados são aplicados tanto a `/scan` quanto a
+`/point_cloud`, com filtragem de valores inválidos e fora dos limites.
+`invalid_range_is_inf=true` representa bins vazios com infinito; `false`
+preserva o zero usado anteriormente. Distâncias, sentido angular e TF ainda
+precisam de comparação com referências físicas.
 
-```bash
-docker build -f Dockerfile.robot -t robis:robot .
-```
+Na simulação, o scan é publicado pelo Gazebo, e este driver não é compilado.
 
-Para um workspace já preparado manualmente, instale o SDK antes do build:
-
-```bash
-cmake -S etc/YDLidar-SDK -B /tmp/ydlidar-sdk-build \
-  -DCMAKE_BUILD_TYPE=Release \
-  -DCMAKE_INSTALL_PREFIX=/opt/ydlidar-sdk
-cmake --build /tmp/ydlidar-sdk-build -j"$(nproc)"
-sudo cmake --install /tmp/ydlidar-sdk-build
-colcon build --packages-select robis_ydlidar
-```
-
-## Execução
-
-```bash
-ros2 launch robis_ydlidar ydlidar_launch.py
-```
-
-O bringup completo do robô real inicia o driver por meio de
-`robis_bringup/launch/real_full.launch.py` quando `enable_lidar:=true`.
-
-## Interfaces
-
-Publica:
-
-- `/scan` (`sensor_msgs/msg/LaserScan`);
-- `/point_cloud` (`sensor_msgs/msg/PointCloud`).
-
-Serviços:
-
-- `start_scan`;
-- `stop_scan`.
-
-TF publicado:
-
-```text
-base_footprint → lidar_link
-```
-
-## Parâmetros
-
-Os parâmetros estão em `params/ydlidar.yaml`. Os principais são `port`,
-`frame_id`, `baudrate`, `lidar_type`, `sample_rate`, `angle_min`, `angle_max`,
-`range_min`, `range_max` e `frequency`.
-
-## Troubleshooting
-
-- Sem dados: confirme se o dispositivo existe (`ls -l /dev/ttyUSB*`) e se o
-  container tem acesso privilegiado ao dispositivo.
-- Falha de inicialização: confirme o modelo do lidar, `baudrate` e `lidar_type`.
-- Erro de TF no RViz2: confirme que `frame_id` é `lidar_link` e que existe a
-  transformação `base_footprint → lidar_link`.
+Veja o [README principal](../../README.md).

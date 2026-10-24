@@ -1,54 +1,31 @@
 # robis_navigation
 
-Navegação, localização e SLAM para o robIS em ROS 2 Jazzy.
+Contém as configurações e launches de SLAM, localização AMCL e navegação Nav2.
 
-## O que este pacote entrega
+Entra nos perfis `navigation` do robô e `simulation`; a imagem básica não
+inclui navegação. Os dois perfis usam NavFn e Regulated Pure Pursuit.
 
-- `slam.launch.py`: sobe o `slam_toolbox` para mapear o mundo a partir do `/scan` no real ou na simulação
-- `localization.launch.py`: sobe localizacao 2D com `map_server` + `amcl`
-- `navigation.launch.py`: sobe localizacao + stack completo do Nav2
-- `config/nav2_params.yaml`: parametros base do Nav2 alinhados com `base_footprint`, `/odom` e `/scan`
-- `config/nav2_params_demo.yaml`: variante de simulação com os mesmos tópicos canônicos do robô real
-- `config/slam_toolbox.yaml`: parametros iniciais do SLAM 2D
-- `config/ekf.yaml`: base inicial para futura fusao com `robot_localization`
+Os parâmetros ficam em `config/`; `maps/` contém mapas de exemplo. Mapas
+gerados durante o uso ficam em `data/navigation/`, preservados pelo volume
+de dados do container. Veja [como salvar e carregar mapas](maps/README.md).
 
-## Ordem recomendada
+| Launch | Responsabilidade |
+| --- | --- |
+| `slam.launch.py` | SLAM Toolbox para construir o mapa |
+| `localization.launch.py` | Mapa salvo, AMCL e seu gerenciador de ciclo de vida |
+| `navigation.launch.py` | Planejador, controlador, comportamentos e suavização de velocidades do Nav2 |
 
-1. Subir a simulacao:
+O launch de navegação precisa de localização e TFs fornecidas pelos outros
+componentes. O bringup com `stack:=navigation` combina AMCL e Nav2;
+`make sim-nav` seleciona esse modo na simulação. `make sim-slam` inicia SLAM.
+No robô, use o bringup físico com `use_sim_time=false`, conforme seu guia.
 
-```bash
-ros2 launch robis_bringup simulation_full.launch.py stack:=slam
-```
+A localização inicia mapa, AMCL e seu gerenciador de ciclo de vida diretamente.
+O relógio é configurado em todos os nós e costmaps. Veja
+[o ensaio da simulação](../../docs/navigation.md) e
+[o perfil físico](../../docs/real-navigation.md).
 
-2. Mapear o ambiente:
-
-```bash
-ros2 topic pub /cmd_vel geometry_msgs/msg/Twist \
-  "{linear: {x: 0.15}, angular: {z: 0.2}}" -r 10
-```
-
-3. Mover o robô pela simulação e salvar o mapa:
-
-```bash
-ros2 run nav2_map_server map_saver_cli -f ~/robis_ws/src/robis_navigation/maps/lab_map
-```
-
-4. Subir navegacao com o mapa salvo:
-
-```bash
-ros2 launch robis_bringup simulation_full.launch.py stack:=navigation map:=/home/ubuntu/robis_ws/src/robis_navigation/maps/lab_map.yaml
-```
-
-## Tópicos, frames e parâmetros
-
-- O `blank_map.yaml` em `maps/` e apenas um placeholder para bootstrap.
-- O `ekf.yaml` ainda nao entra no launch por padrao, porque a simulacao ja entrega `/odom` limpo e a fusao multi-sensorial vem depois.
-- O pacote consome `/scan`, `/odom` e TF; publica os tópicos de mapa, custo e planejamento do Nav2.
-- A cadeia mínima esperada é `map → odom → base_footprint → lidar_link`.
-- `use_sim_time` deve ser `true` na simulação e `false` no robô real.
-
-## Troubleshooting
-
-- Sem mapa: confirme se o `slam_toolbox` recebe `/scan` e se o laser está conectado a `base_footprint`.
-- Falha de localização: confirme o caminho do mapa e o frame `map`.
-- Nav2 não inicia: verifique se todos os nós gerenciados aparecem como ativos e se apenas uma fonte publica `/odom`.
+O ensaio automatizado `make nav-check` pertence às ferramentas locais
+`extras/`; seus mapas e relatórios ficam em `extras/data/navigation/`.
+Para o clone público, veja o [README principal](../../README.md) e
+[a entrega com simulação](../../docs/initial-release.md).

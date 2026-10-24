@@ -1,77 +1,50 @@
 # robis_odrive
 
-Interface ROS 2 para os controladores ODrive do robô robIS e simulador de
-locomoção diferencial.
+Driver dos motores e da odometria.
 
-## Dependências
+O perfil básico recebe `/cmd_vel`, publica `/odom` e a transformação
+`odom -> base_footprint`. A configuração usada no robô fica em
+`robis_bringup/config/odrive_real.yaml`.
 
-- ROS 2 Jazzy;
-- `rclpy`, `geometry_msgs`, `nav_msgs`, `tf2_ros`, `std_msgs` e `std_srvs`;
-- pacote Python `odrive` para operação física;
-- pacote Python `transforms3d`.
+A API ODrive é instalada no build da imagem; não precisa ser instalada no host.
+A polaridade de avanço foi preservada. O comando angular segue a convenção
+ROS quando os lados estão corretamente identificados. A matemática está em
+`drive_math.py`; o ciclo de controle e os prazos ficam em `drive_controller.py`.
+`odrive_interface.py` acessa a placa, `drive_safety.py` confere o perfil e
+supervisiona a telemetria, e `odrive_node.py` cuida das mensagens e serviços ROS.
 
-## Compilação
+Os parâmetros de conexão, calibração, engate e publicação são respeitados.
+O perfil físico conecta sem engatar os motores nem calibrar automaticamente.
+Um `/cmd_vel` válido e não nulo pode engatar os motores. O serviço
+`/odrive_node/engage` também permite engate manual. Erros encontrados na
+conexão são reportados sem limpar erros nem reiniciar automaticamente a placa.
+O driver para ao perder comandos por 0,5 segundo e libera os motores após
+confirmar parada por posição/referência, ou após 2 segundos ocioso. Os prazos
+são configuráveis. A partida confere serial, firmware e perfil persistido;
+o watchdog da placa fica habilitado durante o controle ativo. Corrente,
+temperatura, erros, tensão e resíduos de percurso são supervisionados.
+
+O perfil físico usa odometria `encoder`, com unidades explícitas.
+`legacy` continua disponível para comparação histórica. Giros ficam bloqueados
+por `allow_angular_motion=false` até confirmar esquerda/direita no robô.
+Distâncias e orientação ainda precisam de comparação física externa.
+`motor_signs` registra o sinal de avanço por eixo físico, independentemente
+da seleção `axis_for_right`.
+
+Para inspecionar a placa sem comandos de escrita, dentro da imagem:
 
 ```bash
-cd ~/robis_ws
-rosdep install --from-paths src --ignore-src -r -y
-colcon build --packages-select robis_odrive
-source install/setup.bash
+ros2 run robis_odrive inspect_odrive
 ```
 
-## Execução
+Há um modo de driver simulado, mas ele não representa a física do Gazebo.
+O simulador usa as mesmas polaridades e unidades da API 0.5.x, com encoders
+fracionários e sem truncar deslocamentos pequenos. Os testes não conectam à placa.
 
-Robô real:
+Use `make test` na raiz para compilar os pacotes e executar os testes
+públicos, incluindo mensagens e serviços ROS com o driver simulado.
+O alvo adicional `make odrive-check` pertence às ferramentas locais `extras/`.
+Veja [o comportamento e os serviços](../../docs/odrive.md).
 
-```bash
-ros2 launch robis_odrive odrive_launch.py
-```
-
-Simulador isolado, sem hardware:
-
-```bash
-ros2 launch robis_odrive odrive_launch.py \
-  simulation_mode:=true \
-  cmd_vel_topic:=/cmd_vel \
-  odom_topic:=/odom \
-  publish_odom_tf:=false
-```
-
-Não execute o simulador ODrive junto com a odometria do Gazebo; deve existir
-somente um publicador de `/odom` e de `odom → base_footprint` por ambiente.
-
-## Interfaces
-
-Assina:
-
-- `/cmd_vel` (`geometry_msgs/msg/Twist`), configurável por `cmd_vel_topic`.
-
-Publica:
-
-- `/odom` (`nav_msgs/msg/Odometry`), configurável por `odom_topic`;
-- `odom → base_footprint`, quando `publish_odom_tf` está habilitado;
-- diagnósticos dos motores em tópicos `odrive/...`.
-
-Serviço:
-
-- `reset_odometry` (`std_srvs/srv/Trigger`).
-
-## Parâmetros principais
-
-- `simulation_mode`;
-- `wheel_track`;
-- `tyre_circumference`;
-- `cmd_vel_topic`;
-- `odom_topic`;
-- `odom_frame`;
-- `base_frame`;
-- `publish_odom`;
-- `publish_odom_tf`;
-- `odom_calc_hz`.
-
-## Troubleshooting
-
-- Sem movimento: confirme a conexão USB com o ODrive e se `/cmd_vel` está recebendo mensagens.
-- TF duplicado: desligue `publish_odom_tf` quando outro componente fornecer `odom → base_footprint`.
-- Odometria invertida ou com escala incorreta: revise `wheel_track`, `tyre_circumference` e a calibração dos encoders.
-- Erro de importação Python: instale as dependências do pacote no mesmo ambiente usado pelo workspace.
+Veja o [README principal](../../README.md) e o
+[estado dos ensaios físicos](../../docs/hardware.md).

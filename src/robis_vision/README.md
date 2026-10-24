@@ -1,77 +1,39 @@
 # robis_vision
 
-Pacote de câmera e comportamentos simples por visão para o robIS.
+Câmera USB, comportamentos visuais e ferramentas de percepção.
 
-## O que este pacote entrega
+No perfil básico, apenas `usb_camera_node` é iniciado. Ele publica
+`/camera/image_raw` e `/camera/camera_info` com o mesmo timestamp e referencial.
+A captura usa V4L2 com MJPEG por padrão, caminho testado com a C920 na Nano.
+O bringup básico configura 640×480 e solicita 30 fps.
+`capture_backend` também aceita `gstreamer` e `auto` para outros ambientes.
+Captura e preview usam `opencv_threads=1` para limitar a disputa por CPU.
 
-- `usb_camera.launch.py`: Launch para câmera USB real
-- `ball_follower.launch.py`: Launch para seguidor de bola (real ou simulado)
-- `config/ball_follower.yaml`: Configuração para uso com câmera física
-- `config/ball_follower_demo.yaml`: Configuração para uso em simulação
-- `robis_vision/ball_follower.py`: Node do seguidor de bola implementado em Python
+Uma calibração ROS YAML pode ser informada em `camera_info_url`.
+Sem calibração, CameraInfo tem `K[0]=0`; não são inventados parâmetros da câmera.
+A configuração inicial fica em `robis_bringup/config/usb_cam_basic.yaml`.
 
-## Como usar a câmera USB
+Os detectores, benchmarks e seguidor de bola foram preservados.
+YOLO/VLM/GPU não fazem parte da primeira execução do robô.
 
-```bash
-ros2 launch robis_vision usb_camera.launch.py
-```
+No LabSEA semântico, `yolo26_detector` fornece detecções em
+`/semantic_perception/detections` e máscaras para a associação com o LiDAR.
+As CCTVs usam o detector dentro de `fixed_camera_stream`, do pacote
+`robis_semantic_navigation`. O perfil GPU usa o checkpoint de segmentação
+LabSEA das classes `chair` e `dining table`, com
+[pesos e manifesto](../../config/models/README.md) incluídos no repositório.
+Essa validação é sintética; o desempenho com imagens físicas ainda está pendente.
 
-Por padrão publica `sensor_msgs/Image` em `/camera/image_raw`.
+Quando o Foxglove é iniciado, `image_preview` fornece
+`/camera/image_raw/compressed`: JPEG de qualidade 70, limitado a 30 fps de
+tempo real. Ele preserva o cabeçalho da imagem original, mantém apenas o
+quadro mais recente e comprime somente quando há assinantes. A percepção
+continua usando `/camera/image_raw`. Parâmetros: `input_topic`, `output_topic`,
+`fps` e `jpeg_quality`. Veja o [guia do Foxglove](../../foxglove/README.md).
 
-## Seguidor de bola
+A entrada raw do preview usa QoS confiável e fila de um quadro, compatível
+com a câmera USB e o bridge atuais. A saída JPEG continua best effort.
+Para uma câmera externa que publique best effort, selecione
+`input_reliability:=best_effort` no nó de preview.
 
-```bash
-# Em ambiente real:
-ros2 launch robis_vision ball_follower.launch.py \
-  params_file:=/robis_ws/src/robis_vision/config/ball_follower.yaml
-
-# Em simulação:
-ros2 launch robis_vision ball_follower.launch.py \
-  params_file:=/robis_ws/src/robis_vision/config/ball_follower_demo.yaml
-```
-
-O node detecta uma bola laranja por HSV, centraliza a bola na imagem e aproxima ou
-afasta até manter o raio alvo. Ajuste os limites HSV e ganhos em `config/`.
-
-## Tópicos, parâmetros e troubleshooting
-
-- O seguidor de bola funciona tanto em ambiente real quanto em simulação
-- Para ambientes simulados, utilize a configuração `ball_follower_demo.yaml`
-- A câmera de simulação publica em `/camera/image_raw` e o controle é feito em `/cmd_vel`
-- Os parâmetros HSV podem ser ajustados para diferentes condições de iluminação
-- A câmera publica `/camera/image_raw` (`sensor_msgs/msg/Image`).
-- O seguidor assina `/camera/image_raw` e publica comandos em `/cmd_vel` (`geometry_msgs/msg/Twist`).
-- A imagem de depuração é publicada em `/ball_follower/debug_image` quando habilitada.
-- Os principais parâmetros são `image_topic`, `cmd_vel_topic`, limites HSV, `min_area_px`,
-  `target_radius_px`, `max_linear_speed`, `max_angular_speed` e `stop_on_lost`.
-- Se não houver comandos, confirme que a câmera publica imagens e que a bola está dentro da faixa HSV configurada.
-
-## Como testar em ambientes simulados
-
-Para testar o seguidor de bola em ambiente simulado, você pode usar a nova world `ball_follower_test.world`:
-
-```bash
-ros2 launch robis_bringup simulation_full.launch.py world:=/robis_ws/src/robis_gazebo/worlds/ball_follower_test.world stack:=slam
-```
-
-Então inicie o seguidor de bola com:
-```bash
-ros2 launch robis_vision ball_follower.launch.py params_file:=/robis_ws/src/robis_vision/config/ball_follower_demo.yaml
-```
-
-## Estrutura do pacote
-
-```text
-robis_vision/
-├── CMakeLists.txt
-├── package.xml
-├── README.md
-├── config/
-│   ├── ball_follower.yaml
-│   └── ball_follower_demo.yaml
-├── launch/
-│   ├── usb_camera.launch.py
-│   └── ball_follower.launch.py
-├── robis_vision/
-│   └── ball_follower.py
-└── setup.cfg
+Veja o [README principal](../../README.md) e [a compatibilidade da Nano](../../docs/jetson.md).

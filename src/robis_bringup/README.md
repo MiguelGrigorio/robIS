@@ -1,70 +1,37 @@
 # robis_bringup
 
-Camada de integracao do projeto para manter o mesmo stack de localizacao e navegacao entre simulacao e robo real.
+Reúne os launches que iniciam os componentes do robô.
 
-## Ideia central
+| Launch | Finalidade |
+| --- | --- |
+| `basic_real.launch.py` | Drivers físicos, odometria e descrição do robô |
+| `real_full.launch.py` | Perfil físico com `stack:=slam`, `mapping`, `localization` ou `navigation`; o padrão é `none` |
+| `semantic_real.launch.py` | Perfil físico com percepção e memória, em modo `mapping` ou `navigation` |
+| `simulation_full.launch.py` | Gazebo com SLAM/localização/Nav2 selecionados por `stack` |
+| `semantic_simulation.launch.py` | Composição da percepção e navegação semântica no Gazebo |
+| `foxglove.launch.py` | Bridge, preview JPEG e teleoperação opcional |
 
-O contrato do projeto fica assim:
+O perfil atual da Nano usa `basic_real.launch.py`: motores, lidar, câmera e
+modelo do robô. Ele não depende de Nav2, Gazebo ou navegação semântica.
 
-- `robis_description`: descreve o robo e sua arvore TF
-- `robis_navigation`: consome `/scan`, `/odom`, `/tf` e `/cmd_vel`
-- `robis_bringup`: troca a origem dos dados entre `sim` e `real`, mantendo o mesmo stack acima
+As configurações ficam em `config/`: `odrive_real.yaml`,
+`ydlidar_real.yaml` e `usb_cam_basic.yaml`.
+Os argumentos `enable_base`, `enable_lidar` e `enable_camera` permitem
+selecionar quais componentes iniciar.
+O argumento `enable_foxglove` habilita a observação opcional no perfil básico.
+`foxglove.launch.py` também permite iniciar o bridge separadamente.
+`enable_teleop:=true` habilita o painel Teleop pelo encaminhador
+`/cmd_vel_teleop → /cmd_vel`, com limites e expiração dos comandos. O padrão
+continua sendo somente observação. Veja o [guia do Foxglove](../../foxglove/README.md).
 
-## Launch files principais
+`real_full.launch.py` reutiliza esses drivers e acrescenta SLAM ou AMCL e
+Nav2. `semantic_real.launch.py` também inicia detector, fusão e memória;
+esse perfil usa a imagem `robot-navigation` e exige calibração da câmera USB.
+Veja [o perfil real completo](../../docs/real-navigation.md).
 
-- `simulation_full.launch.py`: simulacao completa + stack opcional (`none`, `slam`, `localization`, `navigation`)
-- `real_full.launch.py`: bringup do robo real + stack opcional (`none`, `slam`, `localization`, `navigation`)
-- `ball_follow_demo.launch.py`: Gazebo + câmera simulada + seguidor de bola
-- `ball_follow_real.launch.py`: robo real + webcam + seguidor de bola
+Na raiz do repositório, `make sim-up` usa `simulation_full.launch.py` com
+`stack:=none`. O perfil LabSEA com CCTVs e detector visual é iniciado por
+`make sim-semantic-up`, após construir suas imagens conforme o
+[guia de simulação semântica](../../docs/semantic-simulation.md).
 
-## Dependencias opcionais para o modo real
-
-O modo `real` espera estes pacotes instalados no ambiente:
-
-- `robis_odrive`
-- `robis_ydlidar`
-- `robis_vision` (opcional, se a camera USB fizer parte do bringup)
-
-## Exemplos
-
-
-### Robo real apenas com hardware + TF
-
-```bash
-ros2 launch robis_bringup real_full.launch.py stack:=none
-```
-
-### Robo real com SLAM
-
-```bash
-ros2 launch robis_bringup real_full.launch.py stack:=slam
-```
-
-### Robo real com navegacao
-
-```bash
-ros2 launch robis_bringup real_full.launch.py \
-  stack:=navigation \
-  map:=~/robis_ws/src/robis_navigation/maps/lab_map.yaml
-```
-
-## Observacoes
-
-- O mesmo `robis_navigation` e usado nos dois modos.
-- O modo `real` nasce com camera desativada por padrao, porque a webcam costuma precisar de ajuste fino de dispositivo, formato e exposicao.
-- Os parametros do ODrive neste pacote foram alinhados ao `robis_description`, que hoje e a fonte canonica do robo.
-
-## Tópicos e parâmetros
-
-Os modos real e simulado usam as mesmas interfaces: `/cmd_vel`, `/odom`, `/scan`,
-`/camera/image_raw`, `/tf` e `/tf_static`. O argumento `namespace` da simulação
-é opcional e pode ser usado para executar múltiplos robôs.
-
-Os principais argumentos de `real_full.launch.py` são `stack`, `enable_base`,
-`enable_lidar`, `enable_camera`, `map`, `nav_params_file` e `slam_params_file`.
-
-## Troubleshooting
-
-- Se o RViz informar que não encontra uma transformação, confirme `ros2 run tf2_tools view_frames` e verifique a cadeia `map → odom → base_footprint`.
-- Se o robô não se mover, confirme se há somente um consumidor de `/cmd_vel` e se o ODrive está habilitado.
-- O lidar real depende de `robis_ydlidar`, compilado na imagem do robô real.
+Comece pelo [README principal](../../README.md) e pelo [guia de build](../../docs/build.md).

@@ -1,51 +1,23 @@
 # robis_description
 
-Descrição do robô robIS para ROS 2 Jazzy.
+Contém a descrição física do robô: URDF/Xacro, malhas e dimensões.
 
-## O que o pacote fornece
+- `config/robot_parameters.yaml`: medidas e nomes dos referenciais.
+- `urdf/robis.urdf.xacro`: modelo usado pelo robô e pelo Gazebo.
+- `meshes/`: aparência do robô.
 
-- Modelo `robis.urdf.xacro`.
-- Parâmetros centralizados em `config/robot_parameters.yaml`.
-- Malhas do chassi, rodas, borracha e marcador ArUco.
-- `display.launch.py` para visualização no RViz2.
-- Configuração RViz em `rviz/robis.rviz`.
+O perfil básico usa esse modelo para publicar as TFs fixas dos sensores.
+A odometria publica a transformação de `odom` para `base_footprint`.
+O Gazebo fornece os estados das rodas e dos casters em `/joint_states`.
+Essa publicação das juntas móveis ainda está pendente no driver físico.
 
-## Estrutura
+Os casters possuem pivô vertical e roda com rolamento passivo. As massas
+totais e os pontos de montagem foram preservados; os novos parâmetros de
+suporte, deslocamento do eixo, amortecimento e atrito são aproximações no YAML.
+As dimensões, massas e extrínsecas ainda exigem comparação com medições do
+robô. Veja os [testes e limites do modelo](../../docs/simulation.md).
+Veja o [README principal](../../README.md).
 
-```text
-robis_description/
-├── CMakeLists.txt
-├── package.xml
-├── config/
-├── launch/
-├── meshes/
-├── rviz/
-└── urdf/
-```
-
-## Dependências e compilação
-
-```bash
-cd ~/robis_ws
-rosdep install --from-paths src --ignore-src -r -y
-colcon build --packages-select robis_description
-source install/setup.bash
-```
-
-## Execução
-
-```bash
-ros2 launch robis_description display.launch.py
-```
-
-Para usar os controles das juntas:
-
-```bash
-ros2 launch robis_description display.launch.py use_joint_state_publisher_gui:=true
-```
-
-## Frames e troubleshooting
-
-- O frame principal da navegação é `base_footprint`; o chassi físico é `base_link`.
-- Os sensores usam `lidar_link` e `camera_link`.
-- Se o modelo não aparecer, confirme a instalação do pacote e execute `xacro` diretamente para localizar erros no arquivo.
+O visual atual usa [o CAD fornecido](meshes/updated/README.md), com as peças
+estáticas separadas das rodas e casters articulados. As configurações físicas
+foram mantidas. Os arquivos Blender e modelos anteriores ficam em `extras/assets/`.

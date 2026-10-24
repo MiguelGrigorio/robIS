@@ -1,45 +1,34 @@
 # robis_gazebo
 
-Simulação Gazebo Sim do robô robIS para ROS 2 Jazzy.
+Contém os mundos e a comunicação entre Gazebo e ROS.
+Entra no perfil `simulation`; as imagens do robô físico não incluem Gazebo.
 
-## O que o pacote fornece
+`simulation.launch.py` carrega o robô e os sensores. Os tópicos incluem
+`/scan`, `/odom`, `/camera/image_raw` e `/camera/camera_info`.
+O Gazebo recebe movimento em `/cmd_vel`.
 
-- Um mundo interno simples, inspirado nas demonstrações de navegação do TurtleBot3
-- Launch files para abrir o Gazebo Sim e inserir o robô
-- Uma configuração de bridge para os principais tópicos do projeto:
-  - `/clock`
-  - `/cmd_vel`
-  - `/odom`
-  - `/scan`
-  - `/camera/image_raw`
-  - `/camera/camera_info`
-  - `/tf`
+Comece com `make sim-up` na raiz do repositório.
+Use `make sim-check` para conferir sensores, TF e movimento; `make sim-gui`
+abre a janela. Os sensores extras de pesquisa têm bridges separados e só
+iniciam com `enable_ground_truth_sensors:=true`.
+Veja o [guia de simulação](../../docs/simulation.md) e os
+[resultados públicos](../../docs/initial-release.md).
 
-## Dependências, compilação e execução
+O LabSEA foi atualizado a partir do GLB fornecido em outubro/2026: 74 grupos
+de objetos, além da estrutura. A referência do mundo 3D é
+[JoabFelippx/Labsea-3D](https://github.com/JoabFelippx/Labsea-3D); a versão
+integrada está identificada em [PROVENANCE.md](models/robis_labsea/PROVENANCE.md).
+O cenário completo preserva suas posições;
+os layouts controlados continuam aplicando as poses de seus YAMLs. Os
+ensaios de outubro/2026 já usaram os modelos atualizados no cenário controlado;
+veja [o escopo da versão inicial](../../docs/initial-release.md).
+Fontes Blender e a revisão anterior ficam em `extras/assets/`.
 
-```bash
-cd ~/robis_ws
-rosdep install --from-paths src --ignore-src -r -y
-colcon build --packages-select robis_description robis_gazebo
-source install/setup.bash
-ros2 launch robis_gazebo simulation.launch.py
-```
+Os módulos `robis_gazebo.runtime` instalam as sessões usadas pela simulação
+manual. Os executores de ensaios que reutilizam essas sessões ficam em
+`extras/scripts/`; a imagem de operação não depende desses executores.
 
-## Verificações iniciais
-
-Depois de iniciar, valide:
-
-```bash
-ros2 topic list | grep -E '/(odom|scan|camera|cmd_vel|tf)'
-ros2 topic echo /odom --once
-ros2 topic echo /scan --once
-ros2 topic echo /camera/camera_info --once
-ros2 topic pub /cmd_vel geometry_msgs/msg/Twist '{linear: {x: 0.2}, angular: {z: 0.2}}' -r 10
-```
-
-## Frames e troubleshooting
-
-- O pacote usa Gazebo Sim e `ros_gz_sim`.
-- O modelo é gerado de `robis_description/urdf/robis.urdf.xacro` com `sim_flavor:=gz`.
-- O mundo padrão é `turtlebot3_like.world`; `empty.world` pode ser usado para testes mínimos.
-- Os tópicos simulados são os mesmos do robô real. Se o laser não aparecer, verifique `/scan` e a conexão TF até `lidar_link`.
+O perfil público de LabSEA com câmeras fixas, YOLO, memória e Nav2 usa
+`make sim-semantic-up`. Ele requer a base GPU e o checkpoint descritos no
+[guia de uso](../../docs/semantic-simulation.md). O mundo completo e o arranjo
+controlado são distintos; a aceitação atual cobre o arranjo controlado.

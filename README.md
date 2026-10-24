@@ -1,148 +1,137 @@
-# Workspace ROS 2 do robIS
+# robIS
 
-Workspace ROS 2 Jazzy do robIS. A fonte dos pacotes fica somente em
-`src/`; a separacao entre robo real e simulacao acontece nos Dockerfiles.
+Software do robô robIS em **ROS 2 Jazzy**, com os pacotes em `src/`.
+Robô físico, desenvolvimento e simulação usam a mesma distribuição.
+Execute os comandos abaixo na raiz do repositório. `make help` mostra os atalhos.
 
-## Estrutura
+A versão inicial prioriza a simulação: sensores, navegação e memória semântica
+por câmeras fixas. O pacote passou pela verificação de publicação em outubro/2026.
+Veja [escopo, resultados e limites](docs/initial-release.md).
 
-- `src/robis_bringup`: launchs de alto nivel para real, simulacao e demos.
-- `src/robis_description`: URDF/Xacro, malhas e parametros fisicos do robo.
-- `src/robis_gazebo`: mundo, bridge e launch do Gazebo.
-- `src/robis_navigation`: SLAM, localizacao e navegacao.
-- `src/robis_odrive`: driver ODrive e modo simulado do driver.
-- `src/robis_ydlidar`: driver do YDLidar, usado exclusivamente no robô real.
-- `src/robis_vision`: camera USB e seguidor de bola por OpenCV.
+## Desenvolver e simular
 
-## Imagens Docker
-
-### Robo real
+Use Linux com Docker Engine, Compose v2 e Make. ROS e Gazebo ficam no
+container; a simulação básica renderiza por CPU e dispensa hardware do robô:
 
 ```bash
-make build
-```
-
-`Dockerfile.robot` copia `src/`, mas mantem apenas pacotes necessarios no robo
-real: bringup, description, navigation, ODrive, YDLidar e vision. Gazebo nao
-entra nessa imagem.
-
-### Simulacao com Docker Compose
-
-```bash
-make compose-build
 make sim-up
+make sim-logs
+# Depois de aparecer Entity creation successful nos logs:
+make sim-check
 ```
 
-O `docker-compose.yml` monta `src/` no container. Portanto, alteracoes nos
-pacotes ficam disponiveis no proximo `sim-up` sem reconstruir a imagem; use
-`make compose-build` quando mudar o `Dockerfile.sim` ou dependencias do
-container.
+`make test` constrói e testa os pacotes em um container isolado, sem hardware.
+`make sim-shell` abre um terminal ROS com o código compartilhado.
 
-Comandos uteis:
+Depois de editar os pacotes, reinicie o nó afetado. Para C++, arquivos novos
+ou alterações de instalação, execute `make sim-build`.
+`make sim-down` encerra o ambiente. Veja o [guia de simulação](docs/simulation.md).
+
+Para desenvolver o perfil básico com código compartilhado:
 
 ```bash
-make sim-shell       # shell dentro do container
-make sim-logs        # logs em tempo real
-make sim-down        # encerra a simulacao
+make dev-up
+make dev-shell
+make dev-build
 ```
 
-Antes da primeira execucao com Gazebo/RViz, habilite o acesso grafico:
+`make down` encerra os ambientes de desenvolvimento. Os containers de
+produção levam código compilado; os de desenvolvimento compartilham `src/`.
+
+## LabSEA e navegação semântica
+
+O perfil GPU preparado para a Orin mantém Gazebo, câmera embarcada,
+LiDAR, câmeras do teto, percepção, memória e Nav2.
+
+Na primeira instalação, prepare a base com
+`make sim-semantic-base-build`. O checkpoint de segmentação LabSEA já está
+em `config/models/`, com hash e manifesto. Depois:
 
 ```bash
-xhost +local:docker
+make sim-semantic-build
+make sim-semantic-up
+make sim-semantic-shell
 ```
 
-Se o host usar outro arquivo Xauthority, execute:
+Dentro do container:
 
 ```bash
-XAUTHORITY=/caminho/.Xauthority make sim-up
+ros2 run robis_semantic_navigation goto mesa \
+  --environment labsea_fixed_fixture --timeout 120
 ```
 
-`Dockerfile.sim` usa a mesma pasta `src/` montada pelo Compose e o entrypoint
-compila somente os pacotes necessários à simulação. O laser da simulação vem do sensor do Gazebo publicado em
-`/scan`. O `robis_odrive` fica disponivel em `simulation_mode:=true` para
-testes do node sem hardware quando for compilado explicitamente no workspace.
+Use `make sim-semantic-stop` para cancelar uma missão e
+`make sim-semantic-down` para encerrar a simulação.
+Esse perfil precisa de GPU NVIDIA e do runtime descrito no
+[guia de uso](docs/semantic-simulation.md).
 
-## Topicos Na Simulacao
+Para observar, conecte o Foxglove a `ws://localhost:8765` e importe
+[foxglove/robis.json](foxglove/robis.json). O layout mostra robô, LiDAR,
+câmera, mapa e navegação. A aba Controle manual usa o painel Teleop quando
+habilitado no bridge; veja [conexão e controle](foxglove/README.md).
 
-Na simulação, os tópicos do robô usam os mesmos nomes canônicos do robô real:
+Os modelos atualizados do robIS e do LabSEA estão integrados aos respectivos
+pacotes. A revisão de outubro/2026 passou nos ensaios do cenário controlado,
+incluindo percepção, navegação e objetos deslocados. Veja os resultados e
+limites no [guia da simulação semântica](docs/semantic-simulation.md).
 
-- `/cmd_vel`
-- `/odom`
-- `/scan`
-- `/camera/image_raw`
-- `/camera/camera_info`
-- `/joint_states`
-- `/tf`
-- `/tf_static`
+## Rodar no robô
 
-O `/clock` continua global, como esperado pelo `use_sim_time`.
+Alvo atual: **Jetson Nano 4 GB, JetPack 4.6.6 e L4T 32.7.6**.
+A imagem contém os pacotes compilados, o SDK do YDLidar e a API do ODrive.
+A inicialização usa essa imagem pronta, sem compilação ou volume de código.
 
-## Gazebo
-
-```bash
-ros2 launch robis_bringup simulation_full.launch.py stack:=slam
-```
-
-Para testar movimento direto:
+No computador com Docker e um builder ARM64:
 
 ```bash
-ros2 topic pub /cmd_vel geometry_msgs/msg/Twist \
-  "{linear: {x: 0.15}, angular: {z: 0.2}}" -r 10
-```
-
-## ODrive E YDLidar Na Simulacao
-
-O YDLidar real nao roda no Gazebo. Em simulacao, o equivalente funcional e o
-sensor lidar do Gazebo, que publica `LaserScan` em `/scan`.
-
-O ODrive pode ser testado sem hardware:
-
-```bash
-ros2 launch robis_odrive odrive_launch.py \
-  simulation_mode:=true \
-  cmd_vel_topic:=/cmd_vel \
-  odom_topic:=/odom \
-  publish_odom_tf:=false
-```
-
-Para teste integrado de locomocao no Gazebo, normalmente use o DiffDrive do
-Gazebo consumindo `/cmd_vel`. Evite publicar duas odometrias principais ao
-mesmo tempo; deixe `/odom` vindo do Gazebo e use o ODrive apenas
-para validar o node do ODrive.
-
-## Seguir Bola
-
-O mundo padrao do Gazebo tem uma bola laranja na frente do robo. Para testar a
-camera simulada e o seguidor:
-
-```bash
-ros2 launch robis_bringup ball_follow_demo.launch.py
-```
-
-No robo real com Jetson Nano e webcam:
-
-```bash
-ros2 launch robis_bringup ball_follow_real.launch.py video_device:=/dev/video0
-```
-
-O node `ball_follower` detecta bola laranja por HSV e publica `Twist`. Ajustes
-de cor, area minima e ganhos ficam em:
-
-- `src/robis_vision/config/ball_follower.yaml`
-- `src/robis_vision/config/ball_follower_demo.yaml`
-
-## Deploy Na Jetson Nano
-
-```bash
-make setup
+make robot-build
 make deploy
 ```
 
-Depois, na Jetson:
+O destino padrão é `jetson@10.10.1.220`. O SSH usa a chave configurada ou
+solicita a senha no terminal. Para outro destino: `make deploy JETSON=usuario@host`.
+O deploy transfere e carrega a imagem; a inicialização é feita na Nano:
 
 ```bash
-sudo docker run --runtime nvidia -it --rm \
-  --network=host --privileged -v /dev:/dev \
-  miguelgrigorio27/robis:jazzy \
-  ros2 launch robis_bringup real_full.launch.py stack:=none
+~/robis/run_robot.sh
+docker logs -f robis
 ```
+
+Esse comando inicia o perfil básico. Após parar com `docker stop robis`,
+use `docker start robis` para iniciar o mesmo container novamente.
+A Nano precisa de Docker, acesso SSH e permissão do usuário para executar Docker.
+
+O perfil básico inicia os drivers de motores, LiDAR, câmera e odometria.
+A ODrive conecta sem engatar na partida. Para incluir Nav2,
+detector e memória semântica, use `make robot-navigation-build` e
+`make deploy-navigation`.
+Veja [build e deploy](docs/build.md), [compatibilidade da Nano](docs/jetson.md)
+e [configuração do perfil completo](docs/real-navigation.md).
+O bringup básico conjunto passou na Nano com a imagem compilada. A navegação
+física, os giros e a calibração da câmera continuam pendentes.
+Veja o [inventário e estado da montagem em outubro/2026](docs/hardware.md).
+
+## Onde encontrar cada coisa
+
+| Pasta | Conteúdo |
+| --- | --- |
+| `src/` | Pacotes ROS, parâmetros, modelos e mundos usados em execução |
+| `docker/` | Dockerfiles, inicialização e perfis Compose de uso |
+| `scripts/` | Build, deploy e inicialização |
+| `config/` | Perfis de pacotes, pesos do detector e calibrações das câmeras fixas |
+| `foxglove/` | Layout e guia de visualização/controle |
+| `docs/` | Guias de instalação e uso |
+| `extras/` | Material local de desenvolvimento: ensaios, testes, pesquisa e CAD |
+
+Os YAMLs dos pacotes ROS configuram nós e sensores. Os arquivos de
+`docker/compose/` escolhem como iniciar os containers: desenvolvimento,
+robô básico, navegação no robô ou simulação semântica. O Makefile seleciona
+os arquivos e mantém os caminhos relativos à raiz; não é preciso editar
+Compose para usar os comandos acima.
+
+Leitura complementar: [navegação](docs/navigation.md),
+[memória semântica](docs/semantic-navigation.md),
+[câmeras fixas](docs/fixed-cameras.md) e [ODrive](docs/odrive.md).
+
+O SDK do YDLidar é baixado do repositório oficial durante o build da imagem
+do robô, com commit fixo. Não é preciso cloná-lo ou instalá-lo manualmente.
