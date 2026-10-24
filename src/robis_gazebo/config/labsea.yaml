@@ -1,0 +1,6 @@
+# All imported furniture, in its supplied positions. Layout coordinates use
+# Gazebo: x/y on the floor, z upwards, angles in radians.
+world: labsea
+spawn: [0, 0, 0]
+overrides: {}
+additions: []

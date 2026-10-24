@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+  <world name="semantic_lab">
+    <gravity>0 0 -9.8</gravity>
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"/>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster"/>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors"><render_engine>ogre2</render_engine></plugin>
+    <light type="directional" name="sun">
+      <pose>0 0 8 0 0 0</pose><cast_shadows>true</cast_shadows>
+      <diffuse>0.9 0.9 0.9 1</diffuse><direction>-0.3 0.2 -1</direction>
+    </light>
+    <model name="floor"><static>true</static><link name="link">
+      <collision name="collision"><geometry><plane><normal>0 0 1</normal><size>9 7</size></plane></geometry></collision>
+      <visual name="visual"><geometry><plane><normal>0 0 1</normal><size>9 7</size></plane></geometry>
+        <material><diffuse>0.82 0.82 0.78 1</diffuse></material></visual>
+    </link></model>
+    <model name="walls"><static>true</static><link name="link">
+      <collision name="north"><pose>0 3.5 0.75 0 0 0</pose><geometry><box><size>9 0.15 1.5</size></box></geometry></collision>
+      <visual name="north_v"><pose>0 3.5 0.75 0 0 0</pose><geometry><box><size>9 0.15 1.5</size></box></geometry></visual>
+      <collision name="south"><pose>0 -3.5 0.75 0 0 0</pose><geometry><box><size>9 0.15 1.5</size></box></geometry></collision>
+      <visual name="south_v"><pose>0 -3.5 0.75 0 0 0</pose><geometry><box><size>9 0.15 1.5</size></box></geometry></visual>
+      <collision name="east"><pose>4.5 0 0.75 0 0 0</pose><geometry><box><size>0.15 7 1.5</size></box></geometry></collision>
+      <visual name="east_v"><pose>4.5 0 0.75 0 0 0</pose><geometry><box><size>0.15 7 1.5</size></box></geometry></visual>
+      <collision name="west"><pose>-4.5 0 0.75 0 0 0</pose><geometry><box><size>0.15 7 1.5</size></box></geometry></collision>
+      <visual name="west_v"><pose>-4.5 0 0.75 0 0 0</pose><geometry><box><size>0.15 7 1.5</size></box></geometry></visual>
+      <!-- Divisória com abertura de 1,4 m entre y=-0,7 e y=0,7. -->
+      <collision name="divider_a"><pose>0 -2.1 0.75 0 0 0</pose><geometry><box><size>0.18 2.8 1.5</size></box></geometry></collision>
+      <visual name="divider_a_v"><pose>0 -2.1 0.75 0 0 0</pose><geometry><box><size>0.18 2.8 1.5</size></box></geometry></visual>
+      <collision name="divider_b"><pose>0 2.1 0.75 0 0 0</pose><geometry><box><size>0.18 2.8 1.5</size></box></geometry></collision>
+      <visual name="divider_b_v"><pose>0 2.1 0.75 0 0 0</pose><geometry><box><size>0.18 2.8 1.5</size></box></geometry></visual>
+    </link></model>
+
+    <!-- Colisão simples e malha visual realista CC BY 4.0; veja models/robis_chair/PROVENANCE.md. -->
+    <model name="blue_chair"><static>true</static><pose>2.7 1.7 0 0 0 3.14</pose>
+      <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label"><label>1</label></plugin>
+      <link name="chair">
+        <collision name="body"><pose>0 0 0.55 0 0 0</pose><geometry><box><size>0.7 0.7 1.1</size></box></geometry></collision>
+        <visual name="realistic_chair"><pose>0 0 0 0 0 1.5708</pose><geometry><mesh>
+          <uri>model://robis_chair/meshes/Chair.obj</uri><scale>0.00817 0.00817 0.00817</scale>
+        </mesh></geometry></visual>
+      </link>
+    </model>
+    <model name="red_chair"><static>true</static><pose>-3.0 2.2 0 0 0 -1.57</pose><link name="chair">
+      <collision name="body"><pose>0 0 0.45 0 0 0</pose><geometry><box><size>0.55 0.55 0.9</size></box></geometry></collision>
+      <visual name="body"><pose>0 0 0.45 0 0 0</pose><geometry><box><size>0.55 0.55 0.9</size></box></geometry><material><diffuse>0.8 0.08 0.05 1</diffuse></material></visual>
+    </link></model>
+    <model name="table_distractor"><static>true</static><pose>2.6 -2.0 0 0 0 0</pose><link name="table">
+      <collision name="top"><pose>0 0 0.72 0 0 0</pose><geometry><box><size>1.3 0.8 0.1</size></box></geometry></collision>
+      <visual name="top_v"><pose>0 0 0.72 0 0 0</pose><geometry><box><size>1.3 0.8 0.1</size></box></geometry><material><diffuse>0.45 0.22 0.08 1</diffuse></material></visual>
+    </link></model>
+    <model name="plant_distractor"><static>true</static><pose>-2.7 -2.3 0 0 0 0</pose><link name="plant">
+      <collision name="pot"><pose>0 0 0.25 0 0 0</pose><geometry><cylinder><radius>0.3</radius><length>0.5</length></cylinder></geometry></collision>
+      <visual name="pot_v"><pose>0 0 0.25 0 0 0</pose><geometry><cylinder><radius>0.3</radius><length>0.5</length></cylinder></geometry><material><diffuse>0.15 0.55 0.15 1</diffuse></material></visual>
+    </link></model>
+  </world>
+</sdf>

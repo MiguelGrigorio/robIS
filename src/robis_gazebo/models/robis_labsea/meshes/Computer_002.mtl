@@ -1,0 +1,23 @@
+# File produced by Open Asset Import Library (http://www.assimp.sf.net)
+# (assimp v6.0.0)
+
+newmtl LabSEA_keycap
+Kd 0.0179999992 0.023 0.0250000004
+Ke 0 0 0
+d 1
+Ns 62.5
+illum 2
+
+newmtl LabSEA_black
+Kd 0.00499999989 0.00700000022 0.00899999961
+Ke 0 0 0
+d 1
+Ns 144.399994
+illum 2
+
+newmtl $Material_2
+Kd 1 1 1
+Ke 0 0 0
+d 1
+illum 1
+

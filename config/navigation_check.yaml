@@ -1,0 +1,25 @@
+# Acceptance route for turtlebot3_like.world; all distances are metres.
+world: robis_turtlebot3_like
+robot: robis
+mapping_waypoints:
+  - [0.0, -2.6]
+  - [1.85, -2.6]
+  - [1.85, -0.8]
+  - [2.5, 0.8]
+  - [2.5, 2.8]
+  - [-2.1, 2.8]
+  - [-2.1, -2.7]
+  - [0.0, -2.7]
+  - [0.0, 0.0]
+navigation_goals:
+  - [2.5, 0.8, 1.57]
+  - [-2.1, 2.8, 3.14]
+  - [0.0, 0.0, 0.0]
+outside_map_goal: [20.0, 20.0, 0.0]
+mapping_speed: 0.25
+mapping_turn_speed: 0.5
+waypoint_tolerance: 0.12
+goal_tolerance: 0.30
+first_goal_min_detour_ratio: 1.5
+waypoint_timeout_wall_sec: 120.0
+goal_timeout_wall_sec: 240.0

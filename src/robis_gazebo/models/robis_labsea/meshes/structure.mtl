@@ -1,0 +1,90 @@
+# File produced by Open Asset Import Library (http://www.assimp.sf.net)
+# (assimp v6.0.0)
+
+newmtl LabSEA_edge
+Kd 0.330000013 0.360000014 0.340000004
+Ke 0 0 0
+d 1
+Ns 230.400024
+illum 2
+
+newmtl LabSEA_white
+Kd 0.730000019 0.75 0.709999979
+Ke 0 0 0
+d 1
+Ns 360
+illum 2
+
+newmtl LabSEA_paper
+Kd 0.720000029 0.730000019 0.660000026
+Ke 0 0 0
+d 1
+Ns 22.4999924
+illum 2
+
+newmtl LabSEA_seam
+Kd 0.0549999997 0.0489999987 0.0399999991
+Ke 0 0 0
+d 1
+Ns 39.9999962
+illum 2
+
+newmtl LabSEA_wear
+Kd 0.0649999976 0.0549999997 0.0450000018
+Ke 0 0 0
+d 1
+Ns 10.0000048
+illum 2
+
+newmtl LabSEA_steel
+Kd 0.479999989 0.519999981 0.5
+Ke 0 0 0
+d 1
+Ns 462.399994
+illum 2
+
+newmtl LabSEA_glass
+Kd 0.680000007 0.75999999 0.800000012
+Ke 0.842105269 0.894736886 1
+d 1
+Ni 1.45000005
+Ns 608.399963
+illum 2
+
+newmtl LabSEA_green_tile
+Kd 0.0350000001 0.0799999982 0.0399999991
+Ke 0 0 0
+d 1
+Ns 384.399994
+illum 2
+
+newmtl LabSEA_wood
+Kd 0.119999997 0.061999999 0.0299999993
+Ke 0 0 0
+d 1
+Ns 202.5
+illum 2
+
+newmtl LabSEA_paint
+Kd 0.660000026 0.670000017 0.610000014
+Ke 0 0 0
+d 1
+Ns 32.4000015
+illum 2
+
+newmtl LabSEA_floor
+Kd 1 1 1
+Ke 0 0 0
+d 1
+Ns 547.600037
+illum 2
+map_Kd embedded_0.png
+bump embedded_0.png
+map_bump embedded_0.png
+
+newmtl $Material_11
+Kd 1 1 1
+Ke 0 0 0
+d 1
+illum 1
+

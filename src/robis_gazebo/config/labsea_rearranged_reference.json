@@ -1,0 +1,59 @@
+{
+  "world": "labsea_rearranged",
+  "source": "3424ba7fad0c261e64ceb3e51c5201ea63c5d84893cb5e67c67a09a142870e63",
+  "spawn": [
+    0,
+    0,
+    0
+  ],
+  "objects": [
+    {
+      "model": "Chair_001",
+      "class": "chair",
+      "pose": [
+        1.8,
+        -0.7,
+        0,
+        0,
+        0,
+        3.1415927
+      ]
+    },
+    {
+      "model": "Chair_006",
+      "class": "chair",
+      "pose": [
+        -2.0,
+        1.2,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "model": "Table_001",
+      "class": "dining table",
+      "pose": [
+        0.4,
+        -2.2,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "model": "extra_table",
+      "class": "dining table",
+      "pose": [
+        -1.7,
+        -1.8,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ]
+}

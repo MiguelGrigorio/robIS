@@ -1,0 +1,11 @@
+# Controlled semantic-map experiment using the supplied LabSEA structure.
+# Objects are static during a run, but their poses can be edited between runs.
+world: labsea_semantic
+spawn: [0, 0, 0]
+include_only: [Chair_001, Chair_006, Table_001, Cabinet_001]
+overrides:
+  Chair_001: {pose: [2.2, 1.2, 0, 0, 0, 3.1415927]}
+  Chair_006: {pose: [-2.0, 1.2, 0, 0, 0, 0]}
+  Table_001: {pose: [0.4, -2.2, 0, 0, 0, 0]}
+  Cabinet_001: {pose: [-2.9, -3.2, 0, 0, 0, 0]}
+additions: []

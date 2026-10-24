@@ -1,0 +1,24 @@
+# Optional extras/research sensors; not present on the physical robot.
+- ros_topic_name: /camera/rgbd/image
+  gz_topic_name: /camera/rgbd/image
+  ros_type_name: sensor_msgs/msg/Image
+  gz_type_name: gz.msgs.Image
+  direction: GZ_TO_ROS
+
+- ros_topic_name: /camera/rgbd/depth_image
+  gz_topic_name: /camera/rgbd/depth_image
+  ros_type_name: sensor_msgs/msg/Image
+  gz_type_name: gz.msgs.Image
+  direction: GZ_TO_ROS
+
+- ros_topic_name: /camera/semantic/labels_map
+  gz_topic_name: /camera/semantic/labels_map
+  ros_type_name: sensor_msgs/msg/Image
+  gz_type_name: gz.msgs.Image
+  direction: GZ_TO_ROS
+
+- ros_topic_name: /camera/semantic/colored_map
+  gz_topic_name: /camera/semantic/colored_map
+  ros_type_name: sensor_msgs/msg/Image
+  gz_type_name: gz.msgs.Image
+  direction: GZ_TO_ROS

@@ -1,0 +1,23 @@
+# File produced by Open Asset Import Library (http://www.assimp.sf.net)
+# (assimp v6.0.0)
+
+newmtl LabSEA_white
+Kd 0.730000019 0.75 0.709999979
+Ke 0 0 0
+d 1
+Ns 360
+illum 2
+
+newmtl LabSEA_blue
+Kd 0.0179999992 0.0700000003 0.230000004
+Ke 0 0 0
+d 1
+Ns 202.5
+illum 2
+
+newmtl $Material_2
+Kd 1 1 1
+Ke 0 0 0
+d 1
+illum 1
+

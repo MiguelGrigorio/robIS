@@ -1,0 +1,1607 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sdf version="1.9">
+  <world name="labsea">
+    <gravity>0 0 -9.8</gravity>
+    <physics name="semantic_hall_physics" type="ignored">
+      <max_step_size>0.005</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics" />
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands" />
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster" />
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    <light type="directional" name="sun">
+      <pose>0 0 10 0 0 0</pose>
+      <cast_shadows>true</cast_shadows>
+      <diffuse>0.95 0.95 0.95 1</diffuse>
+      <direction>-0.4 0.2 -1</direction>
+    </light>
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.75 0.8 1</background>
+    </scene>
+    <model name="structure">
+      <static>true</static>
+      <pose>0 0 0 0 0 0</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/structure.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/structure.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Ball_001">
+      <static>true</static>
+      <pose>2.99 -0.27 0.75 0 0 0</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Ball_001.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Ball_001.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Ball_002">
+      <static>true</static>
+      <pose>2.99 -0.27 0.75 0 0 0</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Ball_002.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Ball_002.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Bin_001">
+      <static>true</static>
+      <pose>-3.318271 -0.4892448 0 0 0 0</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Bin_001.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Bin_001.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Cabinet_001">
+      <static>true</static>
+      <pose>-3.18 -2.06 0 0 0 1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Cabinet_001.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Cabinet_001.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Cabinet_002">
+      <static>true</static>
+      <pose>-3.18 0.1021805 0 0 0 1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Cabinet_002.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Cabinet_002.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Cabinet_003">
+      <static>true</static>
+      <pose>-0.87 -4.04 0 0 0 -3.141593</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Cabinet_003.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Cabinet_003.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="CameraModel_001">
+      <static>true</static>
+      <pose>2.73679 3.698505 2.86764 0 0 0</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/CameraModel_001.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/CameraModel_001.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="CameraModel_002">
+      <static>true</static>
+      <pose>-2.878442 3.732167 2.850206 0 0 0</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/CameraModel_002.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/CameraModel_002.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="CameraModel_003">
+      <static>true</static>
+      <pose>-2.836204 -3.776548 2.88513 0 0 0</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/CameraModel_003.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/CameraModel_003.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="CameraModel_004">
+      <static>true</static>
+      <pose>2.826685 -3.80825 2.8425 0 0 0</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/CameraModel_004.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/CameraModel_004.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Chair_001">
+      <static>true</static>
+      <pose>1 0 0 0 0 -1.448624</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Chair_001.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Chair_001.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+      <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
+        <label>1</label>
+      </plugin>
+    </model>
+    <model name="Chair_002">
+      <static>true</static>
+      <pose>-1 0 0 0 0 -1.58825</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Chair_002.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Chair_002.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+      <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
+        <label>1</label>
+      </plugin>
+    </model>
+    <model name="Chair_003">
+      <static>true</static>
+      <pose>0 1 0 0 0 -1.658063</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Chair_003.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Chair_003.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+      <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
+        <label>1</label>
+      </plugin>
+    </model>
+    <model name="Chair_004">
+      <static>true</static>
+      <pose>0 -1 0 0 0 -1.48353</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Chair_004.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Chair_004.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+      <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
+        <label>1</label>
+      </plugin>
+    </model>
+    <model name="Chair_005">
+      <static>true</static>
+      <pose>2.3475 -2.6183 0 0 0 -1.518436</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Chair_005.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Chair_005.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+      <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
+        <label>1</label>
+      </plugin>
+    </model>
+    <model name="Chair_006">
+      <static>true</static>
+      <pose>-1.8637 3.2168 0 0 0 -0.05235988</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Chair_006.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Chair_006.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+      <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
+        <label>1</label>
+      </plugin>
+    </model>
+    <model name="Chair_007">
+      <static>true</static>
+      <pose>1.01 3.72 0 0 0 0</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Chair_007.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Chair_007.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+      <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
+        <label>1</label>
+      </plugin>
+    </model>
+    <model name="Chair_008">
+      <static>true</static>
+      <pose>1.672727 3.2424 0 0 0 -0.3141593</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Chair_008.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Chair_008.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+      <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
+        <label>1</label>
+      </plugin>
+    </model>
+    <model name="Chair_009">
+      <static>true</static>
+      <pose>-2.4612 0.9149 0 0 0 1.448624</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Chair_009.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Chair_009.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+      <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
+        <label>1</label>
+      </plugin>
+    </model>
+    <model name="Chair_010">
+      <static>true</static>
+      <pose>-2.4422 2.48 0 0 0 1.692969</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Chair_010.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Chair_010.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+      <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
+        <label>1</label>
+      </plugin>
+    </model>
+    <model name="Chair_011">
+      <static>true</static>
+      <pose>-0.7527 2.5456 0 0 0 -0.5934119</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Chair_011.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Chair_011.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+      <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
+        <label>1</label>
+      </plugin>
+    </model>
+    <model name="Chair_012">
+      <static>true</static>
+      <pose>0.4889609 2.826878 0 0 0 1.396264</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Chair_012.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Chair_012.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+      <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
+        <label>1</label>
+      </plugin>
+    </model>
+    <model name="Chair_013">
+      <static>true</static>
+      <pose>-0.9966 3.439415 0 0 0 -0.1068814</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Chair_013.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Chair_013.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+      <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
+        <label>1</label>
+      </plugin>
+    </model>
+    <model name="Computer_002">
+      <static>true</static>
+      <pose>-2.96 3.98 0.75 0 0 0</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Computer_002.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Computer_002.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Cup_001">
+      <static>true</static>
+      <pose>-0.22 3.04 0.75 0 0 0</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Cup_001.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Cup_001.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Desk_East_01">
+      <static>true</static>
+      <pose>3.02 3.2 0 0 0 -1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Desk_East_01.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Desk_East_01.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+      <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
+        <label>3</label>
+      </plugin>
+    </model>
+    <model name="Desk_East_02">
+      <static>true</static>
+      <pose>3.02 1.6 0 0 0 -1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Desk_East_02.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Desk_East_02.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+      <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
+        <label>3</label>
+      </plugin>
+    </model>
+    <model name="Desk_East_03">
+      <static>true</static>
+      <pose>3.02 0 0 0 0 -1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Desk_East_03.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Desk_East_03.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+      <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
+        <label>3</label>
+      </plugin>
+    </model>
+    <model name="Desk_East_04">
+      <static>true</static>
+      <pose>3.02 -1.6 0 0 0 -1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Desk_East_04.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Desk_East_04.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+      <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
+        <label>3</label>
+      </plugin>
+    </model>
+    <model name="Desk_East_05">
+      <static>true</static>
+      <pose>3.02 -3.2 0 0 0 -1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Desk_East_05.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Desk_East_05.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+      <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
+        <label>3</label>
+      </plugin>
+    </model>
+    <model name="Desk_L_001">
+      <static>true</static>
+      <pose>1.147 -3.46 0 0 0 0</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Desk_L_001.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Desk_L_001.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+      <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
+        <label>3</label>
+      </plugin>
+    </model>
+    <model name="Desk_North_01">
+      <static>true</static>
+      <pose>-1.82 3.91 0 0 0 0</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Desk_North_01.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Desk_North_01.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+      <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
+        <label>3</label>
+      </plugin>
+    </model>
+    <model name="Desk_North_02">
+      <static>true</static>
+      <pose>1.52 3.91 0 0 0 0</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Desk_North_02.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Desk_North_02.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+      <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
+        <label>3</label>
+      </plugin>
+    </model>
+    <model name="Desk_North_03">
+      <static>true</static>
+      <pose>-3.02 4.009217 0 0 0 0</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Desk_North_03.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Desk_North_03.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+      <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
+        <label>3</label>
+      </plugin>
+    </model>
+    <model name="Desk_North_04">
+      <static>true</static>
+      <pose>-0.62 4.006224 0 0 0 0</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Desk_North_04.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Desk_North_04.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+      <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
+        <label>3</label>
+      </plugin>
+    </model>
+    <model name="Desk_West_01">
+      <static>true</static>
+      <pose>-3.025 1.36865 0 0 0 1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Desk_West_01.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Desk_West_01.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+      <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
+        <label>3</label>
+      </plugin>
+    </model>
+    <model name="Desk_West_02">
+      <static>true</static>
+      <pose>-3.025 2.96815 0 0 0 1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Desk_West_02.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Desk_West_02.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+      <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
+        <label>3</label>
+      </plugin>
+    </model>
+    <model name="Desk_west_coffe">
+      <static>true</static>
+      <pose>-3.040938 -0.9964975 0 0 0 1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Desk_west_coffe.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Desk_west_coffe.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+      <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
+        <label>3</label>
+      </plugin>
+    </model>
+    <model name="Display_Wall_001">
+      <static>true</static>
+      <pose>3.39 -3.15 1.31 0 0 -1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Display_Wall_001.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Display_Wall_001.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="EquipmentCase_001">
+      <static>true</static>
+      <pose>-3.18 -2.06 2.05 0 0 1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/EquipmentCase_001.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/EquipmentCase_001.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="FoldedBoard_001">
+      <static>true</static>
+      <pose>-3.08 -1.07 0 0 0 1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/FoldedBoard_001.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/FoldedBoard_001.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Keyboard_001">
+      <static>true</static>
+      <pose>2.83 2.73 0.75 0 0 -1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Keyboard_001.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Keyboard_001.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Keyboard_002">
+      <static>true</static>
+      <pose>2.83 1.25 0.75 0 0 -1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Keyboard_002.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Keyboard_002.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Keyboard_003">
+      <static>true</static>
+      <pose>2.83 -0.32 0.75 0 0 -1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Keyboard_003.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Keyboard_003.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Keyboard_004">
+      <static>true</static>
+      <pose>2.79 -1.68 0.75 0 0 -1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Keyboard_004.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Keyboard_004.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Keyboard_005">
+      <static>true</static>
+      <pose>2.83 -3.4 0.75 0 0 -1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Keyboard_005.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Keyboard_005.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Keyboard_006">
+      <static>true</static>
+      <pose>-2.84 1.227904 0.75 0 0 1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Keyboard_006.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Keyboard_006.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Keyboard_007">
+      <static>true</static>
+      <pose>-2.84 2.687706 0.75 0 0 1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Keyboard_007.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Keyboard_007.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Keyboard_008">
+      <static>true</static>
+      <pose>-1.79 3.71 0.75 0 0 0</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Keyboard_008.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Keyboard_008.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Keyboard_009">
+      <static>true</static>
+      <pose>1.95 3.71 0.75 0 0 0</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Keyboard_009.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Keyboard_009.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Ladder_001">
+      <static>true</static>
+      <pose>-3.08 -3.13 0 0 0 1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Ladder_001.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Ladder_001.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Monitor_001">
+      <static>true</static>
+      <pose>3.15 2.96 0.75 0 0 -1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Monitor_001.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Monitor_001.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Monitor_002">
+      <static>true</static>
+      <pose>3.15 2.49 0.75 0 0 -1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Monitor_002.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Monitor_002.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Monitor_003">
+      <static>true</static>
+      <pose>3.15 1.3 0.75 0 0 -1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Monitor_003.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Monitor_003.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Monitor_004">
+      <static>true</static>
+      <pose>3.15 -0.1 0.75 0 0 -1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Monitor_004.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Monitor_004.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Monitor_005">
+      <static>true</static>
+      <pose>3.15 -0.61 0.75 0 0 -1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Monitor_005.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Monitor_005.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Monitor_006">
+      <static>true</static>
+      <pose>3.15 -1.68 0.75 0 0 -1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Monitor_006.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Monitor_006.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Monitor_007">
+      <static>true</static>
+      <pose>3.15 -3.45 0.75 0 0 -1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Monitor_007.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Monitor_007.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Monitor_008">
+      <static>true</static>
+      <pose>-3.18 1.10429 0.75 0 0 1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Monitor_008.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Monitor_008.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Monitor_009">
+      <static>true</static>
+      <pose>-3.18 1.52429 0.75 0 0 1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Monitor_009.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Monitor_009.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Monitor_010">
+      <static>true</static>
+      <pose>-3.18 2.520839 0.75 0 0 1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Monitor_010.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Monitor_010.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Monitor_011">
+      <static>true</static>
+      <pose>-3.18 3.000839 0.75 0 0 1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Monitor_011.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Monitor_011.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Monitor_012">
+      <static>true</static>
+      <pose>-1.82 4.02 0.75 0 0 0</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Monitor_012.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Monitor_012.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Monitor_013">
+      <static>true</static>
+      <pose>1.98 4.02 0.75 0 0 0</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Monitor_013.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Monitor_013.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Noticeboard_001">
+      <static>true</static>
+      <pose>3.405 1.64 1.5 0 0 -1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Noticeboard_001.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Noticeboard_001.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Printer3D_001">
+      <static>true</static>
+      <pose>-2.53 3.92 0.75 0 0 0</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Printer3D_001.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Printer3D_001.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Printer3D_002">
+      <static>true</static>
+      <pose>3.1 -2.14 0.75 0 0 -1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Printer3D_002.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Printer3D_002.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Projector_001">
+      <static>true</static>
+      <pose>-0.11 -1.17 2.28 0 0 -3.141593</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Projector_001.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Projector_001.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Shelf_001">
+      <static>true</static>
+      <pose>3.34 -0.16 1.86 0 0 -1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Shelf_001.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Shelf_001.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Shelf_002">
+      <static>true</static>
+      <pose>3.34 -0.52 2.08 0 0 -1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Shelf_002.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Shelf_002.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Shelf_003">
+      <static>true</static>
+      <pose>3.34 -0.87 1.89 0 0 -1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Shelf_003.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Shelf_003.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Shelf_004">
+      <static>true</static>
+      <pose>3.34 -1.22 2.08 0 0 -1.570796</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Shelf_004.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Shelf_004.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <model name="Table_001">
+      <static>true</static>
+      <pose>-0.22 3.04 0 0 0 0</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Table_001.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Table_001.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+      <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
+        <label>3</label>
+      </plugin>
+    </model>
+    <model name="Whiteboard_001">
+      <static>true</static>
+      <pose>1.73 -4.235 1.65 0 0 -3.141593</pose>
+      <link name="body">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Whiteboard_001.obj</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>model://robis_labsea/meshes/Whiteboard_001.obj</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+  </world>
+</sdf>

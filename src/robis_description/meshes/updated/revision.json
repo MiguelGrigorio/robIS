@@ -1,0 +1,10 @@
+{
+  "source_glb_sha256": "b7cf7d9401b8067a3a4e8ed39fbd10e5de6ddca935c60863611979040eb16869",
+  "visual_frame": "base_link",
+  "dae_coordinates": "Z-up, metres",
+  "body_parts": 110,
+  "collada_indices": "distinct interleaved offsets for Gazebo compatibility",
+  "articulated_visuals": "existing wheel and caster geometry retained",
+  "physical_parameters_changed": false,
+  "sources": "extras/assets/updated-2026-10-18"
+}

@@ -26,6 +26,9 @@ slam_toolbox:
     stack_size_to_use: 40000000
     enable_interactive_mode: true
 
+    # Incremental scan matching corrects wheel-slip drift in Gazebo.  Global
+    # loop closing stays disabled below because the deliberately open and
+    # nearly symmetric semantic hall can produce false loop correspondences.
     use_scan_matching: true
     use_scan_barycenter: true
     minimum_travel_distance: 0.10
@@ -35,7 +38,7 @@ slam_toolbox:
     link_match_minimum_response_fine: 0.1
     link_scan_maximum_distance: 1.5
     loop_search_maximum_distance: 3.0
-    do_loop_closing: true
+    do_loop_closing: false
     loop_match_minimum_chain_size: 10
     loop_match_maximum_variance_coarse: 3.0
     loop_match_minimum_response_coarse: 0.35

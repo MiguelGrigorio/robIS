@@ -1,5 +1,6 @@
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, SetEnvironmentVariable, TimerAction
+from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import Command, EnvironmentVariable, FindExecutable, LaunchConfiguration, PathJoinSubstitution
 from launch_ros.actions import Node
@@ -20,7 +21,11 @@ def generate_launch_description():
     bridge_config = LaunchConfiguration("bridge_config")
     robot_name = LaunchConfiguration("robot_name")
     spawn_z = LaunchConfiguration("spawn_z")
+    spawn_x = LaunchConfiguration("spawn_x")
+    spawn_y = LaunchConfiguration("spawn_y")
+    spawn_yaw = LaunchConfiguration("spawn_yaw")
     gz_args = LaunchConfiguration("gz_args")
+    enable_ground_truth_sensors = LaunchConfiguration("enable_ground_truth_sensors")
 
     robot_description = ParameterValue(
         Command(
@@ -30,6 +35,9 @@ def generate_launch_description():
                 model,
                 " ",
                 "sim_flavor:=gz",
+                " ",
+                "enable_ground_truth_sensors:=",
+                enable_ground_truth_sensors,
             ]
         ),
         value_type=str,
@@ -66,6 +74,31 @@ def generate_launch_description():
         ],
     )
 
+    # Keep the command bridge explicit. In ros_gz_bridge Jazzy the YAML-loaded
+    # ROS_TO_GZ Twist rule can create a ROS subscription without forwarding the
+    # samples to Gazebo, while the typed command-line bridge is reliable.
+    cmd_vel_bridge = Node(
+        package="ros_gz_bridge",
+        executable="parameter_bridge",
+        name="cmd_vel_bridge",
+        output="screen",
+        arguments=["/cmd_vel@geometry_msgs/msg/Twist]gz.msgs.Twist"],
+    )
+
+    ground_truth_bridge = Node(
+        package="ros_gz_bridge",
+        executable="parameter_bridge",
+        name="ground_truth_bridge",
+        output="screen",
+        parameters=[{
+            "config_file": PathJoinSubstitution([
+                robis_gazebo_share, "config", "ground_truth_bridge_topics.yaml",
+            ]),
+            "use_sim_time": True,
+        }],
+        condition=IfCondition(enable_ground_truth_sensors),
+    )
+
     spawn_robot = Node(
         package="ros_gz_sim",
         executable="create",
@@ -77,22 +110,12 @@ def generate_launch_description():
             "robot_description",
             "-z",
             spawn_z,
-        ],
-    )
-
-    static_tf = Node(
-        package="tf2_ros",
-        executable="static_transform_publisher",
-        output="screen",
-        arguments=[
-            "0.22",
-            "0",
-            "0.275",
-            "0",
-            "0",
-            "0",
-            "base_footprint",
-            "lidar_link",
+            "-x",
+            spawn_x,
+            "-y",
+            spawn_y,
+            "-Y",
+            spawn_yaw,
         ],
     )
 
@@ -103,7 +126,11 @@ def generate_launch_description():
             DeclareLaunchArgument("bridge_config", default_value=default_bridge_config),
             DeclareLaunchArgument("robot_name", default_value="robis"),
             DeclareLaunchArgument("spawn_z", default_value="0.20"),
+            DeclareLaunchArgument("spawn_x", default_value="0.0"),
+            DeclareLaunchArgument("spawn_y", default_value="0.0"),
+            DeclareLaunchArgument("spawn_yaw", default_value="0.0"),
             DeclareLaunchArgument("gz_args", default_value="-r -v 4"),
+            DeclareLaunchArgument("enable_ground_truth_sensors", default_value="false"),
             SetEnvironmentVariable(
                 name="GZ_SIM_RESOURCE_PATH",
                 value=[
@@ -111,13 +138,18 @@ def generate_launch_description():
                     ":",
                     PathJoinSubstitution([robis_gazebo_share, ".."]),
                     ":",
+                    PathJoinSubstitution([robis_gazebo_share, "models"]),
+                    ":",
                     EnvironmentVariable("GZ_SIM_RESOURCE_PATH", default_value=""),
                 ],
             ),
             gazebo,
             robot_state_publisher,
             bridge,
-            static_tf,
-            TimerAction(period=2.0, actions=[spawn_robot]),
+            cmd_vel_bridge,
+            ground_truth_bridge,
+            # Gazebo needs time to advertise robot_description/create services,
+            # especially over SSH X11 and on the first GPU context creation.
+            TimerAction(period=5.0, actions=[spawn_robot]),
         ]
     )

@@ -29,14 +29,23 @@ physical:
   # Ficam perto da ponta do chassi (offset calculado a partir da extensão
   # real do mesh em X, com ~2cm de folga da borda extrema). O robô "bambeia"
   # levemente sobre o eixo das rodas motrizes: os casters tocam o chão
-  # ~1cm ACIMA do ponto de contato das rodas motrizes (caster_ground_gap).
-  # Caster traseiro é o mais usado (carrega mais peso); dianteiro só entra
-  # em contato em frenagens bruscas — refletido nas massas diferentes.
+  # caster_ground_gap acima do chão quando o chassi está horizontal.
+  # O modelo existente concentra mais massa no apoio traseiro. Os valores
+  # foram mantidos como aproximações; a distribuição real precisa de medição.
   caster_radius: 0.025          # ~2 polegadas de diâmetro
   caster_offset_x: 0.18
   caster_ground_gap: 0.005
   caster_front_mass: 0.05
   caster_rear_mass: 0.75
+  # Geometria aproximada: pivô vertical, garfo e roda com eixo horizontal.
+  # A massa existente é repartida entre suporte e roda, sem mudar o total.
+  caster_width: 0.015
+  caster_trail: 0.015           # eixo da roda atrás do pivô; permite autoalinhamento
+  caster_mount_mass_fraction: 0.25
+  caster_swivel_damping: 0.001
+  caster_rolling_damping: 0.00005
+  caster_bearing_friction: 0.00001
+  caster_contact_friction: 0.8
 
   # ---- Torre do LIDAR ----
   lidar_tower_height: 0.05
@@ -89,6 +98,10 @@ sensors:
     noise_stddev: 0.01
 
   camera:
+    # Optical origin for the updated CAD visual, relative to base_link.
+    # Gazebo only; physical camera_offset_* above still require calibration.
+    optical_origin_x: 0.245
+    optical_origin_z: 0.118
     update_rate: 30.0
     horizontal_fov: 1.222
     width: 640

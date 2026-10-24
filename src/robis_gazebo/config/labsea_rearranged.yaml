@@ -1,0 +1,14 @@
+world: labsea_rearranged
+spawn: [0, 0, 0]
+include_only: [Chair_001, Chair_006, Table_001, Cabinet_001]
+overrides:
+  Chair_001: {pose: [1.8, -0.7, 0, 0, 0, 3.1415927]}
+  Chair_006: {pose: [-2.0, 1.2, 0, 0, 0, 0]}
+  Table_001: {pose: [0.4, -2.2, 0, 0, 0, 0]}
+  Cabinet_001: {pose: [-2.9, -3.2, 0, 0, 0, 0]}
+additions:
+  - name: extra_table
+    uri: model://robis_table
+    label: 3
+    class: dining table
+    pose: [-1.7, -1.8, 0, 0, 0, 0]

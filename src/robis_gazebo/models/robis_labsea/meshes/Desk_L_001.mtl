@@ -1,0 +1,23 @@
+# File produced by Open Asset Import Library (http://www.assimp.sf.net)
+# (assimp v6.0.0)
+
+newmtl LabSEA_steel
+Kd 0.479999989 0.519999981 0.5
+Ke 0 0 0
+d 1
+Ns 462.399994
+illum 2
+
+newmtl LabSEA_laminate
+Kd 0.600000024 0.620000005 0.579999983
+Ke 0 0 0
+d 1
+Ns 336.400055
+illum 2
+
+newmtl $Material_2
+Kd 1 1 1
+Ke 0 0 0
+d 1
+illum 1
+

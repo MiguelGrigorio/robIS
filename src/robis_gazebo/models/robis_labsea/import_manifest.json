@@ -1,0 +1,2122 @@
+{
+  "source_name": "labsea (2).glb",
+  "source_sha256": "3424ba7fad0c261e64ceb3e51c5201ea63c5d84893cb5e67c67a09a142870e63",
+  "source_asset": {
+    "generator": "Khronos glTF Blender I/O v5.2.40",
+    "version": "2.0"
+  },
+  "scene_metadata": {
+    "labsea_reconstructed": true,
+    "reference_capture": "saida/imagens_reais/20261014_141328",
+    "ceiling_height_estimated_m": 2.97,
+    "exposure_base_ev": -0.5,
+    "camera_exposure_offsets_ev": "{\"1\": -0.1, \"2\": -0.05, \"3\": -0.45, \"4\": -0.5}"
+  },
+  "coordinate_conversion": "glTF (x,y,z) -> Gazebo (x,-z,y), metres unchanged",
+  "objects": [
+    {
+      "name": "structure",
+      "mesh": "structure.obj",
+      "pose": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "metadata": {},
+      "kind": "structure"
+    },
+    {
+      "name": "Ball_001",
+      "mesh": "Ball_001.obj",
+      "pose": [
+        2.990000009536743,
+        -0.27000001072883606,
+        0.75,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "accessory",
+        "name": "Objeto esf\u00e9rico laranja na bancada",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.16,
+          0.16,
+          0.16
+        ]
+      },
+      "kind": "accessory"
+    },
+    {
+      "name": "Ball_002",
+      "mesh": "Ball_002.obj",
+      "pose": [
+        2.990000009536743,
+        -0.27000001072883606,
+        0.75,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "accessory",
+        "name": "Objeto esf\u00e9rico laranja na bancada",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.16,
+          0.16,
+          0.16
+        ]
+      },
+      "kind": "accessory"
+    },
+    {
+      "name": "Bin_001",
+      "mesh": "Bin_001.obj",
+      "pose": [
+        -3.318270683288574,
+        -0.4892447590827942,
+        0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "accessory",
+        "name": "Lixeira junto ao painel",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.24,
+          0.24,
+          0.28
+        ]
+      },
+      "kind": "accessory"
+    },
+    {
+      "name": "Cabinet_001",
+      "mesh": "Cabinet_001.obj",
+      "pose": [
+        -3.180000066757202,
+        -2.059999942779541,
+        0,
+        0.0,
+        0.0,
+        1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "cabinet",
+        "name": "Arm\u00e1rio alto de duas portas",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.9,
+          0.48,
+          2.05
+        ]
+      },
+      "kind": "cabinet"
+    },
+    {
+      "name": "Cabinet_002",
+      "mesh": "Cabinet_002.obj",
+      "pose": [
+        -3.180000066757202,
+        0.10218053311109543,
+        0,
+        0.0,
+        0.0,
+        1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "cabinet",
+        "name": "Arm\u00e1rio alto de duas portas",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.9,
+          0.48,
+          2.05
+        ]
+      },
+      "kind": "cabinet"
+    },
+    {
+      "name": "Cabinet_003",
+      "mesh": "Cabinet_003.obj",
+      "pose": [
+        -0.8700000047683716,
+        -4.039999961853027,
+        0,
+        0.0,
+        0.0,
+        -3.1415925661670165
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "cabinet",
+        "name": "Arm\u00e1rio alto de duas portas",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.9,
+          0.48,
+          2.05
+        ]
+      },
+      "kind": "cabinet"
+    },
+    {
+      "name": "CameraModel_001",
+      "mesh": "CameraModel_001.obj",
+      "pose": [
+        2.736790418624878,
+        3.698505163192749,
+        2.8676400184631348,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "camera_model",
+        "name": "Intelbras VIP 1230 D G2",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.109,
+          0.109,
+          0.0855
+        ],
+        "nominal_height_m": 0.0855,
+        "nominal_diameter_m": 0.109,
+        "mount": "ceiling",
+        "optical_offset_approximate": true
+      },
+      "kind": "camera_model"
+    },
+    {
+      "name": "CameraModel_002",
+      "mesh": "CameraModel_002.obj",
+      "pose": [
+        -2.878441572189331,
+        3.7321667671203613,
+        2.8502063751220703,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "camera_model",
+        "name": "Intelbras VIP 1230 D G2",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.109,
+          0.109,
+          0.0855
+        ],
+        "nominal_height_m": 0.0855,
+        "nominal_diameter_m": 0.109,
+        "mount": "ceiling",
+        "optical_offset_approximate": true
+      },
+      "kind": "camera_model"
+    },
+    {
+      "name": "CameraModel_003",
+      "mesh": "CameraModel_003.obj",
+      "pose": [
+        -2.8362038135528564,
+        -3.77654767036438,
+        2.885129690170288,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "camera_model",
+        "name": "Intelbras VIP 1230 D G2",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.109,
+          0.109,
+          0.0855
+        ],
+        "nominal_height_m": 0.0855,
+        "nominal_diameter_m": 0.109,
+        "mount": "ceiling",
+        "optical_offset_approximate": true
+      },
+      "kind": "camera_model"
+    },
+    {
+      "name": "CameraModel_004",
+      "mesh": "CameraModel_004.obj",
+      "pose": [
+        2.8266854286193848,
+        -3.8082499504089355,
+        2.8425004482269287,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "camera_model",
+        "name": "Intelbras VIP 1230 D G2",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.109,
+          0.109,
+          0.0855
+        ],
+        "nominal_height_m": 0.0855,
+        "nominal_diameter_m": 0.109,
+        "mount": "ceiling",
+        "optical_offset_approximate": true
+      },
+      "kind": "camera_model"
+    },
+    {
+      "name": "Chair_001",
+      "mesh": "Chair_001.obj",
+      "pose": [
+        1,
+        0,
+        0,
+        0.0,
+        0.0,
+        -1.4486236507361296
+      ],
+      "metadata": {
+        "dynamic": true,
+        "confidence": "media",
+        "object_type": "chair",
+        "name": "Cadeira de escrit\u00f3rio",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": true,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.59,
+          0.6,
+          1.02
+        ]
+      },
+      "kind": "chair"
+    },
+    {
+      "name": "Chair_002",
+      "mesh": "Chair_002.obj",
+      "pose": [
+        -1,
+        0,
+        0,
+        0.0,
+        0.0,
+        -1.5882496451952537
+      ],
+      "metadata": {
+        "dynamic": true,
+        "confidence": "media",
+        "object_type": "chair",
+        "name": "Cadeira de escrit\u00f3rio",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": true,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.59,
+          0.6,
+          1.02
+        ]
+      },
+      "kind": "chair"
+    },
+    {
+      "name": "Chair_003",
+      "mesh": "Chair_003.obj",
+      "pose": [
+        0,
+        1,
+        0,
+        0.0,
+        0.0,
+        -1.6580629341508422
+      ],
+      "metadata": {
+        "dynamic": true,
+        "confidence": "media",
+        "object_type": "chair",
+        "name": "Cadeira de escrit\u00f3rio",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": true,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.59,
+          0.6,
+          1.02
+        ]
+      },
+      "kind": "chair"
+    },
+    {
+      "name": "Chair_004",
+      "mesh": "Chair_004.obj",
+      "pose": [
+        0,
+        -1,
+        0,
+        0.0,
+        0.0,
+        -1.48352989708043
+      ],
+      "metadata": {
+        "dynamic": true,
+        "confidence": "media",
+        "object_type": "chair",
+        "name": "Cadeira de escrit\u00f3rio",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": true,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.59,
+          0.6,
+          1.02
+        ]
+      },
+      "kind": "chair"
+    },
+    {
+      "name": "Chair_005",
+      "mesh": "Chair_005.obj",
+      "pose": [
+        2.3475000858306885,
+        -2.618299961090088,
+        0,
+        0.0,
+        0.0,
+        -1.5184363838323371
+      ],
+      "metadata": {
+        "dynamic": true,
+        "confidence": "media",
+        "object_type": "chair",
+        "name": "Cadeira de escrit\u00f3rio",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": true,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.59,
+          0.6,
+          1.02
+        ]
+      },
+      "kind": "chair"
+    },
+    {
+      "name": "Chair_006",
+      "mesh": "Chair_006.obj",
+      "pose": [
+        -1.863700032234192,
+        3.2167999744415283,
+        0,
+        0.0,
+        0.0,
+        -0.052359877558473815
+      ],
+      "metadata": {
+        "dynamic": true,
+        "confidence": "media",
+        "object_type": "chair",
+        "name": "Cadeira de escrit\u00f3rio",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": true,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.59,
+          0.6,
+          1.02
+        ]
+      },
+      "kind": "chair"
+    },
+    {
+      "name": "Chair_007",
+      "mesh": "Chair_007.obj",
+      "pose": [
+        1.0099999904632568,
+        3.7200000286102295,
+        0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "metadata": {
+        "dynamic": true,
+        "confidence": "media",
+        "object_type": "chair",
+        "name": "Cadeira de escrit\u00f3rio",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": true,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.59,
+          0.6,
+          1.02
+        ]
+      },
+      "kind": "chair"
+    },
+    {
+      "name": "Chair_008",
+      "mesh": "Chair_008.obj",
+      "pose": [
+        1.6727268695831299,
+        3.2423999309539795,
+        0,
+        0.0,
+        0.0,
+        -0.31415931312941786
+      ],
+      "metadata": {
+        "dynamic": true,
+        "confidence": "media",
+        "object_type": "chair",
+        "name": "Cadeira de escrit\u00f3rio",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": true,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.59,
+          0.6,
+          1.02
+        ]
+      },
+      "kind": "chair"
+    },
+    {
+      "name": "Chair_009",
+      "mesh": "Chair_009.obj",
+      "pose": [
+        -2.461199998855591,
+        0.914900004863739,
+        0,
+        0.0,
+        0.0,
+        1.4486235023049607
+      ],
+      "metadata": {
+        "dynamic": true,
+        "confidence": "media",
+        "object_type": "chair",
+        "name": "Cadeira de escrit\u00f3rio",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": true,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.59,
+          0.6,
+          1.02
+        ]
+      },
+      "kind": "chair"
+    },
+    {
+      "name": "Chair_010",
+      "mesh": "Chair_010.obj",
+      "pose": [
+        -2.442199945449829,
+        2.4800000190734863,
+        0,
+        0.0,
+        0.0,
+        1.692969376422393
+      ],
+      "metadata": {
+        "dynamic": true,
+        "confidence": "media",
+        "object_type": "chair",
+        "name": "Cadeira de escrit\u00f3rio",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": true,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.59,
+          0.6,
+          1.02
+        ]
+      },
+      "kind": "chair"
+    },
+    {
+      "name": "Chair_011",
+      "mesh": "Chair_011.obj",
+      "pose": [
+        -0.7526999711990356,
+        2.545599937438965,
+        0,
+        0.0,
+        0.0,
+        -0.5934119291336271
+      ],
+      "metadata": {
+        "dynamic": true,
+        "confidence": "media",
+        "object_type": "chair",
+        "name": "Cadeira de escrit\u00f3rio",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": true,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.59,
+          0.6,
+          1.02
+        ]
+      },
+      "kind": "chair"
+    },
+    {
+      "name": "Chair_012",
+      "mesh": "Chair_012.obj",
+      "pose": [
+        0.4889608919620514,
+        2.826878070831299,
+        0,
+        0.0,
+        0.0,
+        1.396263638952551
+      ],
+      "metadata": {
+        "dynamic": true,
+        "confidence": "media",
+        "object_type": "chair",
+        "name": "Cadeira de escrit\u00f3rio",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": true,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.59,
+          0.6,
+          1.02
+        ]
+      },
+      "kind": "chair"
+    },
+    {
+      "name": "Chair_013",
+      "mesh": "Chair_013.obj",
+      "pose": [
+        -0.9965999722480774,
+        3.4394149780273438,
+        0,
+        0.0,
+        0.0,
+        -0.10688142893588803
+      ],
+      "metadata": {
+        "dynamic": true,
+        "confidence": "media",
+        "object_type": "chair",
+        "name": "Cadeira verde de visitante",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": true,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.48,
+          0.5,
+          0.91
+        ]
+      },
+      "kind": "chair"
+    },
+    {
+      "name": "Computer_002",
+      "mesh": "Computer_002.obj",
+      "pose": [
+        -2.9600000381469727,
+        3.9800000190734863,
+        0.75,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "baixa",
+        "object_type": "computer",
+        "name": "Gabinete/equipamento no canto noroeste",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.22,
+          0.36,
+          0.43
+        ]
+      },
+      "kind": "computer"
+    },
+    {
+      "name": "Cup_001",
+      "mesh": "Cup_001.obj",
+      "pose": [
+        -0.2199999988079071,
+        3.0399999618530273,
+        0.75,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "accessory",
+        "name": "Copo sobre mesa de reuni\u00e3o",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.075,
+          0.075,
+          0.115
+        ]
+      },
+      "kind": "accessory"
+    },
+    {
+      "name": "Desk_East_01",
+      "mesh": "Desk_East_01.obj",
+      "pose": [
+        3.0199999809265137,
+        3.200000047683716,
+        0,
+        0.0,
+        0.0,
+        -1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "desk",
+        "name": "Bancada lateral leste",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          1.6,
+          0.76,
+          0.75
+        ]
+      },
+      "kind": "desk"
+    },
+    {
+      "name": "Desk_East_02",
+      "mesh": "Desk_East_02.obj",
+      "pose": [
+        3.0199999809265137,
+        1.600000023841858,
+        0,
+        0.0,
+        0.0,
+        -1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "desk",
+        "name": "Bancada lateral leste",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          1.6,
+          0.76,
+          0.75
+        ]
+      },
+      "kind": "desk"
+    },
+    {
+      "name": "Desk_East_03",
+      "mesh": "Desk_East_03.obj",
+      "pose": [
+        3.0199999809265137,
+        0,
+        0,
+        0.0,
+        0.0,
+        -1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "desk",
+        "name": "Bancada lateral leste",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          1.6,
+          0.76,
+          0.75
+        ]
+      },
+      "kind": "desk"
+    },
+    {
+      "name": "Desk_East_04",
+      "mesh": "Desk_East_04.obj",
+      "pose": [
+        3.0199999809265137,
+        -1.600000023841858,
+        0,
+        0.0,
+        0.0,
+        -1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "desk",
+        "name": "Bancada lateral leste",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          1.6,
+          0.76,
+          0.75
+        ]
+      },
+      "kind": "desk"
+    },
+    {
+      "name": "Desk_East_05",
+      "mesh": "Desk_East_05.obj",
+      "pose": [
+        3.0199999809265137,
+        -3.200000047683716,
+        0,
+        0.0,
+        0.0,
+        -1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "desk",
+        "name": "Bancada lateral leste",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          1.6,
+          0.76,
+          0.75
+        ]
+      },
+      "kind": "desk"
+    },
+    {
+      "name": "Desk_L_001",
+      "mesh": "Desk_L_001.obj",
+      "pose": [
+        1.1469999551773071,
+        -3.4600000381469727,
+        0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "alta",
+        "object_type": "desk",
+        "name": "Mesa em L sob quadro branco",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          1.58,
+          1.42,
+          0.75
+        ]
+      },
+      "kind": "desk"
+    },
+    {
+      "name": "Desk_North_01",
+      "mesh": "Desk_North_01.obj",
+      "pose": [
+        -1.8200000524520874,
+        3.9100000858306885,
+        0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "desk",
+        "name": "Mesa central de 1,60 m sob janela esquerda",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          1.6,
+          0.7,
+          0.75
+        ]
+      },
+      "kind": "desk"
+    },
+    {
+      "name": "Desk_North_02",
+      "mesh": "Desk_North_02.obj",
+      "pose": [
+        1.5199999809265137,
+        3.9100000858306885,
+        0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "desk",
+        "name": "Bancada sob janela leste",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          1.6,
+          0.7,
+          0.75
+        ]
+      },
+      "kind": "desk"
+    },
+    {
+      "name": "Desk_North_03",
+      "mesh": "Desk_North_03.obj",
+      "pose": [
+        -3.0199999809265137,
+        4.009217262268066,
+        0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "desk",
+        "name": "Mesa menor \u00e0 esquerda da mesa central",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.8,
+          0.5,
+          0.75
+        ]
+      },
+      "kind": "desk"
+    },
+    {
+      "name": "Desk_North_04",
+      "mesh": "Desk_North_04.obj",
+      "pose": [
+        -0.6200000047683716,
+        4.006224155426025,
+        0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "desk",
+        "name": "Mesa menor \u00e0 direita da mesa central",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.8,
+          0.5,
+          0.75
+        ]
+      },
+      "kind": "desk"
+    },
+    {
+      "name": "Desk_West_01",
+      "mesh": "Desk_West_01.obj",
+      "pose": [
+        -3.0250000953674316,
+        1.3686496019363403,
+        0,
+        0.0,
+        0.0,
+        1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "desk",
+        "name": "Bancada lateral oeste",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          1.6,
+          0.76,
+          0.75
+        ]
+      },
+      "kind": "desk"
+    },
+    {
+      "name": "Desk_West_02",
+      "mesh": "Desk_West_02.obj",
+      "pose": [
+        -3.0250000953674316,
+        2.9681496620178223,
+        0,
+        0.0,
+        0.0,
+        1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "desk",
+        "name": "Bancada lateral oeste",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          1.6,
+          0.76,
+          0.75
+        ]
+      },
+      "kind": "desk"
+    },
+    {
+      "name": "Desk_west_coffe",
+      "mesh": "Desk_west_coffe.obj",
+      "pose": [
+        -3.040938377380371,
+        -0.9964974522590637,
+        0,
+        0.0,
+        0.0,
+        1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "desk",
+        "name": "Bancada lateral oeste",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          1.6,
+          0.76,
+          0.75
+        ]
+      },
+      "kind": "desk"
+    },
+    {
+      "name": "Display_Wall_001",
+      "mesh": "Display_Wall_001.obj",
+      "pose": [
+        3.390000104904175,
+        -3.1500000953674316,
+        1.309999942779541,
+        0.0,
+        0.0,
+        -1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "monitor",
+        "name": "Televisor da parede leste",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          1.24,
+          0.06,
+          0.69
+        ]
+      },
+      "kind": "monitor"
+    },
+    {
+      "name": "EquipmentCase_001",
+      "mesh": "EquipmentCase_001.obj",
+      "pose": [
+        -3.180000066757202,
+        -2.059999942779541,
+        2.049999952316284,
+        0.0,
+        0.0,
+        1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "accessory",
+        "name": "Maleta escura sobre arm\u00e1rio",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.76,
+          0.42,
+          0.33
+        ]
+      },
+      "kind": "accessory"
+    },
+    {
+      "name": "FoldedBoard_001",
+      "mesh": "FoldedBoard_001.obj",
+      "pose": [
+        -3.0799999237060547,
+        -1.0700000524520874,
+        0,
+        0.0,
+        0.0,
+        1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "accessory",
+        "name": "Painel dobrado entre arm\u00e1rios",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.91,
+          0.15,
+          0.85
+        ]
+      },
+      "kind": "accessory"
+    },
+    {
+      "name": "Keyboard_001",
+      "mesh": "Keyboard_001.obj",
+      "pose": [
+        2.8299999237060547,
+        2.7300000190734863,
+        0.75,
+        0.0,
+        0.0,
+        -1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "keyboard",
+        "name": "Teclado e mouse",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.42,
+          0.15,
+          0.022
+        ]
+      },
+      "kind": "keyboard"
+    },
+    {
+      "name": "Keyboard_002",
+      "mesh": "Keyboard_002.obj",
+      "pose": [
+        2.8299999237060547,
+        1.25,
+        0.75,
+        0.0,
+        0.0,
+        -1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "keyboard",
+        "name": "Teclado e mouse",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.42,
+          0.15,
+          0.022
+        ]
+      },
+      "kind": "keyboard"
+    },
+    {
+      "name": "Keyboard_003",
+      "mesh": "Keyboard_003.obj",
+      "pose": [
+        2.8299999237060547,
+        -0.3199999928474426,
+        0.75,
+        0.0,
+        0.0,
+        -1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "keyboard",
+        "name": "Teclado e mouse",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.42,
+          0.15,
+          0.022
+        ]
+      },
+      "kind": "keyboard"
+    },
+    {
+      "name": "Keyboard_004",
+      "mesh": "Keyboard_004.obj",
+      "pose": [
+        2.7899999618530273,
+        -1.6799999475479126,
+        0.75,
+        0.0,
+        0.0,
+        -1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "keyboard",
+        "name": "Teclado e mouse",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.42,
+          0.15,
+          0.022
+        ]
+      },
+      "kind": "keyboard"
+    },
+    {
+      "name": "Keyboard_005",
+      "mesh": "Keyboard_005.obj",
+      "pose": [
+        2.8299999237060547,
+        -3.4000000953674316,
+        0.75,
+        0.0,
+        0.0,
+        -1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "keyboard",
+        "name": "Teclado e mouse",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.42,
+          0.15,
+          0.022
+        ]
+      },
+      "kind": "keyboard"
+    },
+    {
+      "name": "Keyboard_006",
+      "mesh": "Keyboard_006.obj",
+      "pose": [
+        -2.8399999141693115,
+        1.227904200553894,
+        0.75,
+        0.0,
+        0.0,
+        1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "keyboard",
+        "name": "Teclado e mouse",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.42,
+          0.15,
+          0.022
+        ]
+      },
+      "kind": "keyboard"
+    },
+    {
+      "name": "Keyboard_007",
+      "mesh": "Keyboard_007.obj",
+      "pose": [
+        -2.8399999141693115,
+        2.6877059936523438,
+        0.75,
+        0.0,
+        0.0,
+        1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "keyboard",
+        "name": "Teclado e mouse",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.42,
+          0.15,
+          0.022
+        ]
+      },
+      "kind": "keyboard"
+    },
+    {
+      "name": "Keyboard_008",
+      "mesh": "Keyboard_008.obj",
+      "pose": [
+        -1.7899999618530273,
+        3.7100000381469727,
+        0.75,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "keyboard",
+        "name": "Teclado e mouse",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.42,
+          0.15,
+          0.022
+        ]
+      },
+      "kind": "keyboard"
+    },
+    {
+      "name": "Keyboard_009",
+      "mesh": "Keyboard_009.obj",
+      "pose": [
+        1.9500000476837158,
+        3.7100000381469727,
+        0.75,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "keyboard",
+        "name": "Teclado e mouse",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.42,
+          0.15,
+          0.022
+        ]
+      },
+      "kind": "keyboard"
+    },
+    {
+      "name": "Ladder_001",
+      "mesh": "Ladder_001.obj",
+      "pose": [
+        -3.0799999237060547,
+        -3.130000114440918,
+        0,
+        0.0,
+        0.0,
+        1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "accessory",
+        "name": "Escada apoiada na parede oeste",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.45,
+          0.3,
+          1.62
+        ]
+      },
+      "kind": "accessory"
+    },
+    {
+      "name": "Monitor_001",
+      "mesh": "Monitor_001.obj",
+      "pose": [
+        3.1500000953674316,
+        2.9600000381469727,
+        0.75,
+        0.0,
+        0.0,
+        -1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "monitor",
+        "name": "Monitor de esta\u00e7\u00e3o",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.46,
+          0.19,
+          0.38
+        ]
+      },
+      "kind": "monitor"
+    },
+    {
+      "name": "Monitor_002",
+      "mesh": "Monitor_002.obj",
+      "pose": [
+        3.1500000953674316,
+        2.490000009536743,
+        0.75,
+        0.0,
+        0.0,
+        -1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "monitor",
+        "name": "Monitor de esta\u00e7\u00e3o",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.46,
+          0.19,
+          0.38
+        ]
+      },
+      "kind": "monitor"
+    },
+    {
+      "name": "Monitor_003",
+      "mesh": "Monitor_003.obj",
+      "pose": [
+        3.1500000953674316,
+        1.2999999523162842,
+        0.75,
+        0.0,
+        0.0,
+        -1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "monitor",
+        "name": "Monitor de esta\u00e7\u00e3o",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.46,
+          0.19,
+          0.38
+        ]
+      },
+      "kind": "monitor"
+    },
+    {
+      "name": "Monitor_004",
+      "mesh": "Monitor_004.obj",
+      "pose": [
+        3.1500000953674316,
+        -0.10000000149011612,
+        0.75,
+        0.0,
+        0.0,
+        -1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "monitor",
+        "name": "Monitor de esta\u00e7\u00e3o",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.46,
+          0.19,
+          0.38
+        ]
+      },
+      "kind": "monitor"
+    },
+    {
+      "name": "Monitor_005",
+      "mesh": "Monitor_005.obj",
+      "pose": [
+        3.1500000953674316,
+        -0.6100000143051147,
+        0.75,
+        0.0,
+        0.0,
+        -1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "monitor",
+        "name": "Monitor de esta\u00e7\u00e3o",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.46,
+          0.19,
+          0.38
+        ]
+      },
+      "kind": "monitor"
+    },
+    {
+      "name": "Monitor_006",
+      "mesh": "Monitor_006.obj",
+      "pose": [
+        3.1500000953674316,
+        -1.6799999475479126,
+        0.75,
+        0.0,
+        0.0,
+        -1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "monitor",
+        "name": "Monitor de esta\u00e7\u00e3o",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.46,
+          0.19,
+          0.38
+        ]
+      },
+      "kind": "monitor"
+    },
+    {
+      "name": "Monitor_007",
+      "mesh": "Monitor_007.obj",
+      "pose": [
+        3.1500000953674316,
+        -3.450000047683716,
+        0.75,
+        0.0,
+        0.0,
+        -1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "monitor",
+        "name": "Monitor de esta\u00e7\u00e3o",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.46,
+          0.19,
+          0.38
+        ]
+      },
+      "kind": "monitor"
+    },
+    {
+      "name": "Monitor_008",
+      "mesh": "Monitor_008.obj",
+      "pose": [
+        -3.180000066757202,
+        1.1042897701263428,
+        0.75,
+        0.0,
+        0.0,
+        1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "monitor",
+        "name": "Monitor de esta\u00e7\u00e3o",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.46,
+          0.19,
+          0.38
+        ]
+      },
+      "kind": "monitor"
+    },
+    {
+      "name": "Monitor_009",
+      "mesh": "Monitor_009.obj",
+      "pose": [
+        -3.180000066757202,
+        1.5242897272109985,
+        0.75,
+        0.0,
+        0.0,
+        1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "monitor",
+        "name": "Monitor de esta\u00e7\u00e3o",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.46,
+          0.19,
+          0.38
+        ]
+      },
+      "kind": "monitor"
+    },
+    {
+      "name": "Monitor_010",
+      "mesh": "Monitor_010.obj",
+      "pose": [
+        -3.180000066757202,
+        2.520838975906372,
+        0.75,
+        0.0,
+        0.0,
+        1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "monitor",
+        "name": "Monitor de esta\u00e7\u00e3o",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.46,
+          0.19,
+          0.38
+        ]
+      },
+      "kind": "monitor"
+    },
+    {
+      "name": "Monitor_011",
+      "mesh": "Monitor_011.obj",
+      "pose": [
+        -3.180000066757202,
+        3.0008389949798584,
+        0.75,
+        0.0,
+        0.0,
+        1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "monitor",
+        "name": "Monitor de esta\u00e7\u00e3o",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.46,
+          0.19,
+          0.38
+        ]
+      },
+      "kind": "monitor"
+    },
+    {
+      "name": "Monitor_012",
+      "mesh": "Monitor_012.obj",
+      "pose": [
+        -1.8200000524520874,
+        4.019999980926514,
+        0.75,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "monitor",
+        "name": "Monitor de esta\u00e7\u00e3o",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.46,
+          0.19,
+          0.38
+        ]
+      },
+      "kind": "monitor"
+    },
+    {
+      "name": "Monitor_013",
+      "mesh": "Monitor_013.obj",
+      "pose": [
+        1.9800000190734863,
+        4.019999980926514,
+        0.75,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "monitor",
+        "name": "Monitor de esta\u00e7\u00e3o",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.46,
+          0.19,
+          0.38
+        ]
+      },
+      "kind": "monitor"
+    },
+    {
+      "name": "Noticeboard_001",
+      "mesh": "Noticeboard_001.obj",
+      "pose": [
+        3.4049999713897705,
+        1.6399999856948853,
+        1.5,
+        0.0,
+        0.0,
+        -1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "noticeboard",
+        "name": "Quadro de avisos da parede leste",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          2.02,
+          0.04,
+          1.12
+        ]
+      },
+      "kind": "noticeboard"
+    },
+    {
+      "name": "Printer3D_001",
+      "mesh": "Printer3D_001.obj",
+      "pose": [
+        -2.5299999713897705,
+        3.9200000762939453,
+        0.75,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "printer_3d",
+        "name": "Impressora 3D na bancada norte",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.38,
+          0.4,
+          0.48
+        ]
+      },
+      "kind": "printer_3d"
+    },
+    {
+      "name": "Printer3D_002",
+      "mesh": "Printer3D_002.obj",
+      "pose": [
+        3.0999999046325684,
+        -2.140000104904175,
+        0.75,
+        0.0,
+        0.0,
+        -1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "printer_3d",
+        "name": "Impressora 3D GTMax Core A2V2",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.425,
+          0.47,
+          0.512
+        ],
+        "legacy_id": "Computer_001"
+      },
+      "kind": "printer_3d"
+    },
+    {
+      "name": "Projector_001",
+      "mesh": "Projector_001.obj",
+      "pose": [
+        -0.10999999940395355,
+        -1.1699999570846558,
+        2.2799999713897705,
+        0.0,
+        0.0,
+        -3.1415925661670165
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "accessory",
+        "name": "Projetor suspenso",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.29,
+          0.24,
+          0.1
+        ]
+      },
+      "kind": "accessory"
+    },
+    {
+      "name": "Shelf_001",
+      "mesh": "Shelf_001.obj",
+      "pose": [
+        3.3399999141693115,
+        -0.1599999964237213,
+        1.8600000143051147,
+        0.0,
+        0.0,
+        -1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "accessory",
+        "name": "Nicho pequeno na parede",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.22,
+          0.18,
+          0.25
+        ]
+      },
+      "kind": "accessory"
+    },
+    {
+      "name": "Shelf_002",
+      "mesh": "Shelf_002.obj",
+      "pose": [
+        3.3399999141693115,
+        -0.5199999809265137,
+        2.0799999237060547,
+        0.0,
+        0.0,
+        -1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "accessory",
+        "name": "Nicho pequeno na parede",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.22,
+          0.18,
+          0.25
+        ]
+      },
+      "kind": "accessory"
+    },
+    {
+      "name": "Shelf_003",
+      "mesh": "Shelf_003.obj",
+      "pose": [
+        3.3399999141693115,
+        -0.8700000047683716,
+        1.8899999856948853,
+        0.0,
+        0.0,
+        -1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "accessory",
+        "name": "Nicho pequeno na parede",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.22,
+          0.18,
+          0.25
+        ]
+      },
+      "kind": "accessory"
+    },
+    {
+      "name": "Shelf_004",
+      "mesh": "Shelf_004.obj",
+      "pose": [
+        3.3399999141693115,
+        -1.2200000286102295,
+        2.0799999237060547,
+        0.0,
+        0.0,
+        -1.570796461153735
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "accessory",
+        "name": "Nicho pequeno na parede",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          0.22,
+          0.18,
+          0.25
+        ]
+      },
+      "kind": "accessory"
+    },
+    {
+      "name": "Table_001",
+      "mesh": "Table_001.obj",
+      "pose": [
+        -0.2199999988079071,
+        3.0399999618530273,
+        0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "table",
+        "name": "Mesa circular de reuni\u00e3o",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          1.2,
+          1.2,
+          0.75
+        ]
+      },
+      "kind": "table"
+    },
+    {
+      "name": "Whiteboard_001",
+      "mesh": "Whiteboard_001.obj",
+      "pose": [
+        1.7300000190734863,
+        -4.235000133514404,
+        1.649999976158142,
+        0.0,
+        0.0,
+        -3.1415925661670165
+      ],
+      "metadata": {
+        "dynamic": false,
+        "confidence": "media",
+        "object_type": "whiteboard",
+        "name": "Quadro branco sob J16",
+        "generated_by": "labsea_reconstruction_v1",
+        "trackable": false,
+        "coordinate_system": "world",
+        "reference_capture": "20261014_141328",
+        "dimensions_m": [
+          2.9,
+          0.04,
+          1.08
+        ]
+      },
+      "kind": "whiteboard"
+    }
+  ],
+  "reference_repository": "https://github.com/JoabFelippx/Labsea-3D"
+}
