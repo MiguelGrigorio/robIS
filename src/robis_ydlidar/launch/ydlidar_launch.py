@@ -15,27 +15,22 @@
 from ament_index_python.packages import get_package_share_directory
 
 from launch import LaunchDescription
-from launch_ros.actions import LifecycleNode
 from launch_ros.actions import Node
 from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
-from launch.actions import LogInfo
-
-import lifecycle_msgs.msg
 import os
 
 
 def generate_launch_description():
     share_dir = get_package_share_directory('robis_ydlidar')
     parameter_file = LaunchConfiguration('params_file')
-    node_name = 'robis_ydlidar_node'
 
     params_declare = DeclareLaunchArgument('params_file',
                                            default_value=os.path.join(
                                                share_dir, 'params', 'ydlidar.yaml'),
                     description='Caminho para o arquivo de parâmetros do lidar.')
 
-    driver_node = LifecycleNode(package='robis_ydlidar',
+    driver_node = Node(package='robis_ydlidar',
                                 executable='robis_ydlidar_node',
                                 name='robis_ydlidar_node',
                                 output='screen',
@@ -43,14 +38,10 @@ def generate_launch_description():
                                 parameters=[parameter_file],
                                 namespace='',
                                 )
-    tf2_node = Node(package='tf2_ros',
-                    executable='static_transform_publisher',
-                    name='static_tf_pub_laser',
-                    arguments=['0.20', '0', '0.24','0', '0', '0', '1','base_footprint','lidar_link'],
-                    )
 
     return LaunchDescription([
         params_declare,
         driver_node,
-        tf2_node,
+        # The common URDF publishes lidar_link. A second static broadcaster
+        # would compete with it and use a different sensor height.
     ])

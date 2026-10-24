@@ -25,6 +25,14 @@ find_package(lifecycle_msgs REQUIRED)
 ############## YDLIDAR SDK START#####################################
 #find ydlidar_sdk package
 find_package(ydlidar_sdk CONFIG REQUIRED)
+# The vendor config can retain its build directory. Resolve the installed
+# library relative to the config as well, so a custom SDK prefix works.
+find_library(YDLIDAR_SDK_LIBRARY
+    NAMES ydlidar_sdk
+    HINTS ${YDLIDAR_SDK_LIBRARY_DIRS} "${ydlidar_sdk_DIR}/../..")
+if(NOT YDLIDAR_SDK_LIBRARY)
+  message(FATAL_ERROR "Installed YDLidar SDK library was not found")
+endif()
 ############## YDLIDAR SDK END#####################################
 
 #Include directories
@@ -32,9 +40,6 @@ include_directories(
   ${PROJECT_SOURCE_DIR}
   ${PROJECT_SOURCE_DIR}/src
   ${YDLIDAR_SDK_INCLUDE_DIRS})
-
-#link library directories
-link_directories(${YDLIDAR_SDK_LIBRARY_DIRS})
 
 #---------------------------------------------------------------------------------------
 # generate excutable and add libraries
@@ -54,7 +59,7 @@ ament_target_dependencies(${PROJECT_NAME}_node
     )
 
 target_link_libraries(${PROJECT_NAME}_node
-    ${YDLIDAR_SDK_LIBRARIES})
+    ${YDLIDAR_SDK_LIBRARY})
 
 #---------------------------------------------------------------------------------------
 # generate excutable and add libraries

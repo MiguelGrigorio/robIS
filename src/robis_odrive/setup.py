@@ -17,7 +17,7 @@ setup(
         ),
         (
             path.join("share", package_name, "params"),
-            glob("params/*.yaml"),
+            glob("params/*.yaml") + glob("params/*.json"),
         ),
     ],
     install_requires=["setuptools", "pyserial==3.5", "transforms3d==0.4.1"],
@@ -26,8 +26,9 @@ setup(
     maintainer_email="root@todo.todo",
     description="TODO: Package description",
     license="TODO: License declaration",
-    tests_require=["pytest"],
+    extras_require={"test": ["pytest"]},
     entry_points={
-        "console_scripts": ["odrive_node = robis_odrive.odrive_node:main"],
+        "console_scripts": ["odrive_node = robis_odrive.odrive_node:main",
+                            "inspect_odrive = robis_odrive.profile_inspection:main"],
     },
 )

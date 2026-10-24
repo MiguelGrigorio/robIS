@@ -3,13 +3,29 @@ odrive_node:
     simulation_mode: false
     wheel_track: 0.36
     tyre_circumference: 0.5366
-    connect_on_startup: false
+    # Connect without arming the motor controllers at ROS startup.
+    connect_on_startup: true
     calibrate_on_startup: false
     engage_on_startup: false
+    axis_for_right: 0
+    use_preroll: false
+    connection_timeout_sec: 10.0
+    calibration_timeout_sec: 60.0
+    # Firmware 0.5.1 confirmed. Physical yaw sign still awaits wheel-side check.
+    odometry_mode: encoder
+    allow_angular_motion: false
+    legacy_velocity_scale: 100.0
+    encoder_velocity_units: turns_per_second
+    # ROS: positive yaw turns left, once left/right axes are identified.
+    encoder_yaw_sign: 1.0
     publish_raw_odom: true
     publish_odom: true
     publish_odom_tf: true
     odom_topic: /odom
     odom_frame: odom
     base_frame: base_footprint
-    odom_calc_hz: 50
+    # Host supervision/odometry; the ODrive keeps its own fast control loop.
+    odom_calc_hz: 20
+    cmd_vel_topic: /cmd_vel
+    command_timeout_sec: 0.5
+    idle_release_sec: 2.0

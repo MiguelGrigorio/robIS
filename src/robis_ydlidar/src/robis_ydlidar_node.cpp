@@ -18,6 +18,8 @@
 #include <chrono>
 #include <iostream>
 #include <memory>
+#include <cmath>
+#include <limits>
 #include "sensor_msgs/msg/point_cloud.hpp"
 #include "rclcpp/clock.hpp"
 #include "rclcpp/rclcpp.hpp"
@@ -130,6 +132,11 @@ int main(int argc, char *argv[]) {
   float scan_gain = 1.0f;
   node->declare_parameter("scan_gain", scan_gain);
   node->get_parameter("scan_gain", scan_gain);
+  if (!std::isfinite(scan_gain) || scan_gain <= 0.0f) {
+    RCLCPP_ERROR(node->get_logger(), "scan_gain must be finite and positive");
+    rclcpp::shutdown();
+    return 1;
+  }
 
   float f_optvalue = 180.0f;
   node->declare_parameter("angle_max", f_optvalue);
@@ -213,7 +220,8 @@ int main(int argc, char *argv[]) {
       scan_msg->range_max = scan.config.max_range;
       
       int size = (scan.config.max_angle - scan.config.min_angle)/ scan.config.angle_increment + 1;
-      scan_msg->ranges.resize(size);
+      scan_msg->ranges.assign(size, invalid_range_is_inf
+        ? std::numeric_limits<float>::infinity() : 0.0f);
       scan_msg->intensities.resize(size);
 
       pc_msg->channels.resize(2);
@@ -223,19 +231,20 @@ int main(int argc, char *argv[]) {
       pc_msg->channels[idx_timestamp].name = "stamps";
 
       for(size_t i=0; i < scan.points.size(); i++) {
+        const float range = scan_gain * scan.points[i].range;
+        if (!std::isfinite(range) || range < scan.config.min_range || range > scan.config.max_range) {
+          continue;
+        }
         int index = std::ceil((scan.points[i].angle - scan.config.min_angle)/scan.config.angle_increment);
         if(index >=0 && index < size) {
-	  if (scan.points[i].range >= scan.config.min_range) {
-            scan_msg->ranges[index] = scan_gain*scan.points[i].range;
+            scan_msg->ranges[index] = range;
             scan_msg->intensities[index] = scan.points[i].intensity;
-	  }
         }
 
-	if (scan.points[i].range >= scan.config.min_range &&
-             scan.points[i].range <= scan.config.max_range) {
+	{
           geometry_msgs::msg::Point32 point;
-          point.x = scan.points[i].range * cos(scan.points[i].angle);
-          point.y = scan.points[i].range * sin(scan.points[i].angle);
+          point.x = range * cos(scan.points[i].angle);
+          point.y = range * sin(scan.points[i].angle);
           point.z = 0.0;
           pc_msg->points.push_back(point);
           pc_msg->channels[idx_intensity].values.push_back(scan.points[i].intensity);

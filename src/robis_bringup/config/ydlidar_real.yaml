@@ -21,4 +21,5 @@ robis_ydlidar_node:
     range_min: 0.1
     frequency: 10.0
     invalid_range_is_inf: false
-    scan_gain: 0.88
+    # Use SDK distances until an external measurement justifies a correction.
+    scan_gain: 1.0

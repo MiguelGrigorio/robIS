@@ -1,0 +1,39 @@
+{
+  "device_serial_number": "207C399D4D4D",
+  "firmware": "0.5.1",
+  "firmware_unreleased": 1,
+  "motor_signs": {"0": -1, "1": 1},
+  "host_policy": {
+    "gain_per_s": 1.0,
+    "idle_at_stop": true,
+    "max_correction_turns_s": 0.08,
+    "synchronize_encoder_travel": true,
+    "watchdog_active_only": true
+  },
+  "max_wheel_speed_m_s": 0.4999997263927414,
+  "native_profile_persisted": true,
+  "per_axis_properties": {
+    "config.enable_watchdog": 0,
+    "config.startup_closed_loop_control": 0,
+    "config.startup_encoder_index_search": 0,
+    "config.startup_encoder_offset_calibration": 0,
+    "config.startup_homing": 0,
+    "config.startup_motor_calibration": 0,
+    "config.startup_sensorless_control": 0,
+    "config.watchdog_timeout": 2.0,
+    "controller.config.control_mode": 2,
+    "controller.config.enable_overspeed_error": 1,
+    "controller.config.enable_vel_limit": 1,
+    "controller.config.inertia": 0.0,
+    "controller.config.input_mode": 2,
+    "controller.config.vel_gain": 10.0,
+    "controller.config.vel_integrator_gain": 0.75,
+    "controller.config.vel_limit": 0.93182,
+    "controller.config.vel_limit_tolerance": 1.2,
+    "controller.config.vel_ramp_rate": 0.75,
+    "encoder.config.bandwidth": 50.0,
+    "motor.config.current_lim": 2.5,
+    "motor.config.current_lim_margin": 1.0
+  },
+  "wheel_radius_m": 0.0854
+}
