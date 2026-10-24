@@ -1,0 +1,11 @@
+/**:
+  ros__parameters:
+    # Publishing is enabled explicitly by the launch's enable_teleop argument.
+    capabilities: [connectionGraph, assets]
+    # Keep the full-rate camera local to ROS; viewers use its JPEG preview.
+    topic_whitelist: ['^(?!/camera/image_raw$).*']
+    num_threads: 2
+    max_qos_depth: 5
+    asset_uri_allowlist:
+      - '^package://robis_description/meshes/[A-Za-z0-9_/-]+\.(stl|dae|obj|glb|gltf|png|jpg)$'
+      - '^file:///robis_ws/(install/robis_description/share/robis_description|src/robis_description)/meshes/[A-Za-z0-9_/-]+\.(stl|dae|obj|glb|gltf|png|jpg)$'

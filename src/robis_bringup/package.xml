@@ -3,7 +3,7 @@
 <package format="3">
   <name>robis_bringup</name>
   <version>0.1.0</version>
-  <description>Bringup package for the RobIS D2X platform on ROS 2 Jazzy.</description>
+  <description>Bringup package for the RobIS D2X platform.</description>
 
   <maintainer email="miguelgrigorio@todo.todo">Miguel Grigorio</maintainer>
   <license>Apache-2.0</license>
@@ -14,6 +14,13 @@
   <depend>launch_ros</depend>
   <depend>robis_description</depend>
   <depend>robis_navigation</depend>
+  <depend>robis_semantic_navigation</depend>
+  <depend>robis_vision</depend>
+  <exec_depend>robis_odrive</exec_depend>
+  <exec_depend>robis_ydlidar</exec_depend>
+  <exec_depend>foxglove_bridge</exec_depend>
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
   <depend>robot_state_publisher</depend>
   <depend>xacro</depend>
 

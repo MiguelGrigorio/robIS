@@ -1,0 +1,474 @@
+{
+  "configById": {
+    "3D!robis": {
+      "scene": {
+        "meshUpAxis": "z_up",
+        "transforms": {
+          "visible": false,
+          "showLabel": false,
+          "axisSize": 0.1
+        },
+        "ignoreColladaUpAxis": true
+      },
+      "transforms": {
+        "odom": {
+          "visible": false
+        },
+        "base_footprint": {
+          "visible": false
+        },
+        "lidar_link": {
+          "visible": false
+        },
+        "camera_optical_frame": {
+          "visible": false
+        }
+      },
+      "layers": {
+        "robis-grid": {
+          "visible": true,
+          "instanceId": "robis-grid",
+          "layerId": "foxglove.Grid",
+          "frameId": "odom",
+          "size": 10,
+          "divisions": 20,
+          "lineWidth": 1,
+          "color": "#64748b"
+        }
+      },
+      "topics": {
+        "/robot_description": {
+          "visible": true,
+          "controlMode": "transforms",
+          "displayMode": "visual",
+          "showAxis": false,
+          "showOutlines": false
+        },
+        "/scan": {
+          "visible": true,
+          "pointSize": 4,
+          "cubeOutline": false,
+          "pointShape": "circle",
+          "decayTime": 0,
+          "colorMode": "flat",
+          "flatColor": "#eab308"
+        }
+      },
+      "cameraState": {
+        "distance": 4,
+        "perspective": true,
+        "phi": 60,
+        "thetaOffset": 45,
+        "near": 0.01
+      },
+      "followTf": "base_footprint",
+      "fixedFrame": "odom",
+      "followMode": "follow-position"
+    },
+    "Image!camera": {
+      "imageMode": {
+        "imageTopic": "/camera/image_raw/compressed",
+        "calibrationTopic": "/camera/camera_info",
+        "synchronize": false,
+        "rectifyImage": false
+      }
+    },
+    "Plot!linear": {
+      "paths": [
+        {
+          "enabled": true,
+          "color": "#f59e0b",
+          "label": "Comando (m/s)",
+          "value": "/cmd_vel.linear.x",
+          "id": "series-0",
+          "timestampMethod": "receiveTime"
+        },
+        {
+          "enabled": true,
+          "color": "#3b82f6",
+          "label": "Odometria (m/s)",
+          "value": "/odom.twist.twist.linear.x",
+          "id": "series-1",
+          "timestampMethod": "receiveTime"
+        }
+      ],
+      "showLegend": true,
+      "timeRange": "latest",
+      "yAxisLabel": "m/s",
+      "minYValue": -0.25,
+      "maxYValue": 0.5,
+      "followingViewWidth": 20
+    },
+    "Plot!angular": {
+      "paths": [
+        {
+          "enabled": true,
+          "color": "#f59e0b",
+          "label": "Comando (rad/s)",
+          "value": "/cmd_vel.angular.z",
+          "id": "series-0",
+          "timestampMethod": "receiveTime"
+        },
+        {
+          "enabled": true,
+          "color": "#3b82f6",
+          "label": "Odometria (rad/s)",
+          "value": "/odom.twist.twist.angular.z",
+          "id": "series-1",
+          "timestampMethod": "receiveTime"
+        }
+      ],
+      "showLegend": true,
+      "timeRange": "latest",
+      "yAxisLabel": "rad/s",
+      "minYValue": -0.7,
+      "maxYValue": 0.7,
+      "followingViewWidth": 20
+    },
+    "Plot!position": {
+      "paths": [
+        {
+          "enabled": true,
+          "color": "#3b82f6",
+          "label": "X (m)",
+          "value": "/odom.pose.pose.position.x",
+          "id": "series-0",
+          "timestampMethod": "receiveTime"
+        },
+        {
+          "enabled": true,
+          "color": "#22c55e",
+          "label": "Y (m)",
+          "value": "/odom.pose.pose.position.y",
+          "id": "series-1",
+          "timestampMethod": "receiveTime"
+        }
+      ],
+      "showLegend": true,
+      "timeRange": "latest",
+      "yAxisLabel": "m",
+      "followingViewWidth": 20
+    },
+    "RawMessages!odom": {
+      "defaultExpanded": true,
+      "topicPath": "/odom"
+    },
+    "RawMessages!joints": {
+      "defaultExpanded": true,
+      "topicPath": "/joint_states"
+    },
+    "RawMessages!calibration": {
+      "defaultExpanded": true,
+      "topicPath": "/camera/camera_info"
+    },
+    "RawMessages!clock": {
+      "defaultExpanded": true,
+      "topicPath": "/clock"
+    },
+    "Tab!robis": {
+      "activeTabIdx": 0,
+      "tabs": [
+        {
+          "title": "Visão geral",
+          "layout": {
+            "direction": "row",
+            "first": "3D!robis",
+            "second": {
+              "direction": "column",
+              "first": "Image!camera",
+              "second": {
+                "direction": "column",
+                "first": "Plot!linear",
+                "second": "Plot!angular",
+                "splitPercentage": 50
+              },
+              "splitPercentage": 50
+            },
+            "splitPercentage": 60
+          }
+        },
+        {
+          "title": "Odometria",
+          "layout": {
+            "direction": "row",
+            "first": "RawMessages!odom",
+            "second": "Plot!position",
+            "splitPercentage": 50
+          }
+        },
+        {
+          "title": "Sensores",
+          "layout": {
+            "direction": "row",
+            "first": "RawMessages!joints",
+            "second": {
+              "direction": "column",
+              "first": "RawMessages!calibration",
+              "second": "RawMessages!clock",
+              "splitPercentage": 65
+            },
+            "splitPercentage": 50
+          }
+        },
+        {
+          "title": "Navegação",
+          "layout": {
+            "direction": "row",
+            "first": "3D!navigation",
+            "second": {
+              "direction": "column",
+              "first": "Image!navigation",
+              "second": "RawMessages!amcl",
+              "splitPercentage": 50
+            },
+            "splitPercentage": 70
+          }
+        },
+        {
+          "title": "Controle manual",
+          "layout": {
+            "direction": "row",
+            "first": "3D!teleop",
+            "second": {
+              "direction": "column",
+              "first": "Image!teleop",
+              "second": "Teleop!robis",
+              "splitPercentage": 60
+            },
+            "splitPercentage": 65
+          }
+        }
+      ]
+    },
+    "3D!navigation": {
+      "scene": {
+        "meshUpAxis": "z_up",
+        "transforms": {
+          "visible": false,
+          "showLabel": false,
+          "axisSize": 0.1
+        },
+        "ignoreColladaUpAxis": true
+      },
+      "transforms": {
+        "odom": {
+          "visible": false
+        },
+        "base_footprint": {
+          "visible": false
+        },
+        "lidar_link": {
+          "visible": false
+        },
+        "camera_optical_frame": {
+          "visible": false
+        },
+        "map": {
+          "visible": false
+        }
+      },
+      "layers": {
+        "robis-grid": {
+          "visible": true,
+          "instanceId": "robis-grid",
+          "layerId": "foxglove.Grid",
+          "frameId": "map",
+          "size": 10,
+          "divisions": 20,
+          "lineWidth": 1,
+          "color": "#64748b"
+        }
+      },
+      "topics": {
+        "/robot_description": {
+          "visible": true,
+          "controlMode": "transforms",
+          "displayMode": "visual",
+          "showAxis": false,
+          "showOutlines": false
+        },
+        "/scan": {
+          "visible": true,
+          "pointSize": 4,
+          "cubeOutline": false,
+          "pointShape": "circle",
+          "decayTime": 0,
+          "colorMode": "flat",
+          "flatColor": "#eab308"
+        },
+        "/map": {
+          "visible": true,
+          "colorMode": "map",
+          "alpha": 0.8,
+          "drawBehind": true
+        },
+        "/plan": {
+          "visible": true,
+          "type": "line",
+          "lineWidth": 0.04,
+          "gradient": [
+            "#22c55e",
+            "#22c55e"
+          ]
+        },
+        "/navigation_check/goal": {
+          "visible": true,
+          "type": "arrow",
+          "arrowScale": [
+            0.5,
+            0.07,
+            0.07
+          ],
+          "color": "#ef4444"
+        },
+        "/amcl_pose": {
+          "visible": true,
+          "type": "arrow",
+          "arrowScale": [
+            0.4,
+            0.05,
+            0.05
+          ],
+          "color": "#3b82f6",
+          "showCovariance": true
+        },
+        "/local_costmap/costmap": {
+          "visible": false,
+          "colorMode": "costmap",
+          "alpha": 0.4
+        },
+        "/global_costmap/costmap": {
+          "visible": false,
+          "colorMode": "costmap",
+          "alpha": 0.4
+        }
+      },
+      "cameraState": {
+        "distance": 12,
+        "perspective": false,
+        "phi": 0,
+        "thetaOffset": 0,
+        "near": 0.01
+      },
+      "followTf": "map",
+      "fixedFrame": "map",
+      "followMode": "follow-none"
+    },
+    "RawMessages!amcl": {
+      "defaultExpanded": true,
+      "topicPath": "/amcl_pose"
+    },
+    "Image!navigation": {
+      "imageMode": {
+        "imageTopic": "/camera/image_raw/compressed",
+        "calibrationTopic": "/camera/camera_info",
+        "synchronize": false,
+        "rectifyImage": false
+      }
+    },
+    "Teleop!robis": {
+      "topic": "/cmd_vel_teleop",
+      "publishRate": 20,
+      "upButton": {
+        "field": "linear-x",
+        "value": 0.15
+      },
+      "downButton": {
+        "field": "linear-x",
+        "value": -0.15
+      },
+      "leftButton": {
+        "field": "angular-z",
+        "value": 0.4
+      },
+      "rightButton": {
+        "field": "angular-z",
+        "value": -0.4
+      },
+      "stopButton": {
+        "field": "linear-x",
+        "value": 0.0
+      },
+      "autoSendStopOnRelease": true
+    },
+    "3D!teleop": {
+      "scene": {
+        "meshUpAxis": "z_up",
+        "transforms": {
+          "visible": false,
+          "showLabel": false,
+          "axisSize": 0.1
+        },
+        "ignoreColladaUpAxis": true
+      },
+      "transforms": {
+        "odom": {
+          "visible": false
+        },
+        "base_footprint": {
+          "visible": false
+        },
+        "lidar_link": {
+          "visible": false
+        },
+        "camera_optical_frame": {
+          "visible": false
+        }
+      },
+      "layers": {
+        "robis-grid": {
+          "visible": true,
+          "instanceId": "robis-grid",
+          "layerId": "foxglove.Grid",
+          "frameId": "odom",
+          "size": 10,
+          "divisions": 20,
+          "lineWidth": 1,
+          "color": "#64748b"
+        }
+      },
+      "topics": {
+        "/robot_description": {
+          "visible": true,
+          "controlMode": "transforms",
+          "displayMode": "visual",
+          "showAxis": false,
+          "showOutlines": false
+        },
+        "/scan": {
+          "visible": true,
+          "pointSize": 4,
+          "cubeOutline": false,
+          "pointShape": "circle",
+          "decayTime": 0,
+          "colorMode": "flat",
+          "flatColor": "#eab308"
+        }
+      },
+      "cameraState": {
+        "distance": 8,
+        "perspective": true,
+        "phi": 60,
+        "thetaOffset": 45,
+        "near": 0.01
+      },
+      "followTf": "base_footprint",
+      "fixedFrame": "odom",
+      "followMode": "follow-position"
+    },
+    "Image!teleop": {
+      "imageMode": {
+        "imageTopic": "/camera/image_raw/compressed",
+        "calibrationTopic": "/camera/camera_info",
+        "synchronize": false,
+        "rectifyImage": false
+      }
+    }
+  },
+  "layout": "Tab!robis",
+  "globalVariables": {},
+  "playbackConfig": {
+    "speed": 1
+  },
+  "userNodes": {}
+}

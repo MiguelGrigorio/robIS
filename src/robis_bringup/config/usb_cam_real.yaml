@@ -1,8 +1,11 @@
-/**:
+usb_camera_node:
   ros__parameters:
     image_topic: /camera/image_raw
+    camera_info_topic: /camera/camera_info
     video_device: /dev/video0
-    frame_id: camera_link
+    frame_id: camera_optical_frame
     image_width: 640
     image_height: 480
     framerate: 30.0
+    capture_backend: v4l2
+    camera_info_url: ""

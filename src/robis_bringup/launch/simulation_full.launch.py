@@ -109,6 +109,14 @@ def generate_launch_description():
 
     return LaunchDescription(
         [
+            DeclareLaunchArgument("enable_foxglove", default_value="false"),
+            IncludeLaunchDescription(
+                PythonLaunchDescriptionSource(PathJoinSubstitution([
+                    FindPackageShare("robis_bringup"), "launch", "foxglove.launch.py",
+                ])),
+                launch_arguments={"use_sim_time": "true"}.items(),
+                condition=IfCondition(LaunchConfiguration("enable_foxglove")),
+            ),
             DeclareLaunchArgument("stack", default_value="slam"),
             DeclareLaunchArgument(
                 "map",
