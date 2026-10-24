@@ -1,0 +1,14 @@
+open_vocab_detector:
+  ros__parameters:
+    use_sim_time: true
+    backend: yoloe
+    model: yoloe-26s-seg.pt
+    prompts: [chair]
+    image_topic: /camera/image_raw
+    detections_topic: /semantic_perception/detections
+    mask_topic: /semantic_perception/mask
+    debug_image_topic: /semantic_perception/debug_image
+    confidence: 0.25
+    image_size: 640
+    inference_hz: 5.0
+    device: "0"

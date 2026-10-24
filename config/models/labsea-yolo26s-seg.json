@@ -1,0 +1,14 @@
+{
+  "file": "labsea-yolo26s-seg.pt",
+  "sha256": "302cca29404c171f612ddd8b69d4eafef58ced55703a0ef991360e2996fba53b",
+  "bytes": 23327581,
+  "architecture": "YOLO26s-seg",
+  "task": "segment",
+  "classes": [
+    "chair",
+    "dining table"
+  ],
+  "source": "Checkpoint LabSEA já usado nos ensaios do projeto, adaptado a imagens sintéticas. Nenhum treino adicional nesta consolidação.",
+  "validation_date": "2026-10-22",
+  "scope": "LabSEA controlado; não validado como detector de imagens reais."
+}

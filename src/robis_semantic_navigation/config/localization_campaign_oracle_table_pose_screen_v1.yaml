@@ -1,0 +1,21 @@
+environment: semantic_hall
+world: semantic_hall.world
+ground_truth: ground_truth_semantic_hall.yaml
+detector_backend: oracle
+detector_device: cpu
+enable_reference_oracle: true
+enable_detector_evaluator: true
+expected_classes: [chair, couch, dining table, bed, toilet]
+launch_mode: perception
+rotation_backend: cmd_vel
+localization_frame: odom
+
+# Design-only observability screen; never pool these trials with the final
+# confirmatory campaign. Candidate poses align different table legs with the
+# planar lidar at practical standoff distances.
+trials:
+  - {id: table_screen_existing_diagonal, x: 4.0, y: -3.5, yaw: 3.14159, estimators: [bbox_cluster, mask_projected_cluster]}
+  - {id: table_screen_west_leg, x: 3.5, y: -4.12, yaw: 0.0, estimators: [bbox_cluster, mask_projected_cluster]}
+  - {id: table_screen_north_leg, x: 4.82, y: -2.8, yaw: -1.5708, estimators: [bbox_cluster, mask_projected_cluster]}
+  - {id: table_screen_south_leg, x: 6.18, y: -6.2, yaw: 1.5708, estimators: [bbox_cluster, mask_projected_cluster]}
+  - {id: table_screen_east_leg, x: 7.5, y: -4.88, yaw: 3.14159, estimators: [bbox_cluster, mask_projected_cluster]}

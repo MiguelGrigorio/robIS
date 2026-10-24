@@ -1,0 +1,47 @@
+environment: semantic_hall
+world: semantic_hall.world
+ground_truth: ground_truth_semantic_hall.yaml
+detector_backend: oracle
+detector_device: cpu
+enable_reference_oracle: true
+enable_detector_evaluator: true
+expected_classes: [chair, couch, dining table, bed, toilet]
+launch_mode: perception
+rotation_backend: cmd_vel
+localization_frame: odom
+record_dataset: true
+dataset_maximum_frames: 0
+dataset_frame_stride: 2
+dataset_save_depth: false
+dataset_minimum_frames: 80
+trials:
+  - id: dataset_center
+    x: 0.0
+    y: 0.0
+    yaw: 0.0
+    estimators: [bbox_cluster]
+    split: train
+  - id: dataset_southeast
+    x: 4.0
+    y: -3.5
+    yaw: 3.14159
+    estimators: [bbox_cluster]
+    split: train
+  - id: dataset_northwest
+    x: -4.0
+    y: 3.5
+    yaw: 0.0
+    estimators: [bbox_cluster]
+    split: train
+  - id: dataset_northeast
+    x: 4.0
+    y: 3.5
+    yaw: 3.14159
+    estimators: [bbox_cluster]
+    split: val
+  - id: dataset_southwest
+    x: -4.0
+    y: -3.5
+    yaw: 0.0
+    estimators: [bbox_cluster]
+    split: test

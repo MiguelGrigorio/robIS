@@ -1,0 +1,39 @@
+environment: semantic_hall
+world: semantic_hall.world
+ground_truth: ground_truth_semantic_hall.yaml
+detector_backend: yolo26
+# CPU is the reproducible backend on the current simulation host. Jetson GPU
+# results belong to a separate hardware campaign.
+detector_device: cpu
+enable_reference_oracle: true
+enable_detector_evaluator: true
+expected_classes: [chair, couch, dining table, bed, toilet]
+launch_mode: perception
+rotation_backend: cmd_vel
+localization_frame: odom
+trials:
+  - id: hall_center
+    x: 0.0
+    y: 0.0
+    yaw: 0.0
+    estimators: [bbox_cluster]
+  - id: hall_northeast
+    x: 4.0
+    y: 3.5
+    yaw: 3.14159
+    estimators: [bbox_cluster]
+  - id: hall_southeast
+    x: 4.0
+    y: -3.5
+    yaw: 3.14159
+    estimators: [bbox_cluster]
+  - id: hall_southwest
+    x: -4.0
+    y: -3.5
+    yaw: 0.0
+    estimators: [bbox_cluster]
+  - id: hall_northwest
+    x: -4.0
+    y: 3.5
+    yaw: 0.0
+    estimators: [bbox_cluster]

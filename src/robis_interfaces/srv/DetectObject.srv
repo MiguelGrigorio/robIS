@@ -1,0 +1,5 @@
+string query
+---
+bool found
+vision_msgs/Detection2D detection
+string message

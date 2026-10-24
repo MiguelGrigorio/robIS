@@ -1,0 +1,25 @@
+# Copy this file and fill the measured fields before using physical images.
+# This template deliberately refuses to run with missing map alignment/heights.
+environment_id: labsea
+map_checksum: null  # SHA-256 of the robot navigation map image, e.g. map.pgm
+map_from_world: {x: null, y: null, yaw: null}  # map <- GLB/calibration world, metres/radians
+ttl_sec: 3.0
+association_radius_m: 0.6
+fusion_window_sec: 0.2
+minimum_observations: 2
+minimum_cameras: 2
+maximum_range_m: 12.0
+maximum_sensitivity_m: 0.6
+anchor_uncertainty_px: 4.0
+# Reference surface represented by the detection centre, not object depth.
+# Measure/justify these assumptions. Person/floating-object depth is not inferred.
+planes:
+  chair: {z_m: null, height_uncertainty_m: null}
+  dining table: {z_m: null, height_uncertainty_m: null}
+# raw uses K + all 14 distortion coefficients; undistorted uses nK + zero distortion.
+# Both modes require full 1280x720 frames, without resizing or ROI cropping.
+cameras:
+  - {id: '1', calibration: calib/calib_rt1.npz, image_space: raw}
+  - {id: '2', calibration: calib/calib_rt2.npz, image_space: raw}
+  - {id: '3', calibration: calib/calib_rt3.npz, image_space: raw}
+  - {id: '4', calibration: calib/calib_rt4.npz, image_space: raw}

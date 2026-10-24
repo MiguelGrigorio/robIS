@@ -1,0 +1,53 @@
+environment: semantic_lab
+world: semantic_lab.world
+ground_truth: ground_truth_semantic_lab.yaml
+detector_backend: yolo26
+# CPU is deliberate for this host: the current PyTorch CUDA 13 wheel requires
+# a newer driver than the installed CUDA 12.9-capable NVIDIA driver.
+detector_device: cpu
+enable_reference_oracle: true
+enable_detector_evaluator: true
+launch_mode: perception
+rotation_backend: cmd_vel
+localization_frame: odom
+trials:
+  - id: yolo_southeast
+    x: 1.5
+    y: -1.2
+    yaw: 2.35619
+    estimators: [bbox_cluster]
+  - id: yolo_origin
+    x: 0.0
+    y: 0.0
+    yaw: 0.0
+    estimators: [bbox_cluster]
+  - id: yolo_west
+    x: -2.0
+    y: 0.0
+    yaw: 0.0
+    estimators: [bbox_cluster]
+  - id: yolo_east
+    x: 2.0
+    y: 0.0
+    yaw: 3.14159
+    estimators: [bbox_cluster]
+  - id: yolo_southwest
+    x: -1.5
+    y: -1.5
+    yaw: 0.78540
+    estimators: [bbox_cluster]
+  - id: yolo_northeast
+    x: 1.5
+    y: 1.5
+    yaw: -2.35619
+    estimators: [bbox_cluster]
+  - id: yolo_door_west
+    x: -2.5
+    y: -0.5
+    yaw: 0.4
+    estimators: [bbox_cluster]
+  - id: yolo_far_east
+    x: 3.6
+    y: 0.0
+    yaw: 3.14159
+    estimators: [bbox_cluster]

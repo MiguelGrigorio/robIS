@@ -1,0 +1,13 @@
+/**/oracle_detector:
+  ros__parameters:
+    use_sim_time: true
+    labels_topic: /camera/semantic/labels_map
+    colored_labels_topic: /camera/semantic/colored_map
+    detections_topic: /semantic_perception/detections
+    mask_topic: /semantic_perception/mask
+    target_label: 1
+    target_name: chair
+    label_ids: [1, 2, 3, 4, 5]
+    label_names: [chair, couch, dining table, bed, toilet]
+    minimum_area_px: 200
+    use_colored_labels_fallback: true

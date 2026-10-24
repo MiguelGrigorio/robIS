@@ -1,0 +1,16 @@
+environment: semantic_lab
+world: semantic_lab.world
+ground_truth: ground_truth_semantic_lab.yaml
+detector_backend: yolo26
+detector_device: cpu
+enable_reference_oracle: true
+enable_detector_evaluator: true
+launch_mode: perception
+rotation_backend: cmd_vel
+localization_frame: odom
+trials:
+  - id: yolo_smoke_southeast
+    x: 1.5
+    y: -1.2
+    yaw: 2.35619
+    estimators: [bbox_cluster]

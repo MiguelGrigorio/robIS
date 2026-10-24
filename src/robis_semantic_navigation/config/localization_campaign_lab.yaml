@@ -1,0 +1,35 @@
+environment: semantic_lab
+world: semantic_lab.world
+ground_truth: ground_truth_semantic_lab.yaml
+detector_backend: oracle
+trials:
+  - id: lab_origin
+    x: 0.0
+    y: 0.0
+    yaw: 0.0
+    estimators: [center, minimum, robust_median]
+  - id: lab_west
+    x: -2.0
+    y: 0.0
+    yaw: 0.0
+    estimators: [minimum, robust_median, center]
+  - id: lab_east
+    x: 2.0
+    y: 0.0
+    yaw: 3.14159
+    estimators: [robust_median, center, minimum]
+  - id: lab_southwest
+    x: -2.0
+    y: -2.0
+    yaw: 0.78540
+    estimators: [center, minimum, robust_median]
+  - id: lab_southeast
+    x: 2.0
+    y: -2.0
+    yaw: 2.35619
+    estimators: [minimum, robust_median, center]
+  - id: lab_northeast
+    x: 2.0
+    y: 2.0
+    yaw: -2.35619
+    estimators: [robust_median, center, minimum]

@@ -1,0 +1,16 @@
+# Software-only integration smoke for the physical campaign runner. This is
+# never evidence of Jetson or real-robot performance.
+protocol: smoke
+environment: semantic_hall_real_runner_smoke
+map_file: /robis_ws/src/robis_navigation/maps/blank_map.yaml
+ground_truth_file: ground_truth_real_runner_smoke_sim.yaml
+localization_frame: map
+spin_radians: 6.283185307
+time_allowance_sec: 90
+pose_tolerance_m: 0.35
+yaw_tolerance_rad: 0.25
+minimum_attempts_per_estimator: 3
+trials:
+  - id: simulated_west_r01
+    expected_pose: {x: 0.0, y: 0.0, yaw: 0.0}
+    estimators: [bbox_cluster, mask_projected_cluster]

@@ -1,0 +1,85 @@
+object_localizer:
+  ros__parameters:
+    detections_topic: /semantic_perception/detections
+    vlm_detections_topic: /semantic_perception/vlm_detections
+    camera_info_topic: /camera/camera_info
+    scan_topic: /scan
+    instance_mask_topic: /semantic_perception/instance_mask
+    objects_topic: /semantic_navigation/objects
+    perception_ready_topic: /semantic_navigation/perception_ready
+    map_frame: map
+    camera_frame: camera_optical_frame
+    lidar_frame: lidar_link
+    scan_window_deg: 2.0
+    minimum_scan_samples: 2
+    maximum_cluster_jump_m: 0.35
+    range_estimator: bbox_cluster
+    use_depth_hint: true
+    maximum_sensor_age_sec: 0.75
+    maximum_sensor_sync_delta_sec: 0.12
+
+semantic_navigation_server:
+  ros__parameters:
+    semantic_map: /robis_ws/data/environments/semantic_map.yaml
+    map_topic: /map
+    odom_topic: /odom
+    maximum_odom_step: 0.5
+    search_mode: auto
+    coverage_spacing: 1.5
+    coverage_clearance: 0.45
+    coverage_occupancy_threshold: 20
+    coverage_max_waypoints: 40
+    instance_policy: nearest
+    default_timeout_sec: 300.0
+    observation_max_age_sec: 1.0
+    perception_status_max_age_sec: 2.0
+    sensor_startup_timeout_sec: 8.0
+    confirmation_count: 3
+    confirmation_radius: 0.8
+    confirmation_timeout_sec: 6.0
+    standoff_distance: 1.4
+    standoff_tolerance: 0.35
+    approach_angle_offsets_deg: [0.0, 30.0, -30.0, 60.0, -60.0, 90.0, -90.0]
+    planner_service_timeout_sec: 2.0
+    merge_distance: 0.5
+    live_external_targets: true
+    target_replan_distance_m: 0.35
+    target_max_replans: 10
+    spin_segments: 4
+    vlm_retry_interval_sec: 10.0
+
+yolo26_detector:
+  ros__parameters:
+    model: yolo26n.pt
+    confidence: 0.25
+    image_size: 640
+    inference_hz: 5.0
+    device: auto
+    cpu_threads: 2
+
+open_vocab_detector:
+  ros__parameters:
+    backend: yoloe
+    model: ""
+    prompts: [chair, couch, dining table, bed, toilet, door]
+    confidence: 0.25
+    image_size: 640
+    inference_hz: 5.0
+    device: auto
+
+oracle_detector:
+  ros__parameters:
+    target_label: 1
+    target_name: chair
+    label_ids: [1, 2, 3, 4, 5]
+    label_names: [chair, couch, dining table, bed, toilet]
+    minimum_area_px: 200
+
+ollama_detector:
+  ros__parameters:
+    enabled: false
+    url: http://127.0.0.1:11434
+    model: ""
+    timeout_sec: 3.0
+    retries: 1
+    detections_topic: /semantic_perception/vlm_detections

@@ -1,0 +1,38 @@
+environment: semantic_hall
+world: semantic_hall.world
+ground_truth: ground_truth_semantic_hall.yaml
+detector_backend: yolo26
+detector_model: yolov8n.pt
+detector_device: cpu
+enable_reference_oracle: true
+enable_detector_evaluator: true
+expected_classes: [chair, couch, dining table, bed, toilet]
+launch_mode: perception
+rotation_backend: cmd_vel
+localization_frame: odom
+trials:
+  - id: yolov8n_hall_center
+    x: 0.0
+    y: 0.0
+    yaw: 0.0
+    estimators: [bbox_cluster]
+  - id: yolov8n_hall_northeast
+    x: 4.0
+    y: 3.5
+    yaw: 3.14159
+    estimators: [bbox_cluster]
+  - id: yolov8n_hall_southeast
+    x: 4.0
+    y: -3.5
+    yaw: 3.14159
+    estimators: [bbox_cluster]
+  - id: yolov8n_hall_southwest
+    x: -4.0
+    y: -3.5
+    yaw: 0.0
+    estimators: [bbox_cluster]
+  - id: yolov8n_hall_northwest
+    x: -4.0
+    y: 3.5
+    yaw: 0.0
+    estimators: [bbox_cluster]

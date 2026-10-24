@@ -1,0 +1,18 @@
+environment: semantic_hall
+world: semantic_hall.world
+ground_truth: ground_truth_semantic_hall.yaml
+detector_backend: yolo_world
+detector_model: yolov8s-worldv2.pt
+detector_device: cpu
+enable_reference_oracle: true
+enable_detector_evaluator: true
+expected_classes: [chair, couch, dining table, bed, toilet]
+launch_mode: perception
+rotation_backend: cmd_vel
+localization_frame: odom
+trials:
+  - id: yolo_world_hall_center_smoke
+    x: 0.0
+    y: 0.0
+    yaw: 0.0
+    estimators: [bbox_cluster]

@@ -1,0 +1,34 @@
+environment: semantic_hall
+world: semantic_hall.world
+ground_truth: ground_truth_semantic_hall.yaml
+detector_backend: oracle
+detector_device: cpu
+enable_reference_oracle: true
+enable_detector_evaluator: true
+expected_classes: [chair, couch, dining table, bed, toilet]
+launch_mode: perception
+rotation_backend: cmd_vel
+localization_frame: odom
+
+# Geometry-control campaign.  It mirrors the learned multipose sequence while
+# replacing detection and instance segmentation with Gazebo ground truth.
+trials:
+  - {id: oracle_multipose_southeast_r01, x: 4.0, y: -3.5, yaw: 3.14159, estimators: [bbox_cluster, mask_projected_cluster]}
+  - {id: oracle_multipose_northeast_r01, x: 4.0, y: 3.5, yaw: 3.14159, estimators: [bbox_cluster, mask_projected_cluster]}
+  - {id: oracle_multipose_southwest_r01, x: -4.0, y: -3.5, yaw: 0.0, estimators: [bbox_cluster, mask_projected_cluster]}
+
+  - {id: oracle_multipose_southwest_r02, x: -4.0, y: -3.5, yaw: 0.0, estimators: [mask_projected_cluster, bbox_cluster]}
+  - {id: oracle_multipose_southeast_r02, x: 4.0, y: -3.5, yaw: 3.14159, estimators: [mask_projected_cluster, bbox_cluster]}
+  - {id: oracle_multipose_northeast_r02, x: 4.0, y: 3.5, yaw: 3.14159, estimators: [mask_projected_cluster, bbox_cluster]}
+
+  - {id: oracle_multipose_northeast_r03, x: 4.0, y: 3.5, yaw: 3.14159, estimators: [bbox_cluster, mask_projected_cluster]}
+  - {id: oracle_multipose_southwest_r03, x: -4.0, y: -3.5, yaw: 0.0, estimators: [bbox_cluster, mask_projected_cluster]}
+  - {id: oracle_multipose_southeast_r03, x: 4.0, y: -3.5, yaw: 3.14159, estimators: [bbox_cluster, mask_projected_cluster]}
+
+  - {id: oracle_multipose_southeast_r04, x: 4.0, y: -3.5, yaw: 3.14159, estimators: [mask_projected_cluster, bbox_cluster]}
+  - {id: oracle_multipose_southwest_r04, x: -4.0, y: -3.5, yaw: 0.0, estimators: [mask_projected_cluster, bbox_cluster]}
+  - {id: oracle_multipose_northeast_r04, x: 4.0, y: 3.5, yaw: 3.14159, estimators: [mask_projected_cluster, bbox_cluster]}
+
+  - {id: oracle_multipose_northeast_r05, x: 4.0, y: 3.5, yaw: 3.14159, estimators: [bbox_cluster, mask_projected_cluster]}
+  - {id: oracle_multipose_southeast_r05, x: 4.0, y: -3.5, yaw: 3.14159, estimators: [bbox_cluster, mask_projected_cluster]}
+  - {id: oracle_multipose_southwest_r05, x: -4.0, y: -3.5, yaw: 0.0, estimators: [bbox_cluster, mask_projected_cluster]}

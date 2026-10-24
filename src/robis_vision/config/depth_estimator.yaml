@@ -1,0 +1,10 @@
+depth_estimator:
+  ros__parameters:
+    use_sim_time: true
+    backend: yolo26
+    model: yolo26n-depth.pt
+    image_topic: /camera/image_raw
+    depth_topic: /semantic_perception/depth
+    debug_topic: /semantic_perception/depth_debug
+    inference_hz: 2.0
+    device: "0"

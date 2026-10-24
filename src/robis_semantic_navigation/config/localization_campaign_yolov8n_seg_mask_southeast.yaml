@@ -1,0 +1,20 @@
+environment: semantic_hall
+world: semantic_hall.world
+ground_truth: ground_truth_semantic_hall.yaml
+detector_backend: yolo26
+# CPU preserves comparability with the YOLOv8n detection campaign. GPU latency
+# is evaluated separately from localization quality.
+detector_device: cpu
+detector_model: /robis_ws/data/models/semantic_hall_yolov8n_seg_v1/best.pt
+enable_reference_oracle: true
+enable_detector_evaluator: true
+expected_classes: [chair, couch, dining table, bed, toilet]
+launch_mode: perception
+rotation_backend: cmd_vel
+localization_frame: odom
+trials:
+  - id: seg_mask_hall_southeast
+    x: 4.0
+    y: -3.5
+    yaw: 3.14159
+    estimators: [mask_projected_cluster]

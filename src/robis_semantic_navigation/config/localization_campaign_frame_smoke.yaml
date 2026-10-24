@@ -1,0 +1,10 @@
+environment: semantic_lab
+world: semantic_lab.world
+ground_truth: ground_truth_semantic_lab.yaml
+detector_backend: oracle
+trials:
+  - id: frame_smoke_southeast
+    x: 1.5
+    y: -1.2
+    yaw: 2.35619
+    estimators: [bbox_cluster]

@@ -1,0 +1,33 @@
+string query
+string environment_id
+float32 timeout_sec
+---
+uint8 SUCCEEDED=0
+uint8 INVALID_QUERY=1
+uint8 NOT_FOUND=2
+uint8 NAVIGATION_FAILED=3
+uint8 SENSORS_UNAVAILABLE=4
+uint8 CANCELLED=5
+uint8 INTERNAL_ERROR=6
+bool success
+uint8 error_code
+string message
+geometry_msgs/PoseStamped object_pose
+float32 elapsed_sec
+float32 distance_traveled_m
+int32 points_visited
+float32 time_to_first_detection_sec
+---
+uint8 VALIDATING=0
+uint8 CHECKING_MAP=1
+uint8 NAVIGATING_TO_MEMORY=2
+uint8 RECONFIRMING=3
+uint8 SEARCHING=4
+uint8 OBJECT_LOCALIZED=5
+uint8 APPROACHING=6
+uint8 PERSISTING=7
+uint8 state
+string description
+int32 waypoint_index
+float32 elapsed_sec
+float32 best_confidence

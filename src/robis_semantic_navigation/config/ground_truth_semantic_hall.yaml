@@ -1,0 +1,19 @@
+environment: semantic_hall
+frame: world
+objects:
+  chair:
+    - {id: chair_east, x: 6.0, y: 4.6}
+    - {id: chair_west, x: -3.5, y: -4.5}
+  couch:
+    - {id: couch, x: -7.0, y: 4.6}
+  dining table:
+    # Footprint follows robis_table/model.sdf (1.5 x 0.8 m tabletop).
+    - id: dining_table
+      x: 5.5
+      y: -4.5
+      yaw: 0.0
+      footprint: {shape: rectangle, size_x: 1.5, size_y: 0.8}
+  bed:
+    - {id: bed, x: -3.2, y: 4.6}
+  toilet:
+    - {id: toilet, x: -7.0, y: -4.8}

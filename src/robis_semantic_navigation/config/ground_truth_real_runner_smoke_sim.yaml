@@ -1,0 +1,14 @@
+environment: semantic_hall_real_runner_smoke
+frame: map
+survey:
+  method: gazebo_model_pose_transformed_to_initial_map
+  instrument: gazebo_ground_truth
+  date_utc: 2026-08-22
+  operator: automated_software_smoke
+objects:
+  dining table:
+    - id: table_from_west_spawn
+      x: 2.0
+      y: -0.38
+      yaw: 0.0
+      footprint: {shape: rectangle, size_x: 1.5, size_y: 0.8}
