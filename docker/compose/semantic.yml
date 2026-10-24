@@ -1,0 +1,38 @@
+# Complete headless simulation on the Orin; source code is compiled in the image.
+services:
+  semantic:
+    image: "${ROBIS_SEMANTIC_SIM_IMAGE:-robis:jazzy-semantic-sim}"
+    runtime: nvidia
+    init: true
+    network_mode: host
+    cpus: 6
+    mem_limit: 8g
+    shm_size: 512m
+    environment:
+      HOME: /tmp
+      ROS_DOMAIN_ID: "${ROBIS_SEMANTIC_DOMAIN:-68}"
+      ROS_AUTOMATIC_DISCOVERY_RANGE: LOCALHOST
+      GZ_PARTITION: robis_semantic_manual
+      GZ_IP: 127.0.0.1
+      ROBIS_BUILD_ON_START: "false"
+      NVIDIA_VISIBLE_DEVICES: all
+      NVIDIA_DRIVER_CAPABILITIES: compute,utility,graphics
+    volumes:
+      - ./data:/robis_ws/data
+    command:
+      - python3
+      - /robis_ws/scripts/run_semantic_simulation.py
+      - --directory
+      - /robis_ws/data/semantic-manual
+      - --owner
+      - "${ROBIS_DATA_OWNER:-1000:1000}"
+      - --foxglove-port
+      - "${ROBIS_SEMANTIC_FOXGLOVE_PORT:-8765}"
+    stop_signal: SIGINT
+    stop_grace_period: 45s
+    healthcheck:
+      test: [CMD, test, -f, /tmp/robis-semantic-ready]
+      interval: 3s
+      timeout: 2s
+      start_period: 180s
+      retries: 3

@@ -1,4 +1,13 @@
-/robis.tar
-.vscode
+build/
+install/
+log/
 __pycache__/
-*.py[cod]
+*.pyc
+*.tar
+.env
+.pytest_cache/
+.vscode/
+extras/
+
+# Runtime maps, memory and camera data are generated locally.
+/data/

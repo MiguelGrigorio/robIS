@@ -1,0 +1,6 @@
+# The supplied LabSEA checkpoint is baked into the CUDA detector runtime.
+ARG DETECTOR_BASE=robis:jazzy-detector-runtime
+FROM ${DETECTOR_BASE}
+ARG SIM_MODEL_FILENAME=best.pt
+COPY --from=detector_weights ${SIM_MODEL_FILENAME} /opt/robis-models/labsea-yolo26s-seg.pt
+RUN python3 -c 'from ultralytics import YOLO; m=YOLO("/opt/robis-models/labsea-yolo26s-seg.pt"); assert m.task == "segment"; assert list(m.names.values()) == ["chair", "dining table"]'

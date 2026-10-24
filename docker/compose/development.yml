@@ -1,0 +1,64 @@
+services:
+  robis_dev:
+    profiles: [dev]
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.robot
+      target: development
+    image: robis:jazzy-dev
+    environment:
+      ROS_DOMAIN_ID: "${ROBIS_ROBOT_DOMAIN_ID:-27}"
+      ROBIS_BUILD_ON_START: "true"
+      ROBIS_BUILD_PROFILE: basic
+    volumes:
+      - ./src:/robis_ws/src
+      - ./config:/robis_ws/config:ro
+      - ./scripts:/robis_ws/scripts:ro
+      - jazzy_basic_build:/robis_ws/build
+      - jazzy_basic_install:/robis_ws/install
+      - jazzy_basic_log:/robis_ws/log
+    # No devices/motion on the development service by default.
+    command: [sleep, infinity]
+    network_mode: host
+    init: true
+
+  robis_sim:
+    profiles: [sim]
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.sim
+    image: robis:jazzy-sim
+    environment:
+      ROS_DOMAIN_ID: "${ROBIS_SIM_DOMAIN_ID:-28}"
+      ROBIS_BUILD_ON_START: "true"
+      ROBIS_BUILD_PROFILE: simulation
+      LIBGL_ALWAYS_SOFTWARE: "1"
+    volumes:
+      - ./src:/robis_ws/src
+      - ./config:/robis_ws/config:ro
+      - ./scripts:/robis_ws/scripts:ro
+      - ${ROBIS_SIM_DATA_DIR:-./data}:/robis_ws/data
+      - jazzy_simulation_build:/robis_ws/build
+      - jazzy_simulation_install:/robis_ws/install
+      - jazzy_simulation_log:/robis_ws/log
+    command:
+      - ros2
+      - launch
+      - robis_bringup
+      - simulation_full.launch.py
+      - "stack:=${ROBIS_SIM_STACK:-none}"
+      - "map:=${ROBIS_MAP_FILE:-/robis_ws/data/navigation/map.yaml}"
+      - nav_rviz:=false
+      - "enable_foxglove:=${ROBIS_FOXGLOVE_ENABLED:-true}"
+      - "gz_args:=${ROBIS_GZ_ARGS:--s -r --headless-rendering -v 2}"
+    network_mode: host
+    stop_signal: SIGINT
+    init: true
+
+volumes:
+  jazzy_basic_build:
+  jazzy_basic_install:
+  jazzy_basic_log:
+  jazzy_simulation_build:
+  jazzy_simulation_install:
+  jazzy_simulation_log:

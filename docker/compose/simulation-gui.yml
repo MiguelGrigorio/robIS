@@ -1,0 +1,15 @@
+# Optional local X11/XWayland session. Headless operation needs no display files.
+services:
+  robis_sim:
+    environment:
+      DISPLAY: "${DISPLAY:-:0}"
+      QT_X11_NO_MITSHM: "1"
+      XAUTHORITY: /tmp/robis.xauthority
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:ro
+      - type: bind
+        source: ${XAUTHORITY:-${HOME}/.Xauthority}
+        target: /tmp/robis.xauthority
+        read_only: true
+        bind:
+          create_host_path: false

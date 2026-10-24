@@ -1,0 +1,19 @@
+# The runtime image holds ROS/Gazebo, CUDA/Torch and the model weights.
+# Code changes rebuild this small application layer independently.
+ARG EXPERIMENT_BASE=robis:jazzy-detector-runtime
+FROM ${EXPERIMENT_BASE} AS runtime
+RUN rm -rf /robis_ws/src /robis_ws/build /robis_ws/install /robis_ws/log
+COPY config /robis_ws/config
+COPY scripts /robis_ws/scripts
+COPY docker/entrypoint.sh /usr/local/bin/robis-entrypoint
+COPY src /robis_ws/src
+RUN chmod +x /usr/local/bin/robis-entrypoint /robis_ws/scripts/*.sh \
+    && /robis_ws/scripts/build_workspace.sh simulation
+ENV ROBIS_BUILD_ON_START=false
+ENTRYPOINT ["/usr/local/bin/robis-entrypoint"]
+
+FROM runtime AS experiments
+COPY extras/scripts /robis_ws/extras/scripts
+
+# The default image contains the operating simulation without experiment runners.
+FROM runtime AS simulation

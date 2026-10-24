@@ -1,0 +1,25 @@
+# Apply over docker-compose.robot.yml. Code, SDK and weights come from the image.
+services:
+  robis:
+    image: "${ROBIS_NAVIGATION_IMAGE:-robis:jazzy-navigation}"
+    volumes:
+      - ./data:/robis_ws/data
+    command:
+      - ros2
+      - launch
+      - robis_bringup
+      - semantic_real.launch.py
+      - "mode:=${ROBIS_REAL_MODE:-mapping}"
+      - "map:=${ROBIS_MAP_FILE:-/robis_ws/data/navigation/map.yaml}"
+      - "camera_info_url:=${ROBIS_CAMERA_INFO_URL:-/robis_ws/data/calibration/robot_camera.yaml}"
+      - "semantic_map:=${ROBIS_SEMANTIC_MAP:-/robis_ws/data/environments/semantic_map.yaml}"
+      - "map_checksum:=${ROBIS_MAP_CHECKSUM:-\"\"}"
+      - "enable_external_memory:=${ROBIS_EXTERNAL_MEMORY:-false}"
+      - "external_environment_id:=${ROBIS_EXTERNAL_ENVIRONMENT:-\"\"}"
+      - "external_max_age_sec:=${ROBIS_EXTERNAL_MAX_AGE_SEC:-3.0}"
+      - "external_max_sensitivity_m:=${ROBIS_EXTERNAL_MAX_SENSITIVITY_M:-0.6}"
+      - "detector_backend:=${ROBIS_REAL_DETECTOR:-yolo26}"
+      - "detector_model:=${ROBIS_REAL_MODEL:-/opt/robis-models/yolo26n-seg.pt}"
+      - "detector_device:=${ROBIS_REAL_DETECTOR_DEVICE:-cpu}"
+      - "detector_image_size:=${ROBIS_REAL_DETECTOR_SIZE:-320}"
+      - "detector_inference_hz:=${ROBIS_REAL_DETECTOR_HZ:-1.0}"

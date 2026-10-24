@@ -1,0 +1,18 @@
+# Run on the Nano after transferring/loading the already-built image.
+services:
+  robis:
+    image: "${ROBIS_ROBOT_IMAGE:-robis:jazzy-basic}"
+    platform: linux/arm64
+    # Keep the Noble CPU image away from automatic L4T GPU library injection.
+    runtime: runc
+    network_mode: host
+    privileged: true
+    volumes:
+      - /dev:/dev
+      - /run/udev:/run/udev:ro
+    environment:
+      ROS_DOMAIN_ID: "${ROBIS_ROBOT_DOMAIN_ID:-27}"
+    init: true
+    stop_signal: SIGINT
+    stop_grace_period: 10s
+    restart: "no"

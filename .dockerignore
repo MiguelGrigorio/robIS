@@ -1,0 +1,17 @@
+.git
+build
+install
+log
+data
+__pycache__
+**/__pycache__
+*.pyc
+*.tar
+.pytest_cache
+.vscode
+extras/*
+!extras/scripts/
+extras/scripts/research/
+
+# Weights enter only the detector image through its named build context.
+config/models/*.pt

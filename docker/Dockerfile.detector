@@ -1,0 +1,33 @@
+# Optional learned perception. Keep Torch out of the robot/basic images.
+ARG SIM_BASE=robis:jazzy-sim
+FROM ${SIM_BASE} AS detector
+ARG TORCH_INDEX_URL=https://download.pytorch.org/whl/cpu
+ARG PYTHONPATH=""
+ENV VIRTUAL_ENV=/opt/detector \
+    PATH=/opt/detector/bin:$PATH \
+    PYTHONPATH=/opt/detector/lib/python3.12/site-packages:$PYTHONPATH \
+    OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 \
+    YOLO_CONFIG_DIR=/robis_ws/data/detector-config \
+    ROBIS_BUILD_ON_START=false
+RUN apt-get update && apt-get install -y --no-install-recommends python3-venv \
+    && rm -rf /var/lib/apt/lists/* \
+    && python3 -m venv --system-site-packages /opt/detector
+# Pin the CUDA suffix too: torch==2.9.1 alone accepts a preinstalled CPU wheel.
+RUN task_torch_index="${TORCH_INDEX_URL%/}" \
+    && task_torch_build=2.9.1 \
+    && case "${task_torch_index##*/}" in cu[0-9]*) task_torch_build="${task_torch_build}+${task_torch_index##*/}";; esac \
+    && python3 -m pip install --no-cache-dir "torch==${task_torch_build}" torchvision==0.24.1 \
+        --index-url "${TORCH_INDEX_URL}" \
+    && python3 -m pip install --no-cache-dir --no-deps --force-reinstall torchvision==0.24.1 \
+        --index-url "${TORCH_INDEX_URL}"
+RUN python3 -m pip install --no-cache-dir \
+    numpy==1.26.4 opencv-python==4.11.0.86 ultralytics==8.4.21
+RUN mkdir -p /opt/robis-models && cd /opt/robis-models \
+    && python3 -c 'from ultralytics import YOLO; YOLO("yolo26n.pt")'
+ENV ROBIS_DETECTOR_MODEL=/opt/robis-models/yolo26n.pt
+COPY config /robis_ws/config
+COPY scripts /robis_ws/scripts
+COPY docker/entrypoint.sh /usr/local/bin/robis-entrypoint
+RUN chmod +x /usr/local/bin/robis-entrypoint /robis_ws/scripts/*.sh
+ENTRYPOINT ["/usr/local/bin/robis-entrypoint"]
+CMD ["bash"]
